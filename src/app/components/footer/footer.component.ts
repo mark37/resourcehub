@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { TermsOfUseComponent } from '../terms-of-use/terms-of-use.component';
 import { AboutComponent } from '../about/about.component';
 import { UserAgreementComponent } from '../user-agreement/user-agreement.component';
-import { Event } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
@@ -12,15 +11,10 @@ import { Event } from '@angular/router';
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'
 })
-export class FooterComponent implements OnInit {
+export class FooterComponent {
   modals: any[string] = [];
 
   toggleModal(name: string) {
-    console.log(name)
     this.modals[name] = !this.modals[name];
-  }
-
-  ngOnInit(): void {
-    this.toggleModal('user-agreement');
   }
 }
