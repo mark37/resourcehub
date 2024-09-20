@@ -1,8 +1,14 @@
 <div class="bg-gray-100 shadow-md p-3 py-8 px-16 flex justify-between">
   <div class="font-semibold">
-    <span class="mr-8">Terms of Use</span>
-    <span class="mr-8">About</span>
-    <span>User Agreement</span>
+    <span class="mr-8 hover:cursor-pointer" (click)="toggleModal('terms-of-use')">
+      Terms of Use
+    </span>
+    <span class="mr-8 hover:cursor-pointer" (click)="toggleModal('about')">
+      About
+    </span>
+    <span class="hover:cursor-pointer" (click)="toggleModal('user-agreement')">
+      User Agreement
+    </span>
   </div>
 
   <div>
@@ -10,3 +16,7 @@
     <span>All Right Reserved</span>
   </div>
 </div>
+
+<app-about *ngIf="modals['about']" (toggleModal)="toggleModal('about')"></app-about>
+<app-terms-of-use *ngIf="modals['terms-of-use']" (toggleModal)="toggleModal('terms-of-use')"></app-terms-of-use>
+<app-user-agreement *ngIf="modals['user-agreement']" (toggleModal)="toggleModal('user-agreement')"></app-user-agreement>

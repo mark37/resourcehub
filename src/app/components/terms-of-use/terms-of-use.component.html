@@ -1,1 +1,112 @@
-<p>terms-of-use works!</p>
+<div id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="relative p-4 w-full max-w-3xl h-auto md:h-auto">
+      <div class="relative bg-white rounded-lg shadow">
+        <div class="flex justify-between items-start py-3 px-5  text-blue-600">
+          <div>
+            <button class="mt-3" (click)="closeModal()">
+              <fa-icon [icon]="faArrowLeft"></fa-icon>
+              Back
+            </button>
+          </div>
+          <h3 class="my-2 text-2xl font-bold">
+              Terms of Use
+          </h3>
+          <div></div>
+        </div>
+
+        <!-- Modal body -->
+        <div class="overflow-y-auto max-h-[620px] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 p-5">
+          <span class="font-semibold text-blue-600">
+            Welcom to ResourceHub!
+          </span><br /><br />
+
+          <span>
+            These Terms of Use (or “Terms”) govern your use of ResourceHub, except where we expressly state that separate terms
+            (and not these) apply, and provide information about the ResourceHub Service (the “Service”), outlined below.
+            When you create an account or use the website, you agree to these terms.
+          </span><br /><br />
+
+          <span class="font-semibold text-blue-600">
+            The ResourceHub Service
+          </span><br /><br />
+
+          <span>
+            We agree to provide you with the ResourceHub Service. The Service includes all of the Financial Opportunities
+            provided in the website through posts of either scholarships and part-time job recruitment, features, services,
+            technologies, and software that we provide to advance the website's missions: (1) Be recommended by educational
+            institutes to students; (2) To provide efficient searching for financial opportunities; (3) To increase the financial
+            opportunities offered to students; (4) To integrate additional financial support platform for students like you;
+            and (5) To spread more information about these financial opportunities.<br />
+
+            The Service is made up of the following aspects:
+          </span><br /><br />
+
+          <ul class="list-disc ml-10">
+            <li>
+              <span class="font-semibold text-blue-600">Offering government-issued scholarships and part-time jobs.</span>
+              Students are often motivated by financial struggles,
+              urging them to seek and work hard for financial aid opportunities to meet their college expenses and living standards.
+              So we built a system that addresses those needs. We also want to make it easier for you to search and find the one that
+              you are looking for. So we offer you the website’s focal idea of hybriding the two most reliable financial aid opportunities,
+              scholarships and part-time jobs.  Part of this is highlighting content, features, and offers that you might be interested in.
+            </li>
+
+            <li>
+              <span class="font-semibold text-blue-600">Fostering a positive, inclusive, and safe environment</span>
+              We develop and use tools and offer resources that are issued by the government, since the local government unit is administering
+              the website. The accounts went through verifications, and the posts are assured to be authentic as these financial opportunities
+              are endorsed by the office of the governor at Tarlac City from various benefactors around.
+            </li>
+
+            <li>
+              <span class="font-semibold text-blue-600">Using emerging technology that helps us keep up with the growing and advancing community</span>
+              Currently, geolocation is the only available technology integrated, which enhances user experience.
+              Incorporating geolocation technology allows the web application to offer available part-time job opportunities to users
+              based on their locations. This approach addresses the need for location-specific job, providing users with a convenient
+              access to relevant work and funding opportunities in their proximity. Emerging technologies such as artificial intelligence
+              and machine learning are yet to be incorporated that will give us the power to apply complex processes across our Service.
+            </li>
+          </ul><br />
+
+          <span class="font-semibold text-blue-600">
+            Your Commitments
+          </span><br /><br />
+
+          <span>
+            In exchange for our commitment to offering the Service, we ask that you fulfill the following obligations to us.
+          </span><br /><br />
+
+          <span>
+            <span class="font-semibold text-blue-600">Who Can Use ResourceHub.</span><br /><br />
+            In exchange for our commitment to offering the Service, we ask that you fulfill the following obligations to us.
+          </span>
+
+          <ul class="list-disc ml-10">
+            <li>You need to be a college student with an active student email account issued by your school or university.</li>
+            <li>Your account must not have been previously disabled due to legal violations or inactivity.</li>
+            <li>You must not have a criminal record for identity theft, fraud, or impersonation for financial gain, access to personal data, or deception.</li>
+          </ul><br />
+
+          <span>
+            <span class="font-semibold text-blue-600">How You Can't Use ResourceHub.</span><br /><br />
+            In exchange for our commitment to offering the Service, we ask that you fulfill the following obligations to us.
+          </span>
+
+          <ul class="list-disc ml-10">
+            <li>You must not engage in unlawful, misleading, or fraudulent activities, or use the Service for illegal or unauthorized purposes.</li>
+            <li>You are prohibited from violating these Terms or encouraging others to do so.</li>
+            <li>You must not interfere with or impair the intended operation of the Service.</li>
+            <li>You must not attempt to create accounts, access information, or collect data in unauthorized ways.</li>
+            <li>You are not allowed to sell, license, or purchase any account or data obtained from us or our Service.</li>
+          </ul>
+        </div>
+
+          <!-- Modal footer -->
+        <div class="flex justify-end py-2 px-5 space-x-4 rounded-b border-t border-gray-200">
+
+        </div>
+      </div>
+  </div>
+</div>
+
+<div class="opacity-50 fixed inset-0 z-50 bg-black"></div>
