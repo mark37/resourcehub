@@ -1,0 +1,103 @@
+<div class="flex flex-col w-full px-5 overflow-y-auto">
+  <!-- <div class="flex flex-col justify-center h-48 w-full text-white bg-gradient-to-r from-blue-600 via-blue-900 to-blue-600 rounded-b-2xl">
+    <div class="text-center">
+      WELCOME TO THE FINANCIAL RESOURCE HUB
+    </div>
+    <div class="text-center text-4xl font-semibold">
+      EMPOWERING STUDENTS <br /> FINANCIALLY
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4 mt-5">
+    <button class="btn-blue-nr w-full">
+      <fa-icon [icon]="faPenToSquare"></fa-icon>
+      Create Post
+    </button>
+
+    <button class="btn-blue-nr bg-white text-blue-600" >
+      <fa-icon [icon]="faTableColumns"></fa-icon>
+      Dashboard
+    </button>
+  </div> -->
+
+  <div class="flex flex-col mt-5 min-h-screen">
+    <span class="font-bold text-xl text-blue-600">
+      SMS Bulk Messaging
+    </span>
+
+    <div class="flex flex-col">
+      <div class="flex flex-row w-full bg-white">
+        <div class="w-8/12 p-3 flex flex-col">
+          <span class="font-semibold">CHED-Tulong Dunong Program</span>
+          <span class="text-gray-400 text-sm">Scholarship</span>
+        </div>
+
+        <div class="w-4/12 p-3 flex flex-col text-right">
+          <span class="font-semibold">Text Message will be sent to</span>
+          <span>500 Applicants</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col bg-white py-3 px-8 mt-3">
+      <div class="text-left flex flex-col">
+        <span class="font-semibold">Text Details</span>
+        <span class="text-sm text-sm">Add texts and information for the content</span>
+      </div>
+
+      <div class="flex flex-col mt-5">
+        <span class="font-semibold text-sm">Content</span>
+        <div class="w-full">
+          <!-- (onFocus)="focus($event)" (onNativeFocus)="nativeFocus($event)" (onEditorChanged)="changedEditor($event)" (onBlur)="blur($event)" (onNativeBlur)="nativeBlur($event)" (onEditorCreated)="created($event)" -->
+          <quill-editor class="h-96 w-full rounded" [(ngModel)]="submittedContent" [modules]="editorConfig"></quill-editor>
+        </div>
+      </div>
+
+      <div class="flex justify-end my-3">
+        <button class="bg-blue-600 text-white px-8 py-2 rounded-md font-semibold rounded-full" (click)="onSubmit()">
+          <fa-icon [icon]="faPaperPlane"></fa-icon>
+          SEND
+        </button>
+      </div>
+    </div>
+
+
+    <!-- <div class="bg-white w-full">
+      <div class="flex flex-row justify-end bg-gray-200 m-3 rounded-md py-2">
+        <div class="flex flex-row">
+          <span class="text-sm pt-2 mr-2">Category</span>
+          <select class="input-txt w-40">
+            <option></option>
+            <option>1</option>
+            <option>2</option>
+          </select>
+        </div>
+
+        <div class="flex flex-row">
+          <span class="text-sm pt-2 mx-2">Start Date</span>
+          <select class="input-txt w-40">
+            <option></option>
+            <option>1</option>
+            <option>2</option>
+          </select>
+        </div>
+
+        <div class="flex flex-row">
+          <span class="text-sm pt-2 mx-2">End Date</span>
+          <select class="input-txt w-40">
+            <option></option>
+            <option>1</option>
+            <option>2</option>
+          </select>
+        </div>
+
+        <div>
+          <button class="mt-1 bg-blue-600 rounded-md px-2 text-white mx-2">
+            <fa-icon [icon]="faFilter"></fa-icon>
+            <span class="text-sm">Apply</span>
+          </button>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>

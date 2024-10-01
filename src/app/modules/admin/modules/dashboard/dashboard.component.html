@@ -1,0 +1,104 @@
+<div class="flex flex-col w-full px-5 overflow-y-auto">
+  <!-- <div class="flex flex-col justify-center h-48 w-full text-white bg-gradient-to-r from-blue-600 via-blue-900 to-blue-600 rounded-b-2xl">
+    <div class="text-center">
+      WELCOME TO THE FINANCIAL RESOURCE HUB
+    </div>
+    <div class="text-center text-4xl font-semibold">
+      EMPOWERING STUDENTS <br /> FINANCIALLY
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4 mt-5">
+    <button class="btn-blue-nr w-full">
+      <fa-icon [icon]="faPenToSquare"></fa-icon>
+      Create Post
+    </button>
+
+    <button class="btn-blue-nr bg-white text-blue-600" >
+      <fa-icon [icon]="faTableColumns"></fa-icon>
+      Dashboard
+    </button>
+  </div> -->
+
+  <div class="flex flex-col mt-5 min-h-screen">
+    <span class="font-semibold text-xl">
+      Scholarship / Part-time job programs
+    </span>
+    <span class="text-sm">
+      Send Bulk Mesages
+    </span>
+
+    <div class="bg-white w-full">
+      <div class="flex flex-row justify-end bg-gray-200 m-3 rounded-md py-2">
+        <!-- <span class="font-semibold pt-1  mr-1">Filter:</span> -->
+        <div class="flex flex-row">
+          <span class="text-sm pt-2 mr-2">Category</span>
+          <select class="input-txt w-40">
+            <option></option>
+            <option>1</option>
+            <option>2</option>
+          </select>
+        </div>
+
+        <div class="flex flex-row">
+          <span class="text-sm pt-2 mx-2">Start Date</span>
+          <select class="input-txt w-40">
+            <option></option>
+            <option>1</option>
+            <option>2</option>
+          </select>
+        </div>
+
+        <div class="flex flex-row">
+          <span class="text-sm pt-2 mx-2">End Date</span>
+          <select class="input-txt w-40">
+            <option></option>
+            <option>1</option>
+            <option>2</option>
+          </select>
+        </div>
+
+        <div>
+          <button class="mt-1 bg-blue-600 rounded-md px-2 text-white mx-2 hover:opacity-75">
+            <fa-icon [icon]="faFilter"></fa-icon>
+            <span class="text-sm ml-1">Apply</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col w-full bg-white p-3">
+      <table class="table-auto">
+        <thead>
+          <tr>
+            <th class="w-4/12">Title</th>
+            <th class="w-3/12"></th>
+            <th class="w-2/12">Date Published</th>
+            <th class="w-2/12">Slots</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of postList; let i = index; let odd = odd" [ngClass]="{'bg-sky-50' : odd }" class="bg-sky-100 hover:bg-sky-300 ">
+            <td class="flex flex-row">
+              <input type="checkbox" class="rounded p-2 m-4 w-5 h-5 border border-gray-400" />
+              <div class="mt-2 mr-3 name-icon-nr hover:opacity-75">
+                <span class="font-medium text-gray-900 text-sm xl:text-lg select-none hover:cursor-pointer">MS</span>
+              </div>
+              <div>
+                <span class="text-lg font-semibold">{{ item.title + ' ' + i }} </span> <br />
+                <span class="text-sm text-gray-500">{{ item.item_type }}</span>
+              </div>
+            </td>
+            <td class="text-end">
+              <button class="bg-white border-2 border-blue-300 px-3 rounded-lg">
+                <fa-icon [icon]="faEllipsis" class="hover:cursor-pointer"></fa-icon>
+              </button>
+            </td>
+            <td class="text-center">{{ item.date_published }}</td>
+            <td class="text-center">{{ item.filled_slots }}/{{ item.total_slots }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

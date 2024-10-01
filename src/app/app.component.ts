@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { FooterComponent } from './components/footer/footer.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
@@ -13,4 +13,12 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 })
 export class AppComponent {
   title = 'resourcehub-client';
+
+  navigateTo(location:string) {
+    this.router.navigate(['/'+location]);
+  }
+
+  constructor (
+    private router: Router
+  ) { }
 }

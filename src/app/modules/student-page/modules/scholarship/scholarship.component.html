@@ -1,0 +1,58 @@
+<div class="flex flex-col mt-5 mx-5 md:mx-20 min-h-screen">
+  <div class="font-bold text-2xl text-blue-600">
+    Scholarship Programs
+  </div>
+
+  <div class="flex flex-row justify-between mt-3 mr-3">
+    <div class="w-5/6 flex item-start">
+      <div class="input-txt rounded-l-md rounded-r-none border-r-0 w-8 p-1 pl-2">
+        <fa-icon [icon]="faSearch"></fa-icon>
+      </div>
+      <input type="text" class="input-txt  rounded-l-none placeholder:italic rounded-md rounded-l-none border-l-0" placeholder="Search scholarhip"/>
+    </div>
+
+    <div class="w-1/6 flex item-start ">
+      <button (click)="loadScholarship()" class="px-3 btn-blue-nr ml-3">
+        <fa-icon [icon]="faFilter"></fa-icon>
+        <span class="hidden md:inline md:pl-1">Filter</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="flex flex-col">
+    <div *ngFor="let item of scholarList; let i = index" class="flex flex-col md:grid md:grid-cols-12 border border-gray-300 shadow rounded-lg h-auto md:h-28 mt-3 w-full">
+      <div class="col-span-7 flex flex-col m-3 md:m-6">
+        <span class="text-gray-500">Posted on {{ item.date_posted}}</span>
+        <span class="text-2xl">{{ item.title + ' ' + (i+1)}}</span>
+      </div>
+
+      <div class="flex flex-row md:flex-col h-full ml-3 md:item-center md:mt-8 md:text-sm">
+        <span class="font-semibold mr-3">Slots</span>
+        <span class="text-gray-500">{{ item.filled_slots}}/{{item.total_slots}}</span>
+      </div>
+
+      <div class="col-span-4 flex flex-row text-xs my-5 md:mt-10 justify-center">
+        <div>
+          <button (click)="toggleModal('view-details')" class="btn-blue w-32 mr-3">
+            View details
+            <fa-icon [icon]="faArrowUpRightFromSquare"></fa-icon>
+          </button>
+        </div>
+
+        <div>
+          <button (click)="toggleModal('apply-now')" class="btn-blue w-32">
+            Apply now
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-apply-now *ngIf="modals['apply-now']"
+  (toggleModal)="toggleModal('apply-now')"
+></app-apply-now>
+
+<app-view-details *ngIf="modals['view-details']"
+  (toggleModal)="toggleModal('view-details')"
+></app-view-details>

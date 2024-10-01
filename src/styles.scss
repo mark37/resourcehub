@@ -1,10 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
+// @import '~quill/dist/quill.snow.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer components {
   .btn-blue {
-    @apply rounded-full bg-blue-600 text-white py-1 px-5 font-semibold;
+    @apply rounded-full bg-blue-600 text-white py-1 px-5 font-semibold hover:opacity-75;
+  }
+
+  .btn-blue-nr {
+    @apply rounded bg-blue-600 text-white py-1 px-1 font-semibold hover:opacity-75;
+  }
+
+  .input-txt {
+    @apply w-full border border-gray-300 focus:ring focus:border-blue-600 focus:outline-none rounded py-1 px-3;
+  }
+
+  .signup-method {
+    @apply text-xl md:text-lg p-8 md:p-3 rounded-md hover:opacity-75 hover:cursor-pointer;
+  }
+
+  .name-icon {
+    @apply inline-flex overflow-hidden relative justify-center items-center w-10 h-10 bg-gray-100 rounded-full border border-2 border-gray-400
+  }
+
+  .name-icon-nr {
+    @apply inline-flex overflow-hidden relative justify-center items-center w-10 h-10 bg-gray-100 rounded-lg border border-2 border-gray-400
+  }
+
+  .footer {
+    @apply sticky bottom-0;
+  }
+
+  .chevron-border {
+    @apply border border-gray-600 px-2 py-1 rounded-md hover:opacity-75 hover:ring;
   }
 }

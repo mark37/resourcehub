@@ -1,0 +1,91 @@
+<div class="flex flex-col w-full px-5 overflow-y-auto">
+  <div class="flex flex-col justify-center h-48 w-full text-white bg-gradient-to-r from-blue-600 via-blue-900 to-blue-600 rounded-b-2xl">
+    <div class="text-center">
+      WELCOME TO THE FINANCIAL RESOURCE HUB
+    </div>
+    <div class="text-center text-4xl font-semibold">
+      EMPOWERING STUDENTS <br /> FINANCIALLY
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4 mt-5">
+    <button class="btn-blue-nr w-full">
+      <fa-icon [icon]="faPenToSquare"></fa-icon>
+      Create Post
+    </button>
+
+    <button class="btn-blue-nr bg-white text-blue-600" >
+      <fa-icon [icon]="faTableColumns"></fa-icon>
+      Dashboard
+    </button>
+  </div>
+
+  <div class="flex flex-col mt-5">
+    <span class="font-semibold text-xl">
+      User Accounts
+    </span>
+    <span class="text-sm">
+      Listing of Users, List of User Reports, Delete User Accounts, Data Backups, Audit Trail
+    </span>
+
+    <div class="bg-white w-full">
+      <div class="flex flex-row justify-end bg-gray-200 m-3 rounded-md py-2">
+        <!-- <span class="font-semibold pt-1  mr-1">Filter:</span> -->
+        <div class="flex flex-row">
+          <span class="text-sm pt-2 mr-2">Category</span>
+          <select class="input-txt w-40">
+            <option></option>
+            <option>1</option>
+            <option>2</option>
+          </select>
+        </div>
+
+        <div class="flex flex-row">
+          <span class="text-sm pt-2 mx-2">Start Date</span>
+          <select class="input-txt w-40">
+            <option></option>
+            <option>1</option>
+            <option>2</option>
+          </select>
+        </div>
+
+        <div class="flex flex-row">
+          <span class="text-sm pt-2 mx-2">End Date</span>
+          <select class="input-txt w-40">
+            <option></option>
+            <option>1</option>
+            <option>2</option>
+          </select>
+        </div>
+
+        <div>
+          <button class="mt-1 bg-blue-600 rounded-md px-2 text-white mx-2">
+            <fa-icon [icon]="faFilter"></fa-icon>
+            <span class="text-sm">Apply</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col w-full bg-white p-3">
+      <table class="table-auto">
+        <thead>
+          <tr>
+            <th class="w-4/12">Name</th>
+            <th class="w-3/12">Student Email</th>
+            <th class="w-3/12">Contact #</th>
+            <th class="w-3/12">School</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of userList; let i = index; let odd = odd" [ngClass]="{'bg-sky-50' : odd }" class="bg-sky-100 hover:bg-sky-300 hover:cursor-pointer">
+            <td>{{ item.name }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.contact }}</td>
+            <td>{{ item.school }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

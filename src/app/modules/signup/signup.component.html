@@ -1,0 +1,48 @@
+@if(showSignupPage) {
+  <app-signup-page [withStudentEmail]="withStudentEmail"></app-signup-page>
+} @else {
+  <div class="h-full bg-gray-100 fixed w-full h-modal md:h-full justify-center items-center flex flex-col" aria-modal="true" role="dialog" style="z-index:60">
+    <div class="flex items-start py-3 px-5 w-4/5 justify-center md:justify-between">
+      <div>
+        <img class="h-11" src="../assets/img/resourcehub-log.png" />
+      </div>
+    </div>
+
+    <div class="relative p-4 w-full max-w-xl h-auto select-none">
+      <div class="bg-white h-auto p-5 md:p-16 rounded-xl shadow-2xl">
+        <div class="flex flex-col">
+          <div class="flex item-start text-blue-600 font-semibold">
+            <div class="hover:cursor-pointer">
+              <fa-icon [icon]="faArrowLeft"></fa-icon>
+              Back
+            </div>
+          </div>
+
+          <div class="flex justify-center text-blue-600 font-semibold">
+            <div>
+              Choose mode of Sign Up
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 p-5 md:p-0 gap-4 text-white text-center font-semibold text-lg">
+            <div class="bg-blue-600 signup-method" (click)="openSignUpPage(true)">
+              Create Account with Student Email <br /><br />
+              <span class="font-normal text-lg md:text-sm">Ideal to get easily verified and use the app</span>
+            </div>
+
+            <div class="bg-blue-800 signup-method" (click)="openSignUpPage(false)">
+              Create Account with Personal Email <br /><br />
+              <span class="font-normal text-lg md:text-sm">Admin account approval is required before activating it</span>
+            </div>
+
+            <div class="text-gray-900 font-normal md:col-span-2 md:text-sm">
+              Already on ResourceHub?
+              <span class="text-blue-600 hover:cursor-pointer font-semibold">Sign In</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+

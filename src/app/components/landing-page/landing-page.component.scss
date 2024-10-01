@@ -1,7 +1,17 @@
-.landing-image {
+.landing-image-mobile {
+  clip-path: polygon(0% 0%,
+  100% 0%,
+  100% 40.3%,
+  50% 48%,
+  0% 39.5%);
+}
+
+.landing-image-md {
   clip-path: polygon(0% 0%,
   100% 0%,
   100% 73.4%,
   48.4% 98.5%,
   0% 71.7%);
 }
+
+
