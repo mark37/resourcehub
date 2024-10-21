@@ -1,6 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MapInfoWindow } from '@angular/google-maps';
-import { faFilter, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faCircleNotch, faFilter, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-part-time',
@@ -10,6 +11,8 @@ import { faFilter, faSearch } from '@fortawesome/free-solid-svg-icons';
 export class PartTimeComponent implements OnInit {
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow | undefined;
 
+  faCircleNotch = faCircleNotch;
+  faArrowRight = faArrowRight;
   faSearch = faSearch;
   faFilter = faFilter;
 
@@ -22,13 +25,27 @@ export class PartTimeComponent implements OnInit {
     zoom: 14,
   };
 
+  isLoading: boolean = false;
   loadPartTime(){
+    this.isLoading = true;
+    this.http.get('').subscribe({
+      next: (data: any) => {
+        this.partTimeList = data.data;
+        console.log(data);
 
+        this.isLoading = false;
+      },
+      error: err => console.log(err)
+    })
   }
 
   toggleModal(name: string) {
     this.modals[name] = !this.modals[name];
   }
+
+  constructor(
+    private http: HttpClient
+  ) { }
 
   ngOnInit(): void {
     this.partTimeList = [
@@ -48,8 +65,4 @@ export class PartTimeComponent implements OnInit {
       { title: 'We are looking for hardworking...', job_status: 'Part time/Full time', date_posted: 'Sept 29, 2024' },
     ]
   }
-
-  /* constructor (
-    private branchService: BranchService
-  ) */
 }

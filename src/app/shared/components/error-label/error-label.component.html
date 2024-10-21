@@ -1,0 +1,5 @@
+<span *ngIf="f[childFormName]?.errors" class="error-label">
+  {{ f[childFormName].errors?.['email'] ? 'not a valid email format' : ''}}
+  {{ f[childFormName].errors?.['required'] ? 'this is required' : ''}}
+  {{ f[childFormName].errors?.['minlength'] ? 'minimum length: ' + f[childFormName].errors?.['minlength'].requiredLength : ''}}
+</span>

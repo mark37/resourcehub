@@ -7,6 +7,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SignupPageComponent } from './components/signup-page/signup-page.component';
 import { TermsOfUseComponent } from '../../components/terms-of-use/terms-of-use.component';
 import { UserAgreementComponent } from '../../components/user-agreement/user-agreement.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ErrorLabelComponent } from '../../shared/components/error-label/error-label.component';
 
 
 @NgModule({
@@ -19,7 +21,9 @@ import { UserAgreementComponent } from '../../components/user-agreement/user-agr
     SignupRoutingModule,
     FontAwesomeModule,
     TermsOfUseComponent,
-    UserAgreementComponent
+    UserAgreementComponent,
+    ReactiveFormsModule,
+    ErrorLabelComponent
   ]
 })
 export class SignupModule { }

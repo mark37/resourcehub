@@ -1,0 +1,48 @@
+<div class="flex flex-col mt-5 min-h-screen">
+  <span class="font-bold text-xl text-blue-600">
+    <button (click)="closeComponent()">
+      <fa-icon [icon]="faArrowLeft"></fa-icon>
+    </button>
+    POST
+  </span>
+
+  <div class="flex flex-col">
+    <div class="flex flex-row w-full bg-white">
+      <div class="w-8/12 p-3 flex flex-col">
+        <span class="font-semibold">CHED-Tulong Dunong Program</span>
+        <span class="text-gray-400 text-sm">Scholarship</span>
+      </div>
+
+      <div class="w-4/12 p-3 flex flex-col text-right">
+        <span class="font-semibold">Text Message will be sent to</span>
+        <span>500 Applicants</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col bg-white py-3 px-8 mt-3">
+    <div class="text-left flex flex-col">
+      <span class="font-semibold">Text Details</span>
+      <span class="text-sm text-sm">Add texts and information for the content</span>
+    </div>
+
+    <div class="flex flex-col mt-5">
+      <span class="font-semibold text-sm">Content</span>
+      <div class="w-full">
+        <!-- (onFocus)="focus($event)" (onNativeFocus)="nativeFocus($event)" (onEditorChanged)="changedEditor($event)" (onBlur)="blur($event)" (onNativeBlur)="nativeBlur($event)" (onEditorCreated)="created($event)" -->
+        <quill-editor class="h-96 w-full rounded" [(ngModel)]="submittedContent" [modules]="editorConfig"></quill-editor>
+      </div>
+    </div>
+
+    <div class="flex justify-end my-3">
+      <button class="bg-blue-600 text-white px-8 py-2 rounded-md font-semibold rounded-full" (click)="onSubmit()">
+        <fa-icon [icon]="faSave"></fa-icon>
+        DRAFT
+      </button>
+      <button class="bg-blue-600 text-white px-8 py-2 rounded-md font-semibold rounded-full" (click)="onSubmit()">
+        <fa-icon [icon]="faUpload"></fa-icon>
+        POST
+      </button>
+    </div>
+  </div>
+</div>

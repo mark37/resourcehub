@@ -20,7 +20,7 @@ export class SidenavComponent  {
     { name: 'Notifications', location: '', icon: faBell },
     { name: 'Manage Users', location: 'manage-user', icon: faUser },
     { name: 'Dashboard', location: 'dashboard', icon: faTableColumns },
-    { name: 'Communicate', location: 'communicate', icon: faComment }
+    // { name: 'Communicate', location: 'communicate', icon: faComment }
   ];
 
   notfications: any[] = [

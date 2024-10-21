@@ -35,8 +35,8 @@
   <div class="relative top-[350px] md:top-[632px] flex justify-between mt-5 text-sm md:text-normal">
     <div></div>
     <div class="flex justify-between">
-      <button class="btn-blue mr-10 md:mr-64 text-sm md:text-normal">FIND SCHOLARSHIP</button>
-      <button class="btn-blue">FIND PART-TIME JOBS</button>
+      <button class="btn-blue mr-10 md:mr-64 text-sm md:text-normal" (click)="navigateTo('student/scholarship')">FIND SCHOLARSHIP</button>
+      <button class="btn-blue" (click)="navigateTo('student/part-time')">FIND PART-TIME JOBS</button>
     </div>
     <div></div>
   </div>
@@ -88,10 +88,10 @@
         <button class="text-right mr-3 mt-3" (click)="toggleMenu('menuList')">
           <fa-icon [icon]="faXmark"></fa-icon>
         </button>
-        <button class="text-right mt-12 mr-4">
+        <button class="text-right mt-12 mr-4" (click)="navigateTo('login')">
           Log In
         </button>
-        <button class="text-right mr-4">
+        <button class="text-right mr-4" (click)="navigateTo('signup')">
           Sign Up
         </button>
       </div>

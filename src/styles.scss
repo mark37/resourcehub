@@ -6,11 +6,11 @@
 
 @layer components {
   .btn-blue {
-    @apply rounded-full bg-blue-600 text-white py-1 px-5 font-semibold hover:opacity-75;
+    @apply rounded-full bg-blue-600 text-white py-1 px-5 font-semibold hover:opacity-75 disabled:bg-gray-400 disabled:hover:opacity-100;
   }
 
   .btn-blue-nr {
-    @apply rounded bg-blue-600 text-white py-1 px-1 font-semibold hover:opacity-75;
+    @apply rounded bg-blue-600 text-white py-1 px-1 font-semibold hover:opacity-75 disabled:bg-gray-400 disabled:hover:opacity-100;
   }
 
   .input-txt {
@@ -35,5 +35,9 @@
 
   .chevron-border {
     @apply border border-gray-600 px-2 py-1 rounded-md hover:opacity-75 hover:ring;
+  }
+
+  .error-label {
+    @apply text-xs italic text-red-500;
   }
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { faFilter, faPaperPlane, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsis, faFilter, faPaperPlane, faSave } from '@fortawesome/free-solid-svg-icons';
 import { EditorChangeContent, EditorChangeSelection, QuillEditorComponent } from 'ngx-quill'
 import Quill from 'quill'
 import Block from 'quill/blots/block';
@@ -16,7 +16,7 @@ export class CommunicateComponent {
   faFilter = faFilter;
   faSave = faSave;
   faPaperPlane = faPaperPlane;
-
+  faEllipsis= faEllipsis;
   editorContent: string = '';  // Stores the editor content
   submittedContent: string = '';  // Stores the submitted content
 
@@ -29,6 +29,13 @@ export class CommunicateComponent {
   };
   blurred = false
   focused = false
+
+  showMessaging: boolean = false;
+  postList: any = [];
+  categoryList: any[] = [
+    { id: 1, title: 'Scholarship' },
+    { id: 2, title: 'Part-time Jobs'}
+  ];
 
   onSubmit(){
     console.log(this.submittedContent)

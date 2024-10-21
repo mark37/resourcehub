@@ -6,11 +6,13 @@ import { PartTimeComponent } from './part-time.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { RouterModule } from '@angular/router';
+import { JobDetailsComponent } from './components/job-details/job-details.component';
 
 
 @NgModule({
   declarations: [
-    PartTimeComponent
+    PartTimeComponent,
+    JobDetailsComponent
   ],
   imports: [
     CommonModule,

@@ -21,299 +21,355 @@
     </div>
   </div>
 
-  @if(page === 0) {
-    <div class="relative p-4 w-full max-w-xl h-auto">
-      <div class="bg-white h-auto p-5 md:p-10 rounded-xl border border-slate-200 shadow-2xl">
-        <div class="flex flex-col">
-          <div class="flex justify-between text-blue-600 font-semibold">
-            <div>
-              Sign Up
-            </div>
-            <button>
-              x
-            </button>
-          </div>
-
-          <div class="flex flex-col p-3 md:p-10">
-            <div>
-              <label class="text-xs text-gray-400">{{ withStudentEmail ? 'Student email' : 'Personal email' }}</label>
-              <input type="text" class="input-txt mb-5" placeholder="Enter your email"/>
-            </div>
-
-            <div>
-              <label class="text-xs text-gray-400">Password (6+ Character)</label>
-              <input type="password" class="input-txt" placeholder="Enter your Password"/>
-            </div>
-            <span class="hover:cursor-pointer text-blue-600 mt-1 text-xs text-right">Forgot password?</span>
-
-            <div class="flex flex-col md:flex-row  justify-center">
-              @if (!withStudentEmail) {
-                <div class="flex flex-col w-full md:w-3/5 mr-3">
-                  <button class="btn-blue-nr bg-gray-300 text-gray-900 mt-5">
-                    <fa-icon [icon]="faArrowUpFromBracket"></fa-icon> Upload <br />
-                    <span class="text-[.6em]">COR/SOA/Entrollment Certificate</span>
-                  </button>
-                  <span class="text-center text-xs mt-1">
-                    Supporer format PDF, DOC, DOCX <br />
-                    Maximum size 5MB
-                  </span>
-                </div>
-              }
-              <div class="flex flex-col w-full md:w-3/5 ">
-                <button (click)="navigatePage(1)" class="btn-blue-nr mt-5 h-14">
-                  Proceed
-                </button>
-                <span class="text-center text-xs mt-1">
-                  By proceeding you agree to
-                  <span class="text-sky-400 hover:cursor-pointer" (click)="toggleModal('terms-of-use')">Terms of Use</span>
-                  and
-                  <span class="text-sky-400 hover:cursor-pointer" (click)="toggleModal('user-agreement')">Terms of Use</span>
-                </span>
-              </div>
-
-            </div>
-
-            <span class="hover:cursor-pointer ml-3 mt-5 text-xs text-center">
-              Already on ResourceHub?
-              <span class="text-blue-600 hover:cursor-pointer">Sign In</span>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  } @else if(page >= 1 && page <= 3) {
-    <div class="relative p-4 w-full max-w-5xl h-96">
-      <div class="flex flex-col">
-        <div class="grid grid-cols-3 font-semibold text-center text-gray-500">
-          <div class="border-b border-b-2 hover:cursor-pointer" (click)="navigatePage(1)" [class]="{'border-b-blue-600' : +page === 1}">
-            Part 1
-          </div>
-          <div class="border-b border-b-2 hover:cursor-pointer" (click)="navigatePage(2)" [class]="{'border-b-blue-600' : +page === 2}">
-            Part 2
-          </div>
-          <div class="border-b border-b-2 hover:cursor-pointer" (click)="navigatePage(3)" [class]="{'border-b-blue-600' : +page === 3}">
-            Part 3
-          </div>
-        </div>
-
-        @switch (page) {
-          @case (1) {
-            <div class="flex flex-col md:grid md:grid-cols-3 md:gap-4 p-3 md:p-10">
+  <form *ngIf="show_form" [formGroup]="signUpForm">
+    @if(page === 0) {
+      <div class="relative p-4 w-full max-w-xl h-auto">
+        <div class="bg-white h-auto p-5 md:p-10 rounded-xl border border-slate-200 shadow-2xl">
+          <div class="flex flex-col">
+            <div class="flex justify-between text-blue-600 font-semibold">
               <div>
-                <label class="text-xs text-gray-400">First Name</label>
-                <input type="text" class="input-txt"/>
+                Sign Up
               </div>
-
-              <div>
-                <label class="text-xs text-gray-400">Middle Name (optional)</label>
-                <input type="text" class="input-txt" />
-              </div>
-
-              <div class="grid grid-cols-6">
-                <div class="col-span-5">
-                  <label class="text-xs text-gray-400">Last Name</label>
-                  <input type="text" class="input-txt" />
-                </div>
-                <div>
-                  <label class="text-xs text-gray-400">Suffix</label>
-                  <select class="input-txt">
-                    <option></option>
-                    <option>I</option>
-                    <option>II</option>
-                    <option>III</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="grid grid-cols-2">
-                <div>
-                  <label class="text-xs text-gray-400">Date of Birth</label>
-                  <input type="date" class="input-txt text-sm placeholder:text-gray-400" placeholder="mm/dd/yyyy"/>
-                </div>
-
-                <div>
-                  <label class="text-xs text-gray-400">Gender</label>
-                  <select class="input-txt">
-                    <option></option>
-                    <option>Male</option>
-                    <option>Female</option>
-                    <option>Others</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label class="text-xs text-gray-400">Contact Number</label>
-                <input type="text" class="input-txt" />
-              </div>
-
-              <div>
-                <label class="text-xs text-gray-400">Municipality</label>
-                <select class="input-txt">
-                  <option></option>
-                  <option>Test</option>
-                  <option>Test 2</option>
-                  <option>Test 3</option>
-                </select>
-              </div>
-
-              <div>
-                <label class="text-xs text-gray-400">Barangay</label>
-                <select class="input-txt">
-                  <option></option>
-                  <option>Test</option>
-                  <option>Test 2</option>
-                  <option>Test 3</option>
-                </select>
-              </div>
-
-              <div>
-                <label class="text-xs text-gray-400">Place of Birth</label>
-                <input type="text" class="input-txt" />
-              </div>
-
-              <div class="md:col-span-3 flex justify-end mt-5">
-                <button class="btn-blue" (click)="navigatePage(2)">
-                  Next
-                </button>
-              </div>
-            </div>
-          }
-          @case (2) {
-            <div class="flex flex-col">
-              <div>
-                <label class="text-xs text-gray-400">School/ University Enrolled at</label>
-                <select class="input-txt">
-                  <option></option>
-                  <option>I</option>
-                </select>
-              </div>
-
-              <div>
-                <label class="text-xs text-gray-400">Course</label>
-                <select class="input-txt">
-                  <option></option>
-                  <option>I</option>
-                </select>
-              </div>
-
-              <div>
-                <label class="text-xs text-gray-400">Year Level</label>
-                <select class="input-txt">
-                  <option></option>
-                  <option>I</option>
-                </select>
-              </div>
-
-              <div class="flex flex-col md:grid md:grid-cols-2 md:gap-4 mt-3">
-                <div>
-                  <span class="text-sm text-gray-700">Upload 2x2 Picture</span>
-                  <button class="btn-blue-nr bg-gray-300 text-gray-900 w-full">
-                    <fa-icon [icon]="faArrowUpFromBracket"></fa-icon>
-                    Upload File
-                  </button>
-                </div>
-
-                <div>
-                  <span class="text-sm text-gray-700">Report of Grade (Latest/Last Released)</span>
-                  <button class="btn-blue-nr bg-gray-300 text-gray-900 w-full">
-                    <fa-icon [icon]="faArrowUpFromBracket"></fa-icon>
-                    Upload File
-                  </button>
-                </div>
-              </div>
-
-              <div class="md:col-span-2 flex justify-end mt-5">
-                <button class="btn-blue" (click)="navigatePage(3)">
-                  Next
-                </button>
-              </div>
-            </div>
-          }
-          @case (3) {
-            <div class="md:grid md:grid-cols-2 md:gap-4">
-              <fieldset class="border border-gray-400">
-                <legend class="ml-3">Father's Information</legend>
-                <div class="flex flex-col m-3 px-1">
-                  <div>
-                    <label class="text-xs">Name of Father</label>
-                    <input type="text" class="input-txt" />
-                  </div>
-
-                  <div>
-                    <label class="text-xs">Occupation</label>
-                    <input type="text" class="input-txt" />
-                  </div>
-
-                  <div>
-                    <label class="text-xs">Company</label>
-                    <input type="text" class="input-txt" />
-                  </div>
-                </div>
-              </fieldset>
-
-              <fieldset class="border border-gray-400">
-                <legend class="ml-3">Mother's Information</legend>
-                <div class="flex flex-col m-3 px-1">
-                  <div>
-                    <label class="text-xs">Name of Mother</label>
-                    <input type="text" class="input-txt" />
-                  </div>
-
-                  <div>
-                    <label class="text-xs">Occupation</label>
-                    <input type="text" class="input-txt" />
-                  </div>
-
-                  <div>
-                    <label class="text-xs">Company</label>
-                    <input type="text" class="input-txt" />
-                  </div>
-                </div>
-              </fieldset>
-
-              <div class="md:col-span-2">
-                <label class="text-xs">Average Monthly Income</label>
-                <input type="text" class="input-txt" />
-              </div>
-
-              <div class="md:col-span-2 flex justify-end mt-5">
-                <button class="btn-blue" (click)="navigatePage(4)">
-                  Finish
-                </button>
-              </div>
-            </div>
-          }
-          @default {
-
-          }
-        }
-
-      </div>
-    </div>
-  } @else {
-    <div class="relative p-4 w-full max-w-xl h-auto">
-      <div class="bg-white h-auto p-5 md:p-10 rounded-xl shadow-2xl">
-        <div class="flex flex-col">
-          <div class="flex flex-col p-3 md:p-10 text-center">
-            <div class="text-3xl font-semibold">
-              Reviewing your Account
-            </div>
-            <div class="text-justify mt-5">
-              Please wait for 1-2 working days for us to review and activate your account.  Expect a message that will be sent to your device through SMS and Email for updates. Thank you!
-            </div>
-            <div class="flex flex-col w-full justify-center ">
-              <button (click)="navigatePage(1)" class="btn-blue-nr mt-5 h-12">
-                Back to Home
+              <button tabindex="0" (click)="closeSignUp()">
+                x
               </button>
             </div>
 
+            @if(showOTPPage) {
+              <div class="flex flex-col p-3 md:p-10">
+                <div class="flex justify-center text-xl text-blue-600">
+                  Authentication
+                </div>
+                <div class="text-center">
+                  Please check the code sent to your Student Email Address then enter them below
+                </div>
+
+                <div class="mt-8">
+                  <input type="text" class="input-txt text-2xl text-center" placeholder="Enter the given code" />
+                  <button class="btn-blue-nr w-full mt-3 text-xl" (click)="navigatePage(1)">
+                    Verify
+                  </button>
+                </div>
+
+                <div class="text-center mt-10 font-semibold text-blue-600" (click)="resendCode()">
+                  Resend Code
+                </div>
+              </div>
+            } @else {
+              <div class="flex flex-col p-3 md:p-10">
+                <div class="mb-5">
+                  <label id="email" class="text-xs text-gray-400">{{ withStudentEmail ? 'Student email' : 'Personal email' }}</label>
+                  <input #emailInput (keypress)="handleKeyPress($event, proceedBtn)" id="email" formControlName="email" type="text" class="input-txt -mb-2" placeholder="Enter your email"/>
+                  <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'email'"></app-error-label>
+                </div>
+
+                <div>
+                  <label for="password" class="text-xs text-gray-400">Password (6+ Character)</label>
+                  <input (keypress)="handleKeyPress($event, proceedBtn)" id="password" formControlName="password" type="password" class="input-txt -mb-2" placeholder="Enter your Password"/>
+                  <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'password'"></app-error-label>
+                </div>
+
+                <div>
+                  <label for="password_confirmation" class="text-xs text-gray-400">Confirm Password</label>
+                  <input (keypress)="handleKeyPress($event, proceedBtn)" id="password_confirmation" formControlName="password_confirmation" type="password" class="input-txt -mb-2" placeholder="Confirm your Password"/>
+                  <span *ngIf="formSubmitted && (signUpForm.value.password !== signUpForm.value.password_confirmation)" class="error-label">
+                    Password does not match
+                  </span>
+                </div>
+
+                <div class="flex flex-col md:flex-row  justify-center">
+                  @if (!withStudentEmail) {
+                    <div class="flex flex-col w-full md:w-3/5 mr-3">
+                      <button class="btn-blue-nr bg-gray-300 text-gray-900 mt-5">
+                        <fa-icon [icon]="faArrowUpFromBracket"></fa-icon> Upload <br />
+                        <span class="text-[.6em]">COR/SOA/Entrollment Certificate</span>
+                      </button>
+                      <span class="text-center text-xs mt-1">
+                        Supporer format PDF, DOC, DOCX <br />
+                        Maximum size 5MB
+                      </span>
+                    </div>
+                  }
+                  <div class="flex flex-col w-full md:w-3/5 ">
+                    <button #proceedBtn [disabled]="(signUpForm.value.password !== signUpForm.value.password_confirmation)" (click)="showOTPPage ? toggleOTPPage() : navigatePage(1)" class="btn-blue-nr mt-5 h-14">
+                      Proceed
+                    </button>
+                    <span class="text-center text-xs mt-1">
+                      By proceeding you agree to
+                      <span class="text-sky-400 hover:cursor-pointer" (click)="toggleModal('terms-of-use')">Terms of Use</span>
+                      and
+                      <span class="text-sky-400 hover:cursor-pointer" (click)="toggleModal('user-agreement')">User Agreement</span>
+                    </span>
+                  </div>
+
+                </div>
+
+                <span class="hover:cursor-pointer ml-3 mt-5 text-xs text-center">
+                  Already on ResourceHub?
+                  <span class="text-blue-600 hover:cursor-pointer">Sign In</span>
+                </span>
+              </div>
+            }
           </div>
         </div>
       </div>
-    </div>
-  }
+    } @else if(page >= 1 && page <= 3) {
+      <div class="relative p-4 w-full max-w-5xl h-96">
+        <div class="flex flex-col">
+          <div class="grid grid-cols-3 font-semibold text-center text-gray-500">
+            <div class="border-b border-b-2 hover:cursor-pointer" (click)="navigatePage(1)" [class]="{'border-b-blue-600' : +page === 1}">
+              Part 1
+            </div>
+            <div class="border-b border-b-2 hover:cursor-pointer" (click)="navigatePage(2)" [class]="{'border-b-blue-600' : +page === 2}">
+              Part 2
+            </div>
+            <div class="border-b border-b-2 hover:cursor-pointer" (click)="navigatePage(3)" [class]="{'border-b-blue-600' : +page === 3}">
+              Part 3
+            </div>
+          </div>
 
+          @switch (page) {
+            @case (1) {
+              <div class="flex flex-col md:grid md:grid-cols-3 md:gap-4 p-3 md:p-10">
+                <div>
+                  <label for="first_name" class="text-xs text-gray-400">First Name</label>
+                  <input id="first_name" formControlName="first_name" type="text" class="input-txt -mb-2" />
+                  <span *ngIf="formSubmitted && f['first_name'].invalid" class="error-label">this is required</span>
+                </div>
+
+                <div>
+                  <label for="middle_name" class="text-xs text-gray-400">Middle Name (optional)</label>
+                  <input id="middle_name" formControlName="middle_name" type="text" class="input-txt -mb-2" />
+                </div>
+
+                <div class="grid grid-cols-6">
+                  <div class="col-span-4">
+                    <label for="last_name" class="text-xs text-gray-400">Last Name</label>
+                    <input id="last_name" formControlName="last_name" type="text" class="input-txt -mb-2" />
+                    <span *ngIf="formSubmitted && f['last_name'].invalid" class="error-label">this is required</span>
+                  </div>
+                  <div class="col-span-2">
+                    <label for="suffix_name" class="text-xs text-gray-400">Suffix</label>
+                    <select id="suffix_name" formControlName="suffix_name" class="input-txt -mb-2">
+                      <option *ngFor="let item of suffixes" [value]="item.code">{{ item.suffix_desc }}</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-2">
+                  <div>
+                    <label for="birthdate" class="text-xs text-gray-400">Date of Birth</label>
+                    <input id="birthdate" formControlName="birthdate" type="date" class="input-txt text-sm placeholder:text-gray-400" placeholder="mm/dd/yyyy" />
+                    <span *ngIf="formSubmitted && f['birthdate'].invalid" class="error-label">this is required</span>
+                  </div>
+
+                  <div>
+                    <label for="gender" class="text-xs text-gray-400">Gender</label>
+                    <select id="gender" formControlName="gender" class="input-txt -mb-2">
+                      <option value="M">Male</option>
+                      <option value="F">Female</option>
+                    </select>
+                    <span *ngIf="formSubmitted && f['sex'].invalid" class="error-label">this is required</span>
+                  </div>
+                </div>
+
+                <div>
+                  <label for="contact_number" class="text-xs text-gray-400">Contact Number</label>
+                  <input id="contact_number" formControlName="contact_number" type="text" class="input-txt -mb-2" />
+                  <span *ngIf="formSubmitted && f['contact_number'].invalid" class="error-label">this is required</span>
+                </div>
+
+                <div></div>
+                <div>
+                  <label for="province_code" class="text-xs text-gray-400">Province</label>
+                  <select id="province_code" formControlName="province_code" class="input-txt -mb-2">
+                    <option *ngFor="let item of provinces" [value]="item.code">{{ item.name }}</option>
+                  </select>
+                  <span *ngIf="formSubmitted && f['province_code'].invalid" class="error-label">this is required</span>
+                </div>
+
+                <div>
+                  <label for="municipality_code" class="text-xs text-gray-400">Municipality</label>
+                  <select id="municipality_code" formControlName="municipality_code" class="input-txt -mb-2">
+                    <option></option>
+                    <option>Test</option>
+                    <option>Test 2</option>
+                    <option>Test 3</option>
+                  </select>
+                  <span *ngIf="formSubmitted && f['municipality_code'].invalid" class="error-label">this is required</span>
+                </div>
+
+                <div>
+                  <label for="barangay_code" class="text-xs text-gray-400">Barangay</label>
+                  <select id="barangay_code" formControlName="barangay_code" class="input-txt -mb-2">
+                    <option></option>
+                    <option>Test</option>
+                    <option>Test 2</option>
+                    <option>Test 3</option>
+                  </select>
+                  <span *ngIf="formSubmitted && f['barangay_code'].invalid" class="error-label">this is required</span>
+                </div>
+
+                <div class="col-span-2">
+                  <label for="address" class="text-xs text-gray-400">Address</label>
+                  <input id="address" formControlName="address" type="text" class="input-txt -mb-2" />
+                  <span *ngIf="formSubmitted && f['address'].invalid" class="error-label">this is required</span>
+                </div>
+
+                <div class="col-span-3">
+                  <label for="place_of_birth" class="text-xs text-gray-400">Place of Birth</label>
+                  <input id="place_of_birth" formControlName="place_of_birth" type="text" class="input-txt -mb-2" />
+                  <span *ngIf="formSubmitted && f['place_of_birth'].invalid" class="error-label">this is required</span>
+                </div>
+
+                <div class="md:col-span-3 flex justify-end mt-5">
+                  <button class="btn-blue" (click)="navigatePage(2)">
+                    Next
+                  </button>
+                </div>
+              </div>
+            }
+            @case (2) {
+              <div class="flex flex-col">
+                <div>
+                  <label for="school_code" class="text-xs text-gray-400">School/ University Enrolled at</label>
+                  <select id="school_code" formControlName="school_code" class="input-txt -mb-2">
+                    <option *ngFor="let item of schools" [value]="item.id">{{ item.desc }}</option>
+                  </select>
+                  <span *ngIf="formSubmitted && f['school_code'].invalid" class="error-label">this is required</span>
+                </div>
+
+                <div>
+                  <label for="course_code" class="text-xs text-gray-400">Course</label>
+                  <select id="course_code" formControlName="course_code" class="input-txt -mb-2">
+                    <option *ngFor="let item of courses" [value]="item.id">{{ item.desc }}</option>
+                  </select>
+                  <span *ngIf="formSubmitted && f['course_code'].invalid" class="error-label">this is required</span>
+                </div>
+
+                <div>
+                  <label for="year_level" class="text-xs text-gray-400">Year Level</label>
+                  <select id="year_level" formControlName="year_level" class="input-txt -mb-2">
+                    <option *ngFor="let item of year_levels" [value]="item.id">{{ item.desc }}</option>
+                  </select>
+                  <span *ngIf="formSubmitted && f['year_level'].invalid" class="error-label">this is required</span>
+                </div>
+
+                <div class="flex flex-col md:grid md:grid-cols-2 md:gap-4 mt-3">
+                  <div>
+                    <span class="text-sm text-gray-700">Upload 2x2 Picture</span>
+                    <button class="btn-blue-nr bg-gray-300 text-gray-900 w-full">
+                      <fa-icon [icon]="faArrowUpFromBracket"></fa-icon>
+                      Upload File
+                    </button>
+                  </div>
+
+                  <div>
+                    <span class="text-sm text-gray-700">Report of Grade (Latest/Last Released)</span>
+                    <button class="btn-blue-nr bg-gray-300 text-gray-900 w-full">
+                      <fa-icon [icon]="faArrowUpFromBracket"></fa-icon>
+                      Upload File
+                    </button>
+                  </div>
+                </div>
+
+                <div class="md:col-span-2 flex justify-end mt-5">
+                  <button class="btn-blue" (click)="navigatePage(3)">
+                    Next
+                  </button>
+                </div>
+              </div>
+            }
+            @case (3) {
+              <div class="md:grid md:grid-cols-2 md:gap-4">
+                <fieldset class="border border-gray-400">
+                  <legend class="ml-3">Father's Information</legend>
+                  <div class="flex flex-col m-3 px-1">
+                    <div>
+                      <label for="fathers_name" class="text-xs">Name of Father</label>
+                      <input id="fathers_name" formControlName="fathers_name" type="text" class="input-txt -mb-2" />
+                    </div>
+
+                    <div>
+                      <label for="fathers_occupation" class="text-xs">Occupation</label>
+                      <input id="fathers_occupation" formControlName="fathers_occupation" type="text" class="input-txt -mb-2" />
+                    </div>
+
+                    <div>
+                      <label for="fathers_company" class="text-xs">Company</label>
+                      <input id="fathers_company" formControlName="fathers_company" type="text" class="input-txt -mb-2" />
+                    </div>
+                  </div>
+                </fieldset>
+
+                <fieldset class="border border-gray-400">
+                  <legend class="ml-3">Mother's Information</legend>
+                  <div class="flex flex-col m-3 px-1">
+                    <div>
+                      <label for="mothers_name" class="text-xs">Name of Mother</label>
+                      <input id="mothers_name" formControlName="mothers_name" type="text" class="input-txt -mb-2" />
+                    </div>
+
+                    <div>
+                      <label for="mothers_occupation" class="text-xs">Occupation</label>
+                      <input id="mothers_occupation" formControlName="mothers_occupation" type="text" class="input-txt -mb-2" />
+                    </div>
+
+                    <div>
+                      <label for="mothers_company" class="text-xs">Company</label>
+                      <input id="mothers_company" formControlName="mothers_company" type="text" class="input-txt -mb-2" />
+                    </div>
+                  </div>
+                </fieldset>
+
+                <div class="md:col-span-2">
+                  <label for="average_monthly_income" class="text-xs">Average Monthly Income</label>
+                  <select id="average_monthly_income" formControlName="average_monthly_income" type="text" class="input-txt -mb-2">
+                    <option *ngFor="let item of incomes" [value]="item.id">{{ item.desc }}</option>
+                  </select>
+                </div>
+
+                <div class="md:col-span-2 flex justify-end mt-5">
+                  <button class="btn-blue" [disabled]="!signUpForm.valid" (click)="onSubmit()">
+                    Finish
+                  </button>
+                </div>
+              </div>
+            }
+          }
+        </div>
+      </div>
+    } @else {
+      <div class="relative p-4 w-full max-w-xl h-auto">
+        <div class="bg-white h-auto p-5 md:p-10 rounded-xl shadow-2xl">
+          <div class="flex flex-col">
+            <div class="flex flex-col p-3 md:p-10 text-center">
+              <div class="text-3xl font-semibold">
+                Reviewing your Account
+              </div>
+              <div class="text-justify mt-5">
+                Please wait for 1-2 working days for us to review and activate your account.  Expect a message that will be sent to your device through SMS and Email for updates. Thank you!
+              </div>
+              <div class="flex flex-col w-full justify-center ">
+                <a href="/" class="btn-blue-nr mt-5 h-12">
+                  <span class="pt-2">Back to Home</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </form>
+
+  <div class="flex flex-col justify-center h-96" *ngIf="!show_form">
+    <div class="flex justify-center">
+      <fa-icon class="text-blue-600" [icon]="faCircleNotch" animation="spin"></fa-icon>
+    </div>
+    <div class="flex justify-center">
+      Loading libraries...
+    </div>
+  </div>
 </div>
 
 @if (modals['terms-of-use']) {

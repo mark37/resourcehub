@@ -21,20 +21,33 @@
           </button>
         </div>
 
-        <div class="flex flex-col p-3 md:p-10">
-          <input type="text" class="input-txt mb-5" placeholder="Enter your email"/>
-          <input type="password" class="input-txt" placeholder="Enter your Password"/>
+        <form  [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col p-3 md:p-10">
+          <div class="mb-5">
+            <input type="text" class="input-txt" formControlName="email" placeholder="Enter your email"/>
+            <app-error-label *ngIf="formSubmitted" [childForm]="loginForm" [childFormName]="'email'"></app-error-label>
+          </div>
+          <div>
+            <input type="password" class="input-txt" formControlName="password" placeholder="Enter your Password"/>
+            <app-error-label *ngIf="formSubmitted" [childForm]="loginForm" [childFormName]="'password'"></app-error-label>
+          </div>
           <span class="hover:cursor-pointer text-blue-600 mt-1 text-xs text-right">Forgot password?</span>
 
           <div>
-            <button class="btn-blue w-full mt-5">Login</button>
+            <button type="submit" class="btn-blue w-full mt-5" [disabled]="isLoading">
+              <fa-icon [icon]="faCircleNotch" animation="spin" *ngIf="isLoading"></fa-icon>
+              {{ isLoading ? 'Logging in' : 'Login' }}
+            </button>
+
+            <div *ngIf="errors_message" class="error-label m-2" >
+              {{ errors_message }}
+            </div>
           </div>
 
           <span class="hover:cursor-pointer ml-3 mt-5 text-xs text-center">
             Dont have and account?
-            <span class="text-blue-600 hover:cursor-pointer">Register</span>
+            <a class="text-blue-600 hover:cursor-pointer" href="#/signup">Register</a>
           </span>
-        </div>
+        </form>
       </div>
     </div>
   </div>

@@ -7,10 +7,10 @@
     <hr class="pb-1" />
   </div>
 
-  <div class="flex flex-col mt-5 mx-10">
-    <div *ngFor="let item of menuList" class="text-xl py-3 font-semibold hover:cursor-pointer hover:opacity-60" (click)="item.location === '' ? toggleMenu('menuList') : navigateTo(item.location)"
+  <div class="flex flex-col mt-5 mx-5">
+    <div *ngFor="let item of menuList" class="py-3 font-semibold hover:cursor-pointer hover:opacity-60" (click)="item.location === '' ? toggleMenu('menuList') : navigateTo(item.location)"
       [ngClass]="{
-        'bg-blue-500 px-3 rounded-lg text-white' : current_url === '/admin/'+item.location,
+        'bg-blue-500 px-2 rounded-lg text-white' : current_url === '/admin/'+item.location,
         'text-blue-500' : this.modals['menuList'] && item.location === ''
       }">
       <fa-icon class="pr-2" [icon]="item.icon"></fa-icon>
@@ -26,7 +26,7 @@
 
 @if(modals['menuList']) {
   <div >
-    <div class="border-2 border-blue-400 fixed block w-1/4 top-44 rounded-lg left-1/4  bg-white h-3/5 z-50 border border overflow-y-auto">
+    <div class="border-2 border-blue-400 fixed block w-1/4 top-56 rounded-lg left-60  bg-white h-3/5 z-50 border border overflow-y-auto">
       <div class="flex flex-col mx-3">
         <div class="text-blue-600 text-2xl flex justify-between mt-5 font-semibold">
           <div>Notifications</div>

@@ -1,38 +1,37 @@
-@if(recentPartTime.length > 0) {
-
-} @else {
-  <!-- <app-no-recent></app-no-recent> -->
-  <div class="grid grid-cols-2 md:grid-cols-3 gap-5 mt-5">
-    <div class="h-24 flex flex-col md:h-64 border-2 border-gray-400 bg-red-100 rounded-lg relative">
-      <div>
-
-      </div>
-
-      <div class="flex absolute bottom-0 bg-white h-1/3 w-full border border-gray-400 rounded-b-md p-1 md:p-2 text-[.63em]">
-        City of Tarlac Itegrated Scholarship
-      </div>
+@if(isLoading) {
+  <div class="flex flex-col w-full py-10">
+    <div class="flex justify-center text-blue-600">
+      <fa-icon [icon]="faCircleNotch" animation="spin"></fa-icon>
     </div>
-
-    <div class="h-24 flex flex-col md:h-64 border-2 border-gray-400 bg-red-100 rounded-lg relative">
-      <div>
-
-      </div>
-
-      <div class="flex absolute bottom-0 bg-white h-1/3 w-full border border-gray-400 rounded-b-md p-1 md:p-2 text-[.63em]">
-        City of Tarlac Itegrated Scholarship
-      </div>
-    </div>
-
-    <div class="h-24 flex flex-col md:h-64 border-2 border-gray-400 bg-red-100 rounded-lg relative">
-      <div>
-
-      </div>
-
-      <div class="flex absolute bottom-0 bg-white h-1/3 w-full border border-gray-400 rounded-b-md p-1 md:p-2 text-[.63em]">
-        City of Tarlac Itegrated Scholarship
-      </div>
+    <div class="flex justify-center">
+      Loading list...
     </div>
   </div>
-
-
+} @else {
+  @if(recentPartTime.length > 0) {
+    <div class="w-full flex justify-center">
+      <table class="w-full table-auto rounded-md mt-4 text-xs md:text-base">
+        <thead>
+          <tr class="border-b border-gray-400">
+            <th>Position</th>
+            <th>Company</th>
+            <th>Deadline</th>
+            <th>Applied</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of recentPartTime; let odd = odd; let i = index"  [ngClass]="{'bg-slate-50' : odd}" class="hover:bg-sky-200 hover:cursor-pointer">
+            <td>{{ item.program + '-' + i+1 }}</td>
+            <td>{{ item.sponsor + '-' + i+1 }} </td>
+            <td>{{ item.deadline }}</td>
+            <td>
+              <fa-icon [icon]="faCheckCircle" class="text-green-500" *ngIf="item.applicationStatus"></fa-icon>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  } @else {
+    <app-no-recent></app-no-recent>
+  }
 }

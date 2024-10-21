@@ -14,11 +14,12 @@ export class HeaderComponent implements OnInit {
   faXmark = faXmark;
   modals: any[string] = [];
 
-  menuList: {name:string, location:string}[] = [
-    {name: 'Dashboard', location: 'dashboard'},
-    {name: 'Scholarships', location: 'scholarship'},
-    {name: 'Part-time Jobs', location: 'part-time'},
-    {name: 'History', location: 'history'},
+  withCred: boolean = false;
+  menuList: {name:string, location:string, requiredCred:boolean}[] = [
+    {name: 'Dashboard', location: 'dashboard', requiredCred: true},
+    {name: 'Scholarships', location: 'scholarship', requiredCred: false},
+    {name: 'Part-time Jobs', location: 'part-time', requiredCred: false},
+    {name: 'History', location: 'history', requiredCred: true},
   ];
 
   toggleModal(name: string){
@@ -45,6 +46,8 @@ export class HeaderComponent implements OnInit {
   );
 
   ngOnInit(): void {
+    this.withCred = localStorage.getItem('access_token') ? true : false;
+
     this.current_url = this.location.path();
     this.navigationEnd$.subscribe();
   }

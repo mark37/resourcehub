@@ -25,6 +25,12 @@
         <span class="text-gray-500">{{ item.date_posted }}</span>
         <span class="text-xl font-semibold">{{ item.title }}</span>
         <span class="text-gray-500">{{ item.job_status }}</span>
+        <div class="flex justify-center">
+          <button class="btn-blue" (click)="toggleModal('view-details')">
+            view details
+            <fa-icon [icon]="faArrowRight"></fa-icon>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -35,3 +41,7 @@
   </div>
 
 </div>
+
+<app-job-details *ngIf="modals['view-details']"
+  (toggleModal)="toggleModal('view-details')"
+></app-job-details>
