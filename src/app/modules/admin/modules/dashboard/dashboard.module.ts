@@ -8,12 +8,15 @@ import { QuillEditorComponent, QuillModule } from 'ngx-quill';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PostingPageComponent } from './components/posting-page/posting-page.component';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { ApplicantListComponent } from './components/applicant-list/applicant-list.component';
+import { PageControllerComponent } from '../../../../components/page-controller/page-controller.component';
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    PostingPageComponent
+    PostingPageComponent,
+    ApplicantListComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +26,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
     QuillEditorComponent,
     FormsModule,
     GoogleMapsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PageControllerComponent
   ]
 })
 export class DashboardModule { }

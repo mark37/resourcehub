@@ -17,40 +17,48 @@
         </span>
       </div>
 
-      <div *ngIf="!showMessaging && !showApplicants && !showPostingComponent">
-        <button class="btn-blue-nr my-3 px-2" (click)="togglePosting()">
+      <div *ngIf="!modals['show-messaging'] && !modals['show-applicants'] && !modals['show-posting']">
+        <button class="btn-blue-nr my-3 px-2" (click)="toggleModal('show-posting')">
           <fa-icon [icon]="faPenToSquare"></fa-icon>
           Create Post
         </button>
       </div>
     </div>
 
-    <div *ngIf="!showMessaging && !showApplicants && !showPostingComponent" class="bg-white w-full">
+    <div *ngIf="!modals['show-messaging'] && !modals['show-applicants'] && !modals['show-posting']" class="bg-white w-full">
       <div class="bg-white w-full">
         <div class="flex justify-end bg-gray-200 m-3  py-2 text-xs">
           <!-- <span class="font-semibold pt-1  mr-1">Filter:</span> -->
           <div class="flex flex-row">
             <label class="pt-2 mr-2">Category</label>
-            <select class="input-txt w-40">
-              <option [value]="null">All</option>
+            <select [(ngModel)]="category" class="input-txt w-40">
+              <option [ngValue]="null">All</option>
               <option *ngFor="let item of categoryList" [value]="item.id">{{ item.title }}</option>
             </select>
           </div>
 
           <div class="flex flex-row">
-            <label class="pt-2 mx-2">Start Date</label>
-            <input type="date" class="input-txt w-40">
+            <label class="pt-2 mr-2">Published</label>
+            <select [(ngModel)]="is_published" class="input-txt w-40">
+              <option [ngValue]="null">All</option>
+              <option *ngFor="let item of publishedList" [value]="item.id">{{ item.title }}</option>
+            </select>
           </div>
 
           <div class="flex flex-row">
-            <label class="pt-2 mx-2">End Date</label>
-            <input type="date" class="input-txt w-40">
+            <label class="pt-2 mx-2">Date</label>
+            <input type="date" [max]="max_date" [(ngModel)]="start_date" class="input-txt w-40">
+          </div>
+
+          <div class="flex flex-row">
+            <label class="pt-2 mx-2">to</label>
+            <input type="date" [max]="max_date" [(ngModel)]="end_date" class="input-txt w-40">
           </div>
 
           <div>
-            <button class="mt-1 bg-blue-600 rounded-md px-2 text-white mx-2 hover:opacity-75 py-1">
+            <button (click)="loadList()" class="mt-1 bg-blue-600 rounded-md px-2 text-white mx-2 hover:opacity-75 py-1">
               <fa-icon [icon]="faFilter"></fa-icon>
-              <span class="text-sm ml-1">Filter</span>
+              <span class="text-sm ml-1">Apply</span>
             </button>
           </div>
         </div>
@@ -61,35 +69,46 @@
           <thead>
             <tr>
               <th class="w-4/12">Title</th>
-              <th class="w-3/12"></th>
-              <th class="w-2/12">Date Published</th>
+              <th class="w-2/12">
+                Date Published <br />
+                Deadline date
+              </th>
               <th class="w-2/12">Slots</th>
+              <th class="w-3/12">Actions</th>
             </tr>
           </thead>
-          <tbody>
-            <tr *ngFor="let item of postList; let i = index; let odd = odd"  class="hover:bg-sky-100 ">
-              <td class="flex flex-row">
+          <tbody *ngIf="!isLoading">
+            <tr *ngFor="let item of postList; let i = index; let odd = odd"  class="hover:bg-sky-100 select-none">
+              <td (click)="toggleModal('show-posting', item)" class="flex flex-row hover:cursor-pointer">
                 <div class="mt-2 mr-3 name-icon-nr hover:opacity-75">
-                  <span class="font-medium text-gray-900 text-sm xl:text-lg select-none hover:cursor-pointer">MS</span>
+                  <span class="font-medium text-gray-900 text-sm xl:text-lg select-none">MS</span>
                 </div>
                 <div>
                   <span class="text-lg font-semibold">{{ item.title }} </span> <br />
-                  <span class="text-sm text-gray-500">{{ item.lib_posting_category_id === '1' ? 'Part-time job' : 'Scholarship' }}</span>
+                  <span class="text-sm text-gray-500">{{ item.lib_posting_category_id === 1 ? 'Part-time job' : 'Scholarship' }}</span>
                 </div>
               </td>
-              <td class="text-end text-xs">
-                <button (click)="toggleMessaging()" class="px-3 py-1 rounded-md bg-gray-300 mr-2 hover:opacity-75">
-                  SMS
-                </button>
-                <button (click)="toggleMessaging()" class="px-3 py-1 rounded-md bg-gray-300 mr-2 hover:opacity-75">
-                  Email
-                </button>
-                <button (click)="toggleApplicants()" class="px-3 py-1 rounded-md bg-blue-300 hover:opacity-75">
-                  Applicant list
-                </button>
+              <td class="text-center text-sm">
+                {{ item.date_published ? (item.date_published | date: 'MMM dd, yyyy') : '-' }} <br />
+                {{ item.date_end | date: 'MMM dd, yyyy' }}
               </td>
-              <td class="text-center">{{ item.date_published }}</td>
-              <td class="text-center">{{ item.filled_slots }}/{{ item.slot }}</td>
+              <td class="text-center text-sm">{{ item.applicants.length }}/{{ item.slot }}</td>
+
+              <td class="text-center text-xs">
+                @if(item.applicants.length > 0) {
+                  <button (click)="toggleModal('show-messaging')" class="px-3 py-1 rounded-md bg-gray-300 mr-2 hover:opacity-75">
+                    SMS
+                  </button>
+                  <button (click)="toggleModal('show-messaging')" class="px-3 py-1 rounded-md bg-gray-300 mr-2 hover:opacity-75">
+                    Email
+                  </button>
+                  <button (click)="toggleModal('show-applicants', item)" class="px-3 py-1 rounded-md bg-blue-300 hover:opacity-75">
+                    Applicant list
+                  </button>
+                } @else {
+                  <span class="italic">{{ !item.date_published ? 'Unpublished' : 'No applicants' }}</span>
+                }
+              </td>
             </tr>
 
             <tr *ngIf="postList.length === 0">
@@ -99,12 +118,22 @@
             </tr>
           </tbody>
         </table>
+        <div *ngIf="isLoading" class="flex flex-col w-full my-20">
+          <div class="flex justify-center text-blue-500">
+            <fa-icon [icon]="faCircleNotch" animation="spin"></fa-icon>
+          </div>
+          <div class="flex justify-center">
+            Loadin list...
+          </div>
+        </div>
       </div>
+
+      <app-page-controller (movePage)="loadList($event)" *ngIf="postList.length > 0" [meta]="meta"></app-page-controller>
     </div>
 
-    <div *ngIf="showMessaging" class="flex flex-col mt-5 min-h-screen">
+    <div *ngIf="modals['show-messaging']" class="flex flex-col mt-5 min-h-screen">
       <span class="font-bold text-xl text-blue-600">
-        <button (click)="toggleMessaging()">
+        <button (click)="toggleModal('show-messaging')">
           <fa-icon [icon]="faArrowLeft"></fa-icon>
         </button>
         SMS Bulk Messaging
@@ -127,7 +156,7 @@
       <div class="flex flex-col bg-white py-3 px-8 mt-3">
         <div class="text-left flex flex-col">
           <span class="font-semibold">Text Details</span>
-          <span class="text-sm text-sm">Add texts and information for the content</span>
+          <span class="text-sm">Add texts and information for the content</span>
         </div>
 
         <div class="flex flex-col mt-5">
@@ -139,82 +168,22 @@
         </div>
 
         <div class="flex justify-end my-3">
-          <button class="bg-blue-600 text-white px-8 py-2 rounded-md font-semibold rounded-full" (click)="onSubmit()">
+          <button class="bg-blue-600 text-white px-8 py-2 font-semibold rounded-full" (click)="sendMessage()">
             <fa-icon [icon]="faPaperPlane"></fa-icon>
             SEND
           </button>
         </div>
       </div>
-
-
-      <!-- <div class="bg-white w-full">
-        <div class="flex flex-row justify-end bg-gray-200 m-3 rounded-md py-2">
-          <div class="flex flex-row">
-            <span class="text-sm pt-2 mr-2">Category</span>
-            <select class="input-txt w-40">
-              <option></option>
-              <option>1</option>
-              <option>2</option>
-            </select>
-          </div>
-
-          <div class="flex flex-row">
-            <span class="text-sm pt-2 mx-2">Start Date</span>
-            <select class="input-txt w-40">
-              <option></option>
-              <option>1</option>
-              <option>2</option>
-            </select>
-          </div>
-
-          <div class="flex flex-row">
-            <span class="text-sm pt-2 mx-2">End Date</span>
-            <select class="input-txt w-40">
-              <option></option>
-              <option>1</option>
-              <option>2</option>
-            </select>
-          </div>
-
-          <div>
-            <button class="mt-1 bg-blue-600 rounded-md px-2 text-white mx-2">
-              <fa-icon [icon]="faFilter"></fa-icon>
-              <span class="text-sm">Apply</span>
-            </button>
-          </div>
-        </div>
-      </div> -->
     </div>
 
-    <div *ngIf="showApplicants" class="flex flex-col w-full bg-white p-3">
-      <span class="font-bold text-xl text-blue-600">
-        <button (click)="toggleApplicants()">
-          <fa-icon [icon]="faArrowLeft"></fa-icon>
-        </button>
-        Applicant List
-      </span>
-      <table class="table-auto">
-        <thead>
-          <tr>
-            <th class="w-4/12">Name</th>
-            <th class="w-3/12">Student Email</th>
-            <th class="w-3/12">Contact #</th>
-            <th class="w-3/12">School</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of applicantList; let i = index; let odd = odd" [ngClass]="{'bg-sky-50' : odd }" class="bg-sky-100 hover:bg-sky-300 hover:cursor-pointer">
-            <td>{{ item.name }}</td>
-            <td>{{ item.email }}</td>
-            <td>{{ item.contact }}</td>
-            <td>{{ item.school }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <app-applicant-list *ngIf="modals['show-applicants']"
+      (toggleModal)="toggleModal('show-applicants')"
+      [selected_posting]="selected_posting"
+    ></app-applicant-list>
 
-    <app-posting-page *ngIf="showPostingComponent"
-      (togglePosting)="togglePosting()"
+    <app-posting-page *ngIf="modals['show-posting']"
+      (toggleModal)="toggleModal('show-posting')"
+      [selected_posting]="selected_posting"
     ></app-posting-page>
   </div>
 </div>

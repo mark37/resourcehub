@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { faArrowLeft, faEllipsis, faFilter, faPaperPlane, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCircleNotch, faEllipsis, faFilter, faPaperPlane, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from '../../../../shared/http.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,17 +14,31 @@ export class DashboardComponent implements OnInit{
   faPaperPlane = faPaperPlane;
   faArrowLeft = faArrowLeft;
   faPenToSquare = faPenToSquare;
+  faCircleNotch = faCircleNotch;
 
+  max_date = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/manila');
   showMessaging: boolean = false;
   showApplicants: boolean = false;
   showPostingComponent: boolean = false;
-
-  postList: any[] = [];
   isLoading: boolean = false;
+  postList: any[] = [];
+  applicantList: any[] = [];
+  modals: any = [];
+  selected_posting!: any;
+  category!: string;
+  is_published!: boolean;
+  start_date!: string;
+  end_date!: string;
+  meta!: any;
 
   categoryList: {title:string ,id:string }[] = [
     {title: 'Part-time Jobs', id: '1'},
     {title: 'Scholarships', id: '2'},
+  ];
+
+  publishedList: {title:string ,id:string }[] = [
+    {title: 'Published', id: 'published'},
+    {title: 'Unpublished', id: 'unpublished'},
   ];
 
   editorContent: string = '';  // Stores the editor content
@@ -37,41 +52,46 @@ export class DashboardComponent implements OnInit{
     ]
   };
 
-  onSubmit() {
-
-  }
-
   toggleMessaging(data?: any) {
     this.showMessaging = !this.showMessaging;
   }
 
-  applicantList: any[] = [];
   toggleApplicants(data?: any) {
+    this.selected_posting = data;
     this.showApplicants = !this.showApplicants;
-    this.http.get('user-information').subscribe({
-      next: (data: any) => {
-        console.log(data);
-        this.applicantList = data.data;
-        this.showApplicants = !this.showApplicants;
-      },
-      error: err => console.log(err)
-    })
   }
 
-  togglePosting(){
+  toggleModal(name: string, data?: any) {
+    this.selected_posting = data;
+    this.modals[name] = !this.modals[name];
+    this.loadList();
+  }
+
+  togglePosting(data?: any){
     this.showPostingComponent = !this.showPostingComponent;
   }
 
-  loadList(page?: number) {
+  sendMessage() {
+
+  }
+
+  loadList(page?: any) {
     this.isLoading = true;
     let params: any = {};
     params['page'] = page ?? 1;
+    params['include'] = 'applicants';
+    params['per_page'] = 10;
+    if(this.start_date) params['start_date'] = this.start_date;
+    if(this.end_date) params['end_date'] = this.end_date;
+    if(this.category) params['lib_posting_category_id'] = this.category;
+    if(this.is_published) params['is_published'] = this.is_published;
 
-    this.http.get('posting-information').subscribe({
+    console.log(this.is_published)
+    this.http.get('posting-information', { params }).subscribe({
       next: (data: any) => {
         console.log(data);
         this.postList = data.data;
-
+        this.meta = data.meta;
         this.isLoading = false;
       },
       error: err => console.log(err)
@@ -84,24 +104,5 @@ export class DashboardComponent implements OnInit{
 
   ngOnInit(): void {
     this.loadList();
-
-    /* this.postList = [
-      {title: 'Test', item_type: 'Scholarship', date_published: 'Jan 01, 2024', filled_slots: '100', total_slots: '250'},
-      {title: 'Test', item_type: 'Part-time', date_published: 'Jan 01, 2024', filled_slots: '100', total_slots: '250'},
-      {title: 'Test', item_type: 'Scholarship', date_published: 'Jan 01, 2024', filled_slots: '100', total_slots: '250'},
-      {title: 'Test', item_type: 'Part-time', date_published: 'Jan 01, 2024', filled_slots: '100', total_slots: '250'},
-      {title: 'Test', item_type: 'Scholarship', date_published: 'Jan 01, 2024', filled_slots: '100', total_slots: '250'},
-      {title: 'Test', item_type: 'Part-time', date_published: 'Jan 01, 2024', filled_slots: '100', total_slots: '250'},
-      {title: 'Test', item_type: 'Scholarship', date_published: 'Jan 01, 2024', filled_slots: '100', total_slots: '250'},
-      {title: 'Test', item_type: 'Part-time', date_published: 'Jan 01, 2024', filled_slots: '100', total_slots: '250'},
-      {title: 'Test', item_type: 'Scholarship', date_published: 'Jan 01, 2024', filled_slots: '100', total_slots: '250'},
-      {title: 'Test', item_type: 'Part-time', date_published: 'Jan 01, 2024', filled_slots: '100', total_slots: '250'},
-      {title: 'Test', item_type: 'Scholarship', date_published: 'Jan 01, 2024', filled_slots: '100', total_slots: '250'},
-      {title: 'Test', item_type: 'Part-time', date_published: 'Jan 01, 2024', filled_slots: '100', total_slots: '250'},
-      {title: 'Test', item_type: 'Scholarship', date_published: 'Jan 01, 2024', filled_slots: '100', total_slots: '250'},
-      {title: 'Test', item_type: 'Part-time', date_published: 'Jan 01, 2024', filled_slots: '100', total_slots: '250'},
-      {title: 'Test', item_type: 'Scholarship', date_published: 'Jan 01, 2024', filled_slots: '100', total_slots: '250'},
-      {title: 'Test', item_type: 'Part-time', date_published: 'Jan 01, 2024', filled_slots: '100', total_slots: '250'},
-    ]; */
   }
 }

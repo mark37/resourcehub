@@ -1,5 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { faArrowLeft, faLocationDot, faSave, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { faArrowLeft, faCircleNotch, faLocationDot, faSave, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from '../../../../../../shared/http.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { postingForm } from './postingForm';
@@ -11,14 +11,19 @@ import { formatDate } from '@angular/common';
   styleUrl: './posting-page.component.scss'
 })
 export class PostingPageComponent implements OnInit {
-  @Output() togglePosting = new EventEmitter<any>();
+  @Output() toggleModal = new EventEmitter<any>();
+  @Input() selected_posting!: any;
+
   faUpload = faUpload;
   faSave = faSave;
   faArrowLeft = faArrowLeft;
   faLocationDot = faLocationDot;
+  faCircleNotch = faCircleNotch;
 
   postingForm: FormGroup = postingForm();
   municipality!: string;
+  isSaving: boolean = false;
+  min_date: string = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/manila');
 
   editorContent: string = '';  // Stores the editor content
   submittedContent: string = '';  // Stores the submitted content
@@ -32,6 +37,8 @@ export class PostingPageComponent implements OnInit {
 
   partTimeList: any[] = [];
   modals: any[string] = [];
+  municipalities: any = [];
+  barangays: any = [];
   isLoading: boolean = false;
   geoLocation!: any;
   showGoogleMap: boolean = false;
@@ -57,11 +64,17 @@ export class PostingPageComponent implements OnInit {
     }
   }
 
-  onSubmit() {
-    console.log(this.postingForm)
+  onSubmit(published?: boolean) {
+    this.isSaving = true;
+    if(published) {
+      const date = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Manila');
+      this.postingForm.patchValue({'date_published': date})
+    }
     this.http.post('posting-information', this.postingForm.value).subscribe({
       next: (data: any) => {
         console.log(data);
+        this.isSaving = false;
+        this.closeComponent()
       },
       error: err => console.log(err)
     })
@@ -79,9 +92,6 @@ export class PostingPageComponent implements OnInit {
     this.showGoogleMap = !this.showGoogleMap;
   }
 
-  municipalities: any = [];
-  barangays: any = [];
-
   loadDemog() {
     this.http.get('psgc/municipalities/'+this.municipality, {params: {'include':'barangays'}}).subscribe({
       next: (data: any) => {
@@ -92,10 +102,9 @@ export class PostingPageComponent implements OnInit {
   }
 
   createForm() {
-    // formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/Manila')
     this.postingForm =  this.formBuilder.nonNullable.group({
       id: [null],
-      date_published: ['2024-10-21', Validators.required],
+      date_published: [null],
       date_end: [null, Validators.required],
       lib_posting_category_id: [null, Validators.required],
       title: [null, Validators.required],
@@ -105,6 +114,21 @@ export class PostingPageComponent implements OnInit {
       barangay_code: [null, Validators.required],
       coordinates: [null, Validators.required]
     });
+
+    if(this.selected_posting) {
+      this.municipality = this.selected_posting.barangay_code.substring(0,7).padEnd(10, '0');
+      this.loadDemog();
+
+      this.postingForm.patchValue({
+        ...this.selected_posting,
+        coordinates: {latitude: this.selected_posting.latitude, longitude: this.selected_posting.longitude}
+      });
+
+      this.markerPositions = [{lat: this.selected_posting.latitude, lng: this.selected_posting.longitude}];
+      this.geoLocation = this.markerPositions[0];
+      if(this.selected_posting.date_published) this.postingForm.disable();
+      console.log(this.postingForm.value)
+    }
   }
 
   loadLibraries() {
@@ -118,7 +142,7 @@ export class PostingPageComponent implements OnInit {
   }
 
   closeComponent(){
-    this.togglePosting.emit()
+    this.toggleModal.emit()
   }
 
   constructor (
@@ -127,6 +151,8 @@ export class PostingPageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.selected_posting)
+    this.isSaving = false;
     this.loadLibraries();
   }
 }

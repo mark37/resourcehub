@@ -6,7 +6,7 @@
     </button>
   </span>
 
-  <form [formGroup]="postingForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="postingForm">
     <div class="flex flex-col">
       <div class="flex flex-row w-full bg-white">
         <div class="w-full p-3 grid grid-cols-4 gap-x-5">
@@ -30,7 +30,7 @@
 
           <div>
             <label class="font-semibold">Deadline date</label>
-            <input type="date" class="input-txt" formControlName="date_end">
+            <input type="date" [min]="min_date" class="input-txt" formControlName="date_end">
           </div>
 
           <div>
@@ -50,10 +50,12 @@
             <input type="text" class="input-txt" formControlName="address" />
           </div>
           <div class="flex justify-center mt-5 col-span-4">
-            <button class="btn-blue-nr px-3" (click)="toggleMap()">
-              <fa-icon [icon]="faLocationDot" class="pr-2"></fa-icon>
-              Tag location
-            </button>
+            @if(!this.postingForm.value.id && !this.geoLocation) {
+              <button class="btn-blue-nr px-3" (click)="toggleMap()">
+                <fa-icon [icon]="faLocationDot" class="pr-2"></fa-icon>
+                Tag location
+              </button>
+            }
             <!-- <span class="italic text-xs mt-2 text-right">{{ geoLocation ? (geoLocation.lat+', '+geoLocation.lng) : ''}}</span> -->
           </div>
         </div>
@@ -86,7 +88,7 @@
       <div class="flex justify-between">
         <div class="text-left flex flex-col">
           <span class="font-semibold">Text Details</span>
-          <span class="text-sm text-sm">Add details for the posting</span>
+          <span class="text-sm">Add details for the posting</span>
         </div>
         <div class="flex justify-end italic text-xs">
           Coordinates: {{ geoLocation ? (geoLocation.lat+', '+geoLocation.lng) : ''}}
@@ -102,14 +104,21 @@
       </div>
 
       <div class="flex justify-end my-3">
-        <!-- <button class="bg-orange-400 text-white px-8 py-2 rounded-md font-semibold rounded-full mr-2" (click)="onSubmit()">
-          <fa-icon [icon]="faSave"></fa-icon>
-          Save
-        </button> -->
-        <button [disabled]="!postingForm.valid" class="disabled:bg-gray-400 bg-blue-600 text-white px-8 py-2 rounded-md font-semibold rounded-full" type="submit">
-          <fa-icon [icon]="faUpload"></fa-icon>
-          Publish
-        </button>
+        @if(!postingForm.value.id || (postingForm.value.id && !postingForm.value.date_published)) {
+          <button [disabled]="!postingForm.valid" class="disabled:bg-gray-400 bg-orange-400 text-white px-8 py-2 font-semibold rounded-full mr-2" (click)="onSubmit()">
+            <fa-icon *ngIf="!isSaving" [icon]="faSave"></fa-icon>
+            <fa-icon *ngIf="isSaving" [icon]="faCircleNotch" animation="spin"></fa-icon>
+            Save
+          </button>
+        }
+
+        @if(!postingForm.value.id || (postingForm.value.id && !postingForm.value.date_published)) {
+          <button [disabled]="!postingForm.valid" class="disabled:bg-gray-400 bg-blue-600 text-white px-8 py-2 font-semibold rounded-full" (click)="onSubmit(true)">
+            <fa-icon *ngIf="!isSaving" [icon]="faUpload"></fa-icon>
+            <fa-icon *ngIf="isSaving" [icon]="faCircleNotch" animation="spin"></fa-icon>
+            Publish
+          </button>
+        }
       </div>
     </div>
   </form>
