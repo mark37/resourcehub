@@ -22,28 +22,34 @@
   <div class="flex flex-col">
     <div *ngFor="let item of scholarList; let i = index" class="flex flex-col md:grid md:grid-cols-12 border border-gray-300 shadow rounded-lg h-auto md:h-28 mt-3 w-full">
       <div class="col-span-7 flex flex-col m-3 md:m-6">
-        <span class="text-gray-500">Posted on {{ item.date_posted}}</span>
-        <span class="text-2xl">{{ item.title + ' ' + (i+1)}}</span>
+        <span class="text-gray-500">Posted on {{ item.date_published }}</span>
+        <span class="text-2xl">{{ item.title }}</span>
+        @if(item.applicants && item.applicants.length > 0 && item.applicants[0].is_applied === 1) {
+          <div class="text-sm w-fit rounded-full italic text-gray-500">
+            <fa-icon [icon]="faCheckCircle" class="text-base text-green-500 p-1"></fa-icon>
+            Application submitted: {{ item.applicants[0]?.date_applied | date: 'MMM dd, yyyy' }}
+          </div>
+        }
       </div>
 
       <div class="flex flex-row md:flex-col h-full ml-3 md:item-center md:mt-8 md:text-sm">
         <span class="font-semibold mr-3">Slots</span>
-        <span class="text-gray-500">{{ item.filled_slots}}/{{item.total_slots}}</span>
+        <span class="text-gray-500">{{ item.applicants?.length }}/{{item.slot}}</span>
       </div>
 
       <div class="col-span-4 flex flex-row text-xs my-5 md:mt-10 justify-center">
         <div>
-          <button (click)="toggleModal('view-details')" class="btn-blue w-32 mr-3">
+          <button (click)="toggleModal('view-details', item)" class="btn-blue w-32 mr-3">
             View details
             <fa-icon [icon]="faArrowUpRightFromSquare"></fa-icon>
           </button>
         </div>
 
-        <div>
+        <!-- <div>
           <button (click)="toggleModal('apply-now')" class="btn-blue w-32">
             Apply now
           </button>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -53,6 +59,10 @@
   (toggleModal)="toggleModal('apply-now')"
 ></app-apply-now>
 
-<app-view-details *ngIf="modals['view-details']"
+<app-post-details *ngIf="modals['view-details']"
   (toggleModal)="toggleModal('view-details')"
-></app-view-details>
+  [selected_posting]="selected_posting"
+></app-post-details>
+<!-- <app-view-details *ngIf="modals['view-details']"
+  (toggleModal)="toggleModal('view-details')"
+></app-view-details> -->

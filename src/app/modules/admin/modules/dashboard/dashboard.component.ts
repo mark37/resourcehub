@@ -18,14 +18,13 @@ export class DashboardComponent implements OnInit{
   showApplicants: boolean = false;
   showPostingComponent: boolean = false;
 
+  postList: any[] = [];
   isLoading: boolean = false;
 
   categoryList: {title:string ,id:string }[] = [
     {title: 'Part-time Jobs', id: '1'},
     {title: 'Scholarships', id: '2'},
   ];
-
-  postList: any[] = [];
 
   editorContent: string = '';  // Stores the editor content
   submittedContent: string = '';  // Stores the submitted content
@@ -49,14 +48,14 @@ export class DashboardComponent implements OnInit{
   applicantList: any[] = [];
   toggleApplicants(data?: any) {
     this.showApplicants = !this.showApplicants;
-    /* this.http.get('').subscribe({
+    this.http.get('user-information').subscribe({
       next: (data: any) => {
         console.log(data);
         this.applicantList = data.data;
         this.showApplicants = !this.showApplicants;
       },
       error: err => console.log(err)
-    }) */
+    })
   }
 
   togglePosting(){
@@ -68,7 +67,7 @@ export class DashboardComponent implements OnInit{
     let params: any = {};
     params['page'] = page ?? 1;
 
-    this.http.get('', { params }).subscribe({
+    this.http.get('posting-information').subscribe({
       next: (data: any) => {
         console.log(data);
         this.postList = data.data;
@@ -84,9 +83,9 @@ export class DashboardComponent implements OnInit{
   ) { }
 
   ngOnInit(): void {
-    // this.loadList();
+    this.loadList();
 
-    this.postList = [
+    /* this.postList = [
       {title: 'Test', item_type: 'Scholarship', date_published: 'Jan 01, 2024', filled_slots: '100', total_slots: '250'},
       {title: 'Test', item_type: 'Part-time', date_published: 'Jan 01, 2024', filled_slots: '100', total_slots: '250'},
       {title: 'Test', item_type: 'Scholarship', date_published: 'Jan 01, 2024', filled_slots: '100', total_slots: '250'},
@@ -103,6 +102,6 @@ export class DashboardComponent implements OnInit{
       {title: 'Test', item_type: 'Part-time', date_published: 'Jan 01, 2024', filled_slots: '100', total_slots: '250'},
       {title: 'Test', item_type: 'Scholarship', date_published: 'Jan 01, 2024', filled_slots: '100', total_slots: '250'},
       {title: 'Test', item_type: 'Part-time', date_published: 'Jan 01, 2024', filled_slots: '100', total_slots: '250'},
-    ];
+    ]; */
   }
 }

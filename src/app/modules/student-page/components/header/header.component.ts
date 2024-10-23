@@ -22,14 +22,30 @@ export class HeaderComponent implements OnInit {
     {name: 'History', location: 'history', requiredCred: true},
   ];
 
+  accountMenuList: {name:string, location:string, requiredCred:boolean}[] = [
+    // {name: 'Manage Account', location: 'manage', requiredCred: true},
+    {name: 'Update Profile', location: 'manage-profile', requiredCred: true},
+    {name: 'Deactivate Account', location: 'deactivate', requiredCred: true},
+    {name: 'Sign Out', location: 'signout', requiredCred: true},
+  ];
+
   toggleModal(name: string){
     this.modals[name] = !this.modals[name];
   }
 
   navigateTo(location:string) {
-    if(this.modals['menuList']) this.toggleModal('menuList');
-    this.router.navigate(['student/'+location])
+    if(location === 'signout') {
+      this.signout();
+    } else {
+      if(location === 'manage-profile' || location === 'deactivate') this.toggleModal('accountMenuList')
+      if(this.modals['menuList']) this.toggleModal('menuList');
+      this.router.navigate(['student/'+location])
+    }
+  }
 
+  signout() {
+    localStorage.clear();
+    this.router.navigate(['/']);
   }
 
   constructor (

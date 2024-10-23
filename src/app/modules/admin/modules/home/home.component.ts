@@ -24,23 +24,7 @@ export class HomeComponent implements OnInit{
     { id: 2, title: 'Part-time Jobs'}
   ];
 
-  userList: any[] = [
-    {name: 'text', email: 'test@tsu.edu', contact: '09123456789', school: 'TSU'},
-    {name: 'text', email: 'test@tsu.edu', contact: '09123456789', school: 'TSU'},
-    {name: 'text', email: 'test@tsu.edu', contact: '09123456789', school: 'TSU'},
-    {name: 'text', email: 'test@tsu.edu', contact: '09123456789', school: 'TSU'},
-    {name: 'text', email: 'test@tsu.edu', contact: '09123456789', school: 'TSU'},
-    {name: 'text', email: 'test@tsu.edu', contact: '09123456789', school: 'TSU'},
-    {name: 'text', email: 'test@tsu.edu', contact: '09123456789', school: 'TSU'},
-    {name: 'text', email: 'test@tsu.edu', contact: '09123456789', school: 'TSU'},
-    {name: 'text', email: 'test@tsu.edu', contact: '09123456789', school: 'TSU'},
-    {name: 'text', email: 'test@tsu.edu', contact: '09123456789', school: 'TSU'},
-    {name: 'text', email: 'test@tsu.edu', contact: '09123456789', school: 'TSU'},
-    {name: 'text', email: 'test@tsu.edu', contact: '09123456789', school: 'TSU'},
-    {name: 'text', email: 'test@tsu.edu', contact: '09123456789', school: 'TSU'},
-    {name: 'text', email: 'test@tsu.edu', contact: '09123456789', school: 'TSU'},
-    {name: 'text', email: 'test@tsu.edu', contact: '09123456789', school: 'TSU'},
-  ];
+  userList: any[] = [];
 
   isLoading: boolean = false;
   loadList(page?: number) {

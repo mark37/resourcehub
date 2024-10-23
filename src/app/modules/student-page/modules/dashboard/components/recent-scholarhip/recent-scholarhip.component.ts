@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faCheckCircle, faCircleNotch, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faCircleNotch, faCircleXmark, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from '../../../../../../shared/http.service';
 import { Router } from '@angular/router';
 
@@ -12,6 +12,7 @@ export class RecentScholarhipComponent implements OnInit {
   faCircleNotch = faCircleNotch;
   faXmarkCircle = faXmarkCircle
   faCheckCircle = faCheckCircle;
+  faCircleXmark = faCircleXmark;
 
   recentScholarhip: any[] = [];
 
@@ -23,7 +24,8 @@ export class RecentScholarhipComponent implements OnInit {
 
   loadList() {
     this.isLoading = true;
-    this.http.get('').subscribe({
+    let params = { lib_posting_category_id: 2 };
+    this.http.get('posting-application', { params }).subscribe({
       next: (data: any) => {
         console.log(data);
         this.recentScholarhip = data.data;
@@ -33,6 +35,15 @@ export class RecentScholarhipComponent implements OnInit {
     })
   }
 
+  modals: any = [];
+  selected_posting!: any;
+
+  toggleModal(name: string, data?: any){
+    this.selected_posting = data ? data.posting : null;
+    if(data) this.selected_posting['applicants'] = [data];
+    this.modals[name] = !this.modals[name];
+  }
+
   constructor (
     private http: HttpService,
     private router: Router
@@ -40,15 +51,5 @@ export class RecentScholarhipComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadList();
-    /* this.recentScholarhip = [
-      { program: 'Scholar Test', sponsor: 'Mayor Test', deadline: '10/12/2024',  applicationStatus: true},
-      { program: 'Scholar Test', sponsor: 'Mayor Test', deadline: '10/12/2024',  applicationStatus: true },
-      { program: 'Scholar Test', sponsor: 'Mayor Test', deadline: '10/12/2024',  applicationStatus: true },
-      { program: 'Scholar Test', sponsor: 'Mayor Test', deadline: '10/12/2024',  applicationStatus: true },
-      { program: 'Scholar Test', sponsor: 'Mayor Test', deadline: '10/12/2024',  applicationStatus: true },
-      { program: 'Scholar Test', sponsor: 'Mayor Test', deadline: '10/12/2024',  applicationStatus: true },
-      { program: 'Scholar Test', sponsor: 'Mayor Test', deadline: '10/12/2024',  applicationStatus: true },
-      { program: 'Scholar Test', sponsor: 'Mayor Test', deadline: '10/12/2024',  applicationStatus: true },
-    ] */
   }
 }

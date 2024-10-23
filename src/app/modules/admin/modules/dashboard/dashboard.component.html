@@ -69,13 +69,12 @@
           <tbody>
             <tr *ngFor="let item of postList; let i = index; let odd = odd"  class="hover:bg-sky-100 ">
               <td class="flex flex-row">
-                <!-- <input type="checkbox" class="rounded p-2 m-4 w-5 h-5 border border-gray-400" /> -->
                 <div class="mt-2 mr-3 name-icon-nr hover:opacity-75">
                   <span class="font-medium text-gray-900 text-sm xl:text-lg select-none hover:cursor-pointer">MS</span>
                 </div>
                 <div>
-                  <span class="text-lg font-semibold">{{ item.title + ' ' + i }} </span> <br />
-                  <span class="text-sm text-gray-500">{{ item.item_type }}</span>
+                  <span class="text-lg font-semibold">{{ item.title }} </span> <br />
+                  <span class="text-sm text-gray-500">{{ item.lib_posting_category_id === '1' ? 'Part-time job' : 'Scholarship' }}</span>
                 </div>
               </td>
               <td class="text-end text-xs">
@@ -88,12 +87,15 @@
                 <button (click)="toggleApplicants()" class="px-3 py-1 rounded-md bg-blue-300 hover:opacity-75">
                   Applicant list
                 </button>
-                <!-- <button class="bg-white border-2 border-blue-300 px-3 rounded-lg">
-                  <fa-icon [icon]="faEllipsis" class="hover:cursor-pointer"></fa-icon>
-                </button> -->
               </td>
               <td class="text-center">{{ item.date_published }}</td>
-              <td class="text-center">{{ item.filled_slots }}/{{ item.total_slots }}</td>
+              <td class="text-center">{{ item.filled_slots }}/{{ item.slot }}</td>
+            </tr>
+
+            <tr *ngIf="postList.length === 0">
+              <td colspan="4" class="text-center italic">
+                No records found...
+              </td>
             </tr>
           </tbody>
         </table>

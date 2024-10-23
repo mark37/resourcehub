@@ -5,6 +5,7 @@ import { HistoryRoutingModule } from './history-routing.module';
 import { HistoryComponent } from './history.component';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { PostDetailsComponent } from '../../../../components/post-details/post-details.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     CommonModule,
     HistoryRoutingModule,
     FormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    PostDetailsComponent
   ]
 })
 export class HistoryModule { }

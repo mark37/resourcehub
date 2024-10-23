@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faCircleCheck, faFilter, faXmark, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUpRightFromSquare, faCircleCheck, faFilter, faXmark, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from '../../../../shared/http.service';
 
 @Component({
@@ -12,6 +12,7 @@ export class HistoryComponent implements OnInit{
   faXmark = faXmark;
   faCircleCheck = faCircleCheck
   faXmarkCircle = faXmarkCircle;
+  faArrowUpRightFromSquare = faArrowUpRightFromSquare;
 
   category: string | null = null;
   isLoading: boolean = false;
@@ -21,20 +22,24 @@ export class HistoryComponent implements OnInit{
     { name: 'Part-time', id: '2' },
   ];
 
-  applicationList: { title: string, type: string, date: string}[] = [
-    {title: 'CHED Tulong-dunong program', type: 'Scholarship', date: '10/01/2024'},
-    {title: 'Kass & Kaye Scholarship Program', type: 'Scholarship', date: '10/01/2024'},
-    {title: 'Tarlac City', type: 'Part-time', date: '10/01/2024'},
-    {title: 'Tarlac State University', type: 'Part-time', date: '10/01/2024'},
-  ];
+  applicationList: any[] = [];
 
   onSubmit() {
+    let params = {};
 
+    this.http.post('', params).subscribe({
+      next: (data: any) => {
+        console.log(data)
+      },
+      error: err => console.log(err)
+    })
   }
 
   loadList() {
     this.isLoading = true;
-    this.http.get('').subscribe({
+    let params: any = { 'include': 'posting', is_applied: 1 };
+    if(this.category) params['lib_posting_category_id'] = this.category;
+    this.http.get('posting-application', { params }).subscribe({
       next: (data: any) => {
         console.log(data);
         this.applicationList = data.data;
@@ -42,6 +47,14 @@ export class HistoryComponent implements OnInit{
       },
       error: err => console.log(err)
     });
+  }
+
+  modals: any = [];
+  selected_posting!: any;
+  toggleModal(name: string, data?: any) {
+    this.selected_posting = data ? data.posting : null;
+    if(data) this.selected_posting['applicants'] = [data];
+    this.modals[name] = !this.modals[name]
   }
 
   constructor (

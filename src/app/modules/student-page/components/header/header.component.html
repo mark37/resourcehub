@@ -12,11 +12,11 @@
       }
     </div>
     @if(withCred) {
-      <div>
+      <button (click)="toggleModal('accountMenuList')">
         <div class="mt-4 mx-3 name-icon hover:opacity-75">
           <span class="font-medium text-gray-900 text-sm xl:text-lg select-none hover:cursor-pointer">MS</span>
         </div>
-      </div>
+      </button>
     }
   </div>
 
@@ -59,5 +59,30 @@
       </div>
     </div>
     <div class="opacity-50 fixed inset-0 z-40 bg-black"></div>
+  </div>
+}
+
+@if(modals['accountMenuList']) {
+  <div >
+    <div class="border-2 border-blue-400 fixed block w-1/4 top-8 right-8  bg-white h-auto z-50 border border overflow-y-auto">
+      <div class="flex flex-col mx-3 text-right">
+        <div class="text-blue-600 text-xl flex justify-between mt-5 font-semibold text-right">
+
+          <button class="text-left ml-3 hover:opacity-75 text-blue-600 text-base" (click)="toggleModal('accountMenuList')">
+            <fa-icon [icon]="faXmark"></fa-icon>
+          </button>
+          <div>Manage Account</div>
+
+        </div>
+        <div class="flex flex-col my-5">
+          <div class="font-semibold hover:opacity-75 hover:text-blue-600" *ngFor="let item of accountMenuList">
+            <button (click)="navigateTo(item.location)">
+              {{ item.name }}
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
   </div>
 }

@@ -16,8 +16,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     CommunicateRoutingModule,
     FontAwesomeModule,
-    QuillModule.forRoot(),
     FormsModule,
+    QuillModule.forRoot(),
     QuillEditorComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

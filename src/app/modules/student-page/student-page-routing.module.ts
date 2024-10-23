@@ -28,6 +28,10 @@ const routes: Routes = [
         path: 'history',
         loadChildren: () => import('./modules/history/history.module').then(m => m.HistoryModule)
       },
+      {
+        path: 'manage-profile',
+        loadChildren: () => import('./modules/manage-profile/manage-profile.module').then(m => m.ManageProfileModule)
+      },
     ]
   }
 ];

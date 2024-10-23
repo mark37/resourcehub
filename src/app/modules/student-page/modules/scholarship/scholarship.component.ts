@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { faArrowUpRightFromSquare, faCircleNotch, faFilter, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUpRightFromSquare, faCheck, faCheckCircle, faCircleNotch, faFilter, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { HttpService } from '../../../../shared/http.service';
 
 @Component({
   selector: 'app-scholarship',
@@ -12,6 +13,7 @@ export class ScholarshipComponent implements OnInit {
   faFilter = faFilter;
   faArrowUpRightFromSquare = faArrowUpRightFromSquare;
   faCircleNotch = faCircleNotch;
+  faCheckCircle = faCheckCircle;
 
   searchTerm!: string;
   scholarList: any[] = [];
@@ -24,17 +26,20 @@ export class ScholarshipComponent implements OnInit {
   to!: number;
   total!: number;
 
-  toggleModal(name: string) {
+  selected_posting!: any;
+  toggleModal(name: string, data?: any) {
+    this.selected_posting = data;
     this.modals[name] = !this.modals[name];
   }
 
   loadScholarship(page?: string) {
     let params: any = {};
 
-    if(page) params['page'] = page;
+    params['page'] = page ?? 1;
+    params['lib_posting_category_id'] = 2;
     if(this.searchTerm) params['search'] = this.searchTerm;
 
-    /* this.http.get('', { params }).subscribe({
+    this.http.get('posting-information', { params }).subscribe({
       next: (data: any) => {
         console.log(data);
         this.scholarList = data.data;
@@ -46,23 +51,11 @@ export class ScholarshipComponent implements OnInit {
         this.total = data.meta.total;
       },
       error: err => console.log(err)
-    }) */
-    this.scholarList = [
-      { title: 'Test', filled_slots: '100', total_slots: '500', date_posted: 'Sept 9, 2023' },
-      { title: 'Test', filled_slots: '100', total_slots: '500', date_posted: 'Sept 9, 2023' },
-      { title: 'Test', filled_slots: '100', total_slots: '500', date_posted: 'Sept 9, 2023' },
-      { title: 'Test', filled_slots: '100', total_slots: '500', date_posted: 'Sept 9, 2023' },
-      { title: 'Test', filled_slots: '100', total_slots: '500', date_posted: 'Sept 9, 2023' },
-      { title: 'Test', filled_slots: '100', total_slots: '500', date_posted: 'Sept 9, 2023' },
-      { title: 'Test', filled_slots: '100', total_slots: '500', date_posted: 'Sept 9, 2023' },
-      { title: 'Test', filled_slots: '100', total_slots: '500', date_posted: 'Sept 9, 2023' },
-      { title: 'Test', filled_slots: '100', total_slots: '500', date_posted: 'Sept 9, 2023' },
-      { title: 'Test', filled_slots: '100', total_slots: '500', date_posted: 'Sept 9, 2023' }
-    ];
+    });
   }
 
   constructor (
-    private http: HttpClient,
+    private http: HttpService,
   ) { }
 
   ngOnInit(): void {

@@ -1,17 +1,17 @@
 <div class="flex flex-col mt-5 mx-5 md:mx-20 min-h-screen">
   <div class="flex flex-col  md:flex-row justify-between">
-    <div class="font-semibold text-2xl text-blue-600 block basis-1/2">Scholarship Programs</div>
+    <div class="font-semibold text-2xl text-blue-600 block basis-1/2">Part-time jobs</div>
 
     <div class="flex flex-row justify-between text-base w-full mt-3 md:mt-0">
       <div class="w-5/6 flex item-start">
         <div class="input-txt rounded-l-md rounded-r-none border-r-0 w-8 p-1 pl-2">
           <fa-icon [icon]="faSearch"></fa-icon>
         </div>
-        <input type="text" class="input-txt  rounded-l-none placeholder:italic rounded-md rounded-l-none border-l-0" placeholder="Search scholarhip"/>
+        <input type="text" [(ngModel)]="search" (keydown.enter)="loadPartTime()" class="input-txt  rounded-l-none placeholder:italic rounded-md rounded-l-none border-l-0" placeholder="Search scholarhip"/>
       </div>
 
       <div class="w-1/6 flex item-start ">
-        <button (click)="loadPartTime()" class="px-3 btn-blue-nr ml-3">
+        <button [disabled]="isLoading" (click)="loadPartTime()" class="px-3 btn-blue-nr ml-3">
           <fa-icon [icon]="faFilter"></fa-icon>
           <span class="hidden md:inline md:pl-1">Filter</span>
         </button>
@@ -22,11 +22,32 @@
   <div class="flex flex-col md:flex-row h-screen mt-5">
     <div class="flex flex-col md:w-1/2 h-3/4 shadow-md block overflow-y-auto mr-5 ">
       <div *ngFor="let item of partTimeList" class="flex flex-col m-3 p-5 border border-gray-300 shadow-md rounded-lg">
-        <span class="text-gray-500">{{ item.date_posted }}</span>
+        <span class="text-gray-500 text-xs flex justify-between">
+          <div>
+            <span class="italic">Date published:</span>
+            {{ item.date_published | date: 'MMM dd, yyyy' }}
+          </div>
+
+          <div>
+            @if(item.applicants.length > 0) {
+              @if(item.applicants[0].is_applied) {
+                <span class="text-xs bg-green-500 text-white py-1 px-2 rounded-full select-none">
+                  <fa-icon [icon]="faCheckCircle"></fa-icon>
+                  Applied
+                </span>
+              } @else {
+                <span class="text-xs bg-blue-500 text-white py-1 px-2 rounded-full select-none">
+                  <fa-icon [icon]="faCheckCircle"></fa-icon>
+                  Post saved
+                </span>
+              }
+            }
+          </div>
+        </span>
         <span class="text-xl font-semibold">{{ item.title }}</span>
         <span class="text-gray-500">{{ item.job_status }}</span>
-        <div class="flex justify-center">
-          <button class="btn-blue" (click)="toggleModal('view-details')">
+        <div class="flex justify-center mt-3">
+          <button class="btn-blue" (click)="toggleModal('view-details', item)">
             view details
             <fa-icon [icon]="faArrowRight"></fa-icon>
           </button>
@@ -36,12 +57,26 @@
 
 
     <div class="flex flex-col md:w-1/2 h-3/4 shadow-md block overflow-y-auto mr-5 mt-5 md:mt-0">
-      <google-map [style]="{height: 'fit-content'}" class="w-fit" [options]="options"> </google-map>
+      <google-map height="620px" width="574px" class="w-fit" [options]="options">
+        @for (item of markerPositions; track item.position) {
+          <map-marker #marker="mapMarker" (mapClick)="openInfoWindow(marker, item.title)"
+            [position]="item.position"
+            [options]="markerOptions" />
+        }
+        <map-info-window>
+          {{ marker_title }}
+        </map-info-window>
+      </google-map>
     </div>
   </div>
 
 </div>
 
-<app-job-details *ngIf="modals['view-details']"
+<app-post-details *ngIf="modals['view-details']"
   (toggleModal)="toggleModal('view-details')"
-></app-job-details>
+  [selected_posting]="selected_posting"
+></app-post-details>
+<!-- <app-job-details *ngIf="modals['view-details']"
+  (toggleModal)="toggleModal('view-details')"
+  [selected_posting]="selected_posting"
+></app-job-details> -->

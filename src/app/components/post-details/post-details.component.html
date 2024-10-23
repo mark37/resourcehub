@@ -20,7 +20,7 @@
           <div *ngIf="showConfirmation" class="flex flex-col w-full my-auto">
             <div class="flex justify-center">
               You are applying to {{ selected_posting.title }}. <br />
-              Are you sure you want to apply to this job posting?
+              Are you sure you want to apply to this {{ selected_posting.lib_posting_category_id === '1' ? 'job' : 'scholarship' }} posting?
             </div>
             <div class="flex justify-center mt-5">
               <button class="btn-blue bg-gray-400 mr-3" (click)="toggleConfirmation()">
@@ -35,14 +35,27 @@
 
           <!-- Modal footer -->
         <div *ngIf="!showConfirmation" class="flex justify-center py-2 px-5 space-x-4 rounded-b border-t border-gray-200">
-          <button class="btn-blue bg-orange-500" (click)="onSubmit()">
-            <fa-icon [icon]="faSave"></fa-icon>
-            Save post
-          </button>
-          <button class="btn-blue" (click)="toggleConfirmation()">
-            <fa-icon [icon]="faFileLines"></fa-icon>
-            Apply now
-          </button>
+          @if(selected_posting.applicants && selected_posting.applicants.length > 0 && selected_posting.applicants[0].is_applied === 0) {
+            <button class="btn-blue" (click)="toggleConfirmation()">
+              <fa-icon [icon]="faFileLines"></fa-icon>
+              Apply now
+            </button>
+          } @else if(selected_posting.applicants && selected_posting.applicants.length > 0 && selected_posting.applicants[0].is_applied === 1) {
+            <button class="btn-blue bg-red-500" (click)="toggleConfirmation()">
+              <fa-icon [icon]="faXmark"></fa-icon>
+              Cancel Application
+            </button>
+          } @else {
+            <button class="btn-blue bg-orange-500" (click)="onSubmit()">
+              <fa-icon [icon]="faSave"></fa-icon>
+              Save post
+            </button>
+
+            <button class="btn-blue" (click)="toggleConfirmation()">
+              <fa-icon [icon]="faFileLines"></fa-icon>
+              Apply now
+            </button>
+          }
         </div>
       </div>
   </div>

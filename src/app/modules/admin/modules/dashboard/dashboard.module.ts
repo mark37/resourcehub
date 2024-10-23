@@ -5,8 +5,9 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { QuillEditorComponent, QuillModule } from 'ngx-quill';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PostingPageComponent } from './components/posting-page/posting-page.component';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 
 @NgModule({
@@ -20,7 +21,9 @@ import { PostingPageComponent } from './components/posting-page/posting-page.com
     FontAwesomeModule,
     QuillModule.forRoot(),
     QuillEditorComponent,
-    FormsModule
+    FormsModule,
+    GoogleMapsModule,
+    ReactiveFormsModule
   ]
 })
 export class DashboardModule { }

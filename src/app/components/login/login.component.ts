@@ -36,6 +36,7 @@ export class LoginComponent {
           const header = JSON.parse(atob(parts[0]));
           const payload = JSON.parse(atob(parts[1]));
 
+          console.log(header, payload)
           this.isLoading = false
           localStorage.setItem('access_token', data.data.token);
           this.router.navigate(['/student'])

@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { faCheckCircle, faCircleNotch, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faCircleNotch, faCircleXmark, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
+import { HttpService } from '../../../../../../shared/http.service';
 
 @Component({
   selector: 'app-recent-part-time',
@@ -12,6 +13,7 @@ export class RecentPartTimeComponent {
   faCircleNotch = faCircleNotch;
   faXmarkCircle = faXmarkCircle;
   faCheckCircle = faCheckCircle;
+  faCircleXmark = faCircleXmark;
 
   recentPartTime: any[] = [];
   isLoading: boolean = false;
@@ -19,7 +21,8 @@ export class RecentPartTimeComponent {
   loadList() {
     this.isLoading = true;
 
-    this.http.get('').subscribe({
+    let params = { lib_posting_category_id: 1 };
+    this.http.get('posting-application', {params}).subscribe({
       next: (data: any) => {
         console.log(data);
         this.recentPartTime = data.data;
@@ -29,22 +32,20 @@ export class RecentPartTimeComponent {
     })
   }
 
+  selected_posting: any;
+  modals: any = [];
+  toggleModal(name: string, data?: any) {
+    this.selected_posting = data ? data.posting : null;
+    if(data) this.selected_posting['applicants'] = [data];
+
+    this.modals[name] = !this.modals[name];
+  }
   constructor (
-    private http: HttpClient,
+    private http: HttpService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
     this.loadList();
-    /* this.recentPartTime = [
-      { program: 'Part-time', sponsor: 'Store Sample', deadline: '10/12/2024',  applicationStatus: true},
-      { program: 'Part-time', sponsor: 'Store Sample', deadline: '10/12/2024',  applicationStatus: true },
-      { program: 'Part-time', sponsor: 'Store Sample', deadline: '10/12/2024',  applicationStatus: true },
-      { program: 'Part-time', sponsor: 'Store Sample', deadline: '10/12/2024',  applicationStatus: true },
-      { program: 'Part-time', sponsor: 'Store Sample', deadline: '10/12/2024',  applicationStatus: true },
-      { program: 'Part-time', sponsor: 'Store Sample', deadline: '10/12/2024',  applicationStatus: true },
-      { program: 'Part-time', sponsor: 'Store Sample', deadline: '10/12/2024',  applicationStatus: true },
-      { program: 'Part-time', sponsor: 'Store Sample', deadline: '10/12/2024',  applicationStatus: true },
-    ] */
   }
 }
