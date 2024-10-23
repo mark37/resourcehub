@@ -1,5 +1,5 @@
 <div class="h-fit fixed pt-10 w-full md:h-full justify-center items-center flex flex-col">
-  <div class="flex items-start py-3 px-5 w-full w-4/5 justify-center md:justify-between">
+  <div class="flex items-start py-3 px-5 w-4/5 justify-center md:justify-between">
     <div class="flex flex-row">
       <img class="h-11" src="../assets/img/resourcehub-log.png" />
 
@@ -117,13 +117,13 @@
       <div class="relative p-4 w-full max-w-5xl h-96">
         <div class="flex flex-col">
           <div class="grid grid-cols-3 font-semibold text-center text-gray-500">
-            <div class="border-b border-b-2 hover:cursor-pointer" (click)="navigatePage(1)" [class]="{'border-b-blue-600' : +page === 1}">
+            <div class="border-b-2 hover:cursor-pointer" (click)="navigatePage(1)" [class]="{'border-b-blue-600' : +page === 1}">
               Part 1
             </div>
-            <div class="border-b border-b-2 hover:cursor-pointer" (click)="navigatePage(2)" [class]="{'border-b-blue-600' : +page === 2}">
+            <div class="border-b-2 hover:cursor-pointer" (click)="navigatePage(2)" [class]="{'border-b-blue-600' : +page === 2}">
               Part 2
             </div>
-            <div class="border-b border-b-2 hover:cursor-pointer" (click)="navigatePage(3)" [class]="{'border-b-blue-600' : +page === 3}">
+            <div class="border-b-2 hover:cursor-pointer" (click)="navigatePage(3)" [class]="{'border-b-blue-600' : +page === 3}">
               Part 3
             </div>
           </div>
@@ -232,11 +232,11 @@
             @case (2) {
               <div class="flex flex-col">
                 <div>
-                  <label for="school_code" class="text-xs text-gray-400">School/ University Enrolled at</label>
-                  <select id="school_code" formControlName="school_code" class="input-txt -mb-2">
+                  <label for="lib_school_id" class="text-xs text-gray-400">School/ University Enrolled at</label>
+                  <select id="lib_school_id" formControlName="lib_school_id" class="input-txt -mb-2">
                     <option *ngFor="let item of schools" [value]="item.id">{{ item.desc }}</option>
                   </select>
-                  <span *ngIf="formSubmitted && f['school_code'].invalid" class="error-label">this is required</span>
+                  <span *ngIf="formSubmitted && f['lib_school_id'].invalid" class="error-label">this is required</span>
                 </div>
 
                 <div>
@@ -255,6 +255,22 @@
                   <span *ngIf="formSubmitted && f['year_level'].invalid" class="error-label">this is required</span>
                 </div>
 
+                <div class="grid grid-col-3 gap-x-4 mt-3">
+                  <div>
+                    <input id="scholar_flag" formControlName="scholar_flag" type="checkbox" class="rounded-md text-lg mr-1" />
+                    <label for="scholar_flag">With existing scholarship</label>
+                  </div>
+
+                  <div>
+                    <input id="shiftee_flag" formControlName="shiftee_flag" type="checkbox" class="rounded-md text-lg mr-1" />
+                    <label for="shiftee_flag">Shiftee?</label>
+                  </div>
+
+                  <div>
+                    <input id="irregular_flag" formControlName="irregular_flag" type="checkbox" class="rounded-md text-lg mr-1" />
+                    <label for="irregular_flag">Irregular</label>
+                  </div>
+                </div>
                 <div class="flex flex-col md:grid md:grid-cols-2 md:gap-4 mt-3">
                   <div>
                     <span class="text-sm text-gray-700">Upload 2x2 Picture</span>
@@ -282,6 +298,11 @@
             }
             @case (3) {
               <div class="md:grid md:grid-cols-2 md:gap-4">
+
+                <div class="col-span-2 flex justify-center mt-2">
+                  <input id="ofw_flag" formControlName="ofw_flag" type="checkbox" class="rounded-md text-lg mr-1" />
+                  <label for="ofw_flag">One or both parents are overseas filipino worker (OFW)</label>
+                </div>
                 <fieldset class="border border-gray-400">
                   <legend class="ml-3">Father's Information</legend>
                   <div class="flex flex-col m-3 px-1">

@@ -79,7 +79,7 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
         break;
       case 2:
         validatorArray = [
-          'school_code', 'course_code', 'year_level',
+          'lib_school_id', 'course_code', 'year_level',
           'photo', 'report_of_grade'
         ];
         this.addValidator(validatorArray);
@@ -158,12 +158,16 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
       municipality_code: [null],
       barangay_code: [null],
       address: [null],
+      scholar_flag: [false],
+      shiftee_flag: [false],
+      irregular_flag: [false],
       place_of_birth: [null],
-      school_code: [null],
+      lib_school_id: [null],
       course_code: [null],
       year_level: [null],
       photo: ['x'],
       report_of_grade: ['x'],
+      ofw_flag: [false],
       fathers_name: [null],
       fathers_occupation: [null],
       fathers_company: [null],

@@ -85,6 +85,12 @@
     </div>
 
     <div *ngIf="geoLocation" class="flex flex-col bg-white py-3 px-8 mt-3">
+      <div class="grid grid-cols-4 gap-x-4 my-3">
+        <div *ngFor="let item of requirementList">
+          <input attr.id="{{item.var_name}}" [formControlName]="item.var_name" type="checkbox" class="rounded-md mr-1 text-lg" />
+          <label attr.for="{{item.var_name}}">{{ item.label }}</label>
+        </div>
+      </div>
       <div class="flex justify-between">
         <div class="text-left flex flex-col">
           <span class="font-semibold">Text Details</span>

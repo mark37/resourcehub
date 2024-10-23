@@ -11,7 +11,11 @@ export function postingForm() {
     slot: new FormControl<number|null>(null),
     address: new FormControl<string|null>(null),
     barangay_code: new FormControl<string|null>(null),
-    coordinates: new FormControl<any|null>(null)
+    coordinates: new FormControl<any|null>(null),
+    no_scholar_flag: new FormControl<boolean>(false),
+    no_ofw_flag : new FormControl<boolean>(false),
+    no_shiftee_flag: new FormControl<boolean>(false),
+    no_irregular_flag: new FormControl<boolean>(false),
   });
 }
 

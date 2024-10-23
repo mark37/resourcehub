@@ -35,6 +35,13 @@ export class PostingPageComponent implements OnInit {
     ]
   };
 
+  requirementList: {label: string, var_name: string}[] = [
+    {label: 'No existing scholarship', var_name: 'no_scholar_flag'},
+    {label: 'Non-OFW parents', var_name: 'no_ofw_flag'},
+    {label: 'No shiftee', var_name: 'no_shiftee_flag'},
+    {label: 'No Irregular', var_name: 'no_irregular_flag'}
+  ];
+
   partTimeList: any[] = [];
   modals: any[string] = [];
   municipalities: any = [];
@@ -112,7 +119,11 @@ export class PostingPageComponent implements OnInit {
       slot: [null, Validators.required],
       address: [null, Validators.required],
       barangay_code: [null, Validators.required],
-      coordinates: [null, Validators.required]
+      coordinates: [null, Validators.required],
+      no_scholar_flag: [false],
+      no_ofw_flag : [false],
+      no_shiftee_flag: [false],
+      no_irregular_flag: [false],
     });
 
     if(this.selected_posting) {
