@@ -28,78 +28,95 @@
       Listing of Users, List of User Reports, Delete User Accounts, Data Backups, Audit Trail
     </span>
 
-    <div class="bg-white w-full">
-      <div class="flex flex-row justify-end bg-gray-200 m-3 rounded-md py-2 text-xs">
-        <!-- <span class="font-semibold pt-1  mr-1">Filter:</span> -->
-        <div class="flex flex-row">
-          <span class="pt-2 mr-1">Category</span>
-          <select [(ngModel)]="is_verified" class="input-txt">
+    <div *ngIf="!modals['user-information']" class="bg-white select-none">
+      <div class="bg-white w-full">
+        <div class="flex flex-row justify-end bg-gray-200 m-3 rounded-md py-2 text-xs">
+          <!-- <span class="font-semibold pt-1  mr-1">Filter:</span> -->
+          <div class="flex flex-row">
+            <span class="pt-2 mr-1">Category</span>
+            <select [(ngModel)]="is_verified" class="input-txt">
+              <option [ngValue]="null">All</option>
+              <option *ngFor="let item of category" [value]="item.id">{{ item.title }}</option>
+            </select>
+          </div>
+
+          <!-- <div class="flex flex-row">
+            <span class="pt-2 mx-1">Sub-category</span>
+            <select [(ngModel)]="lib_cat_id" class="input-txt">
             <option [ngValue]="null">All</option>
-            <option *ngFor="let item of category" [value]="item.id">{{ item.title }}</option>
-          </select>
-        </div>
+              <option *ngFor="let item of scholarPartTime" [value]="item.id">{{ item.title }}</option>
+            </select>
+          </div> -->
 
-        <!-- <div class="flex flex-row">
-          <span class="pt-2 mx-1">Sub-category</span>
-          <select [(ngModel)]="lib_cat_id" class="input-txt">
-          <option [ngValue]="null">All</option>
-            <option *ngFor="let item of scholarPartTime" [value]="item.id">{{ item.title }}</option>
-          </select>
-        </div> -->
+          <div class="flex flex-row">
+            <span class="pt-2 mx-1">Date</span>
+            <input type="date" [(ngModel)]="start_date" [max]="max_date" class="input-txt" />
+          </div>
+          <span class="pt-2 mx-1">to</span>
+          <div class="flex flex-row">
+            <span class="pt-2"></span>
+            <input type="date" [(ngModel)]="end_date" [max]="max_date" class="input-txt" />
+          </div>
 
-        <div class="flex flex-row">
-          <span class="pt-2 mx-1">Date</span>
-          <input type="date" [(ngModel)]="start_date" [max]="max_date" class="input-txt" />
-        </div>
-        <span class="pt-2 mx-1">to</span>
-        <div class="flex flex-row">
-          <span class="pt-2"></span>
-          <input type="date" [(ngModel)]="end_date" [max]="max_date" class="input-txt" />
-        </div>
-
-        <div>
-          <button (click)="loadList()" class="mt-1 bg-blue-600 rounded-md px-2 text-white mx-2 py-1">
-            <fa-icon [icon]="faFilter"></fa-icon>
-            <span class="text-sm">Apply</span>
-          </button>
+          <div>
+            <button (click)="loadList()" class="mt-1 bg-blue-600 rounded-md px-2 text-white mx-2 py-1">
+              <fa-icon [icon]="faFilter"></fa-icon>
+              <span class="text-sm">Apply</span>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="flex flex-col w-full bg-white p-3 min-h-96">
-      <table class="table-auto">
-        <thead>
-          <tr>
-            <th class="w-4/12">Name</th>
-            <th class="w-3/12">Student Email</th>
-            <th class="w-3/12">Contact #</th>
-            <th class="w-3/12">School</th>
-          </tr>
-        </thead>
-        <tbody *ngIf="!isLoading">
-          <tr *ngFor="let item of userList; let i = index; let odd = odd" class="hover:bg-sky-200 hover:cursor-pointer">
-            <td>{{ item.last_name }}, {{ item.first_name }} {{ item.middle_name }} {{ item.suffix_name !== 'NA' ? item.suffix_name : '' }}</td>
-            <td>{{ item.email }}</td>
-            <td>{{ item.contact_number }}</td>
-            <td>{{ item.school }}</td>
-          </tr>
+      <div class="flex flex-col w-full bg-white p-3 min-h-96">
+        <table class="table-auto">
+          <thead>
+            <tr>
+              <th class="w-4/12">Name</th>
+              <th class="w-2/12">Student Email <br /> Contact #</th>
+              <th class="w-3/12">School</th>
+              <th class="w-2/12">Action</th>
+              <th class="w-1/12">Active Status</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="!isLoading">
+            <tr *ngFor="let item of userList; let i = index; let odd = odd" class="hover:bg-sky-200">
+              <td>{{ item.last_name }}, {{ item.first_name }} {{ item.middle_name }} {{ item.suffix_name !== 'NA' ? item.suffix_name : '' }}</td>
+              <td>{{ item.email }} <br />{{ item.contact_number }}</td>
+              <td>{{ item.school }}</td>
+              <td>
+                <button (click)="toggleModal('user-information', item)" class="rounded-full bg-blue-500 px-2 py-0.5 text-xs text-white hover:opacity-75">
+                  view details
+                </button>
+              </td>
+              <td>
+                <label class="inline-flex relative items-center cursor-pointer">
+                  <input  type="checkbox" class="sr-only peer">
+                  <div class="w-12 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300  rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[3px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 disabled:opacity-7"></div>
+                </label>
+              </td>
+            </tr>
 
-          <tr *ngIf="userList.length === 0">
-            <td colspan="4" class="text-center italic">No records found...</td>
-          </tr>
-        </tbody>
-      </table>
+            <tr *ngIf="userList.length === 0">
+              <td colspan="4" class="text-center italic">No records found...</td>
+            </tr>
+          </tbody>
+        </table>
 
-      <div *ngIf="isLoading" class="flex flex-col my-20 text-lg">
-        <div class="flex justify-center text-center text-blue-500">
-          <fa-icon [icon]="faCircleNotch" animation="spin"></fa-icon>
-        </div>
-        <div class="flex justify-center">
-          Loading list...
+        <div *ngIf="isLoading" class="flex flex-col my-20 text-lg">
+          <div class="flex justify-center text-center text-blue-500">
+            <fa-icon [icon]="faCircleNotch" animation="spin"></fa-icon>
+          </div>
+          <div class="flex justify-center">
+            Loading list...
+          </div>
         </div>
       </div>
+
+      <app-page-controller *ngIf="userList.length > 0" (movePage)="loadList($event)" [meta]="meta"></app-page-controller>
     </div>
 
-    <app-page-controller *ngIf="userList.lengt > 0" (movePage)="loadList($event)" [meta]="meta"></app-page-controller>
+    <app-user-information *ngIf="modals['user-information']"
+      [selected_user]="selected_user"
+    ></app-user-information>
   </div>
 </div>

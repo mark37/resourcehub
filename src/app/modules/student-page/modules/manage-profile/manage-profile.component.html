@@ -1,92 +1,93 @@
-<div class="flex flex-col  w-full min-h-full">
-  <button class="text-orange-500">
-    <fa-icon [icon]="faEdit"></fa-icon>
-    Edit
-  </button>
+<div class="bg-gray-100 p-5 min-h-screen">
+  <div class="flex justify-between mb-3">
+    <div class="font-semibold text-lg text-blue-600">
+      User Profile
+    </div>
+    <div class="flex justify-end text-sm">
+      <button class="btn-blue bg-orange-500" (click)="toggleEditForm()">
 
-  <div class="mx-5 mb-5">
-    <fieldset class="border border-gray-300 shadow-md mb-5">
-      <legend class="px-2 ml-2">
-        User Information
-      </legend>
-      <div class="flex justify-between m-3">
-        <div class="w-1/2 flex flex-col">
-          <span>test</span>
-          <span>test</span>
-          <span>test</span>
-        </div>
-        <div class="w-1/2 flex flex-col">
-          <span>test</span>
-          <span>test</span>
-          <span>test</span>
-        </div>
-      </div>
-    </fieldset>
+        <fa-icon [icon]="faEdit" class="text-white"></fa-icon>
+        Update
+      </button>
+    </div>
+  </div>
 
-    <fieldset class="border border-gray-300 shadow-md">
-      <legend class="px-2 ml-2">
-        <!-- <button class="text-orange-500">
-          <fa-icon [icon]="faEdit"></fa-icon>
-        </button> -->
-        Educational Background & Work Experiences
-      </legend>
-      <div class="flex justify-between m-3">
-        <div class="w-1/2 flex flex-col">
-          <div class="w-full text-center font-semibold">Educational Background</div>
-          <div class="flex justify-center">
-            <div class="w-1/2 flex flex-col text-right mr-2">
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
+  <div *ngIf="!showUpdateForm">
+    <app-user-information *ngIf="show_form" [selected_user]="selected_user"></app-user-information>
+  </div>
+
+  <div *ngIf="showUpdateForm">
+    <div>
+      <fieldset class="rounded-md border border-gray-400 bg-white" >
+        <legend class="ml-5 px-3">Educational Background</legend>
+        <form [formGroup]="educationForm" class="flex p-3 mx-4 border-b-2 border-gray-200">
+          <div class="grid grid-cols-5 gap-x-4">
+            <div>
+              <label>Name of School</label>
+              <input formControlName="school_name" type="text" class="input-txt" />
             </div>
-            <div class="w-1/2 flex flex-col">
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
+            <div>
+              <label>Education Level</label>
+              <select formControlName="lib_education_level_id" class="input-txt">
+                <option [ngValue]="null">-</option>
+                <option *ngFor="let item of education_levels" [value]="item.id">{{ item.desc }}</option>
+              </select>
+            </div>
+            <div>
+              <label>Program (optional)</label>
+              <select formControlName="lib_academic_program_id" class="input-txt">
+                <option [ngValue]="null">-</option>
+                <option *ngFor="let item of academic_programs" [value]="item.id">{{ item.desc }}</option>
+              </select>
+            </div>
+            <div>
+              <label>Year Attended (Start)</label>
+              <input formControlName="start_year" type="number" class="input-txt" id="year" name="year" min="1900" max="2100" placeholder="YYYY">
+            </div>
+            <div>
+              <label>Year Attended (End)</label>
+              <input formControlName="end_year" type="number" class="input-txt" id="year" name="year" min="1900" max="2100" placeholder="YYYY">
             </div>
           </div>
-        </div>
-        <div class="w-1/2 flex flex-col">
-          <div class="w-full text-center font-semibold">Work Experiences</div>
-          <div class="flex justify-center">
-            <div class="w-1/2 flex flex-col text-right mr-2">
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-            </div>
-            <div class="w-1/2 flex flex-col">
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-            </div>
+          <div class="ml-3 mt-6">
+            <button [disabled]="!educationForm.valid || isFormSaving['user-education']" (click)="onSubmit('user-education', educationForm, 'educationList', 'educationForm')" class="btn-blue-nr w-20 text-sm py-1.5">
+              <fa-icon *ngIf="!isFormSaving['user-education'] && !educationForm.value.id" [icon]="faAdd"></fa-icon>
+              <fa-icon *ngIf="isFormSaving['user-education']" [icon]="faCircleNotch" animation="spin"></fa-icon>
+              {{ educationForm.value.id ? 'Update' : 'Add'}}
+            </button>
+          </div>
+        </form>
+
+        <div class="w-full p-4">
+          <table class="table-auto border border-gray-400 w-full bg-white select-none">
+            <thead>
+              <tr>
+                <th>Name of school</th>
+                <th>Education Level</th>
+                <th>Year Attended</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of educationList" class="hover:bg-blue-50">
+                <td>{{ item.school_name }}</td>
+                <td>{{ item.educationLevel.desc }}</td>
+                <td>{{ item.start_year }} to {{ item.end_year}}</td>
+                <td>
+                  <button (click)="loadSelected(educationForm, item)">
+                    <fa-icon [icon]="faEdit" class="text-orange-500"></fa-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div *ngIf="isFormSaving['education_levels']">
+            test
           </div>
         </div>
-      </div>
-    </fieldset>
 
+      </fieldset>
+    </div>
   </div>
 </div>

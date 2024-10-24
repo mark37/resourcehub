@@ -240,19 +240,19 @@
                 </div>
 
                 <div>
-                  <label for="course_code" class="text-xs text-gray-400">Course</label>
-                  <select id="course_code" formControlName="course_code" class="input-txt -mb-2">
+                  <label for="lib_academic_program_id" class="text-xs text-gray-400">Course</label>
+                  <select id="lib_academic_program_id" formControlName="lib_academic_program_id" class="input-txt -mb-2">
                     <option *ngFor="let item of courses" [value]="item.id">{{ item.desc }}</option>
                   </select>
-                  <span *ngIf="formSubmitted && f['course_code'].invalid" class="error-label">this is required</span>
+                  <span *ngIf="formSubmitted && f['lib_academic_program_id'].invalid" class="error-label">this is required</span>
                 </div>
 
                 <div>
-                  <label for="year_level" class="text-xs text-gray-400">Year Level</label>
-                  <select id="year_level" formControlName="year_level" class="input-txt -mb-2">
+                  <label for="lib_education_level_id" class="text-xs text-gray-400">Year Level</label>
+                  <select id="lib_education_level_id" formControlName="lib_education_level_id" class="input-txt -mb-2">
                     <option *ngFor="let item of year_levels" [value]="item.id">{{ item.desc }}</option>
                   </select>
-                  <span *ngIf="formSubmitted && f['year_level'].invalid" class="error-label">this is required</span>
+                  <span *ngIf="formSubmitted && f['lib_education_level_id'].invalid" class="error-label">this is required</span>
                 </div>
 
                 <div class="grid grid-col-3 gap-x-4 mt-3">

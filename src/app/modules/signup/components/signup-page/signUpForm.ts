@@ -19,6 +19,8 @@ export function signUpForm() {
     address: new FormControl<string|null>(null),
     place_of_birth: new FormControl<string|null>(null),
     lib_school_id: new FormControl<string|null>(null),
+    lib_education_level_id: new FormControl<string|null>(null),
+    lib_academic_program_id: new FormControl<string|null>(null),
     scholar_flag: new FormControl<boolean>(false),
     shiftee_flag	: new FormControl<boolean>(false),
     irregular_flag: new FormControl<boolean>(false),

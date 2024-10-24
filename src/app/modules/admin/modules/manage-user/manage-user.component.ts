@@ -16,7 +16,7 @@ export class ManageUserComponent implements OnInit {
 
   userList: any = [];
   meta!: any;
-
+  is_active: boolean = false;
   category: any[] = [
     { id: 'verified', title: 'Verified'},
     { id: 'pending', title: 'Pending'},
@@ -50,9 +50,17 @@ export class ManageUserComponent implements OnInit {
         this.userList = data.data;
         this.meta = data.meta;
         this.isLoading = false;
+        // this.toggleModal('user-information', this.userList[0])
       },
       error: err => console.log(err)
     })
+  }
+
+  modals: any = [];
+  selected_user!: any;
+  toggleModal(name: string, data?: any) {
+    this.selected_user = data;
+    this.modals[name] = !this.modals[name];
   }
 
   constructor (

@@ -6,6 +6,7 @@ import { ManageUserComponent } from './manage-user.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PageControllerComponent } from '../../../../components/page-controller/page-controller.component';
 import { FormsModule } from '@angular/forms';
+import { UserInformationComponent } from '../../../../components/user-information/user-information.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { FormsModule } from '@angular/forms';
     ManageUserRoutingModule,
     FontAwesomeModule,
     PageControllerComponent,
-    FormsModule
+    FormsModule,
+    UserInformationComponent
   ]
 })
 export class ManageUserModule { }

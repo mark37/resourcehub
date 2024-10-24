@@ -1,0 +1,112 @@
+<div class="w-full bg-white p-4 min-h-96 text-xs rounded-lg shadow">
+  <div class="flex justify-between border-b-2 border-gray-300 pb-1">
+    <div class="flex flex-col">
+      <span class="font-semibold text-xl">
+        {{ user.first_name }} {{ user.middle_name }} {{ user.last_name }} {{ user.suffix_name !== 'NA' ? user.siffix_name : ''}}
+      </span>
+      <span class="italic">
+        <fa-icon [icon]="faEnvelope" class="mr-2"></fa-icon>
+        {{ user.email }}
+      </span>
+      <span>
+        <fa-icon [icon]="faCakeCandles" class="mr-2"></fa-icon>
+        {{ user.birthdate | date: 'MMM dd, yyyy' }}
+      </span>
+      <span>
+        <fa-icon [icon]="faLocationDot" class="mr-2"></fa-icon>
+        {{ user.address }}, {{ user.barangay_code }}
+      </span>
+    </div>
+
+    <div class="flex flex-col text-left w-1/3">
+      <span class="font-semibold">
+        {{ user.school.desc }}
+      </span>
+      <span>
+        {{ user.academic_program.desc }}
+      </span>
+      <span>
+        {{ user.year_level.desc }}
+      </span>
+      <span>
+        {{ user.scholar_flag ? 'With existing scholarship, ' : '' }} {{ user.shiftee_flag ? 'Shiftee, ' : '' }} {{ user.irregular_flag ? 'Irregular' : '' }}
+      </span>
+    </div>
+  </div>
+
+  <fieldset class="border border-gray-300 rounded-md mt-3">
+    <legend class="text-center px-5 font-semibold text-sm">Parents Information</legend>
+    <div class="flex justify-between">
+      <div class="flex flex-col text-center w-1/2">
+        <span>Father</span>
+        <span class="text-left mx-5">
+          {{ user.fathers_name ?? ''}}
+        </span>
+        <span class="text-left mx-5">
+          {{ user.fathers_occupation ?? ''}}
+        </span>
+        <span class="text-left mx-5">
+          {{ user.fathers_company ?? ''}}
+        </span>
+
+        <span class="italic" *ngIf="!user.fathers_name && !user.fathers_occupation && !user.fathers_company">
+          No information was recorded.
+        </span>
+      </div>
+      <div class="flex flex-col text-center w-1/2">
+        <span>Mother</span>
+        <span class="text-left mx-5">
+          {{ user.mothers_name ?? ''}}
+        </span>
+        <span class="text-left mx-5">
+          {{ user.mothers_occupation ?? ''}}
+        </span>
+        <span class="text-left mx-5">
+          {{ user.mothers_company ?? ''}}
+        </span>
+
+        <span class="italic" *ngIf="!user.mothers_name && !user.mothers_occupation && !user.mothers_company">
+          No information was recorded.
+        </span>
+      </div>
+    </div>
+  </fieldset>
+
+  <!-- <fieldset class="border border-gray-300 rounded-md mt-3">
+    <legend class="text-center px-5 font-semibold text-sm">Education </legend>
+    <div class="flex justify-between">
+      <div class="flex flex-col text-center w-1/2">
+        <span>Father</span>
+        <span class="text-left mx-5">
+          {{ user.fathers_name ?? ''}}
+        </span>
+        <span class="text-left mx-5">
+          {{ user.fathers_occupation ?? ''}}
+        </span>
+        <span class="text-left mx-5">
+          {{ user.fathers_company ?? ''}}
+        </span>
+
+        <span class="italic" *ngIf="!user.fathers_name && !user.fathers_occupation && !user.fathers_company">
+          No information was recorded.
+        </span>
+      </div>
+      <div class="flex flex-col text-center w-1/2">
+        <span>Mother</span>
+        <span class="text-left mx-5">
+          {{ user.mothers_name ?? ''}}
+        </span>
+        <span class="text-left mx-5">
+          {{ user.mothers_occupation ?? ''}}
+        </span>
+        <span class="text-left mx-5">
+          {{ user.mothers_company ?? ''}}
+        </span>
+
+        <span class="italic" *ngIf="!user.mothers_name && !user.mothers_occupation && !user.mothers_company">
+          No information was recorded.
+        </span>
+      </div>
+    </div>
+  </fieldset> -->
+</div>
