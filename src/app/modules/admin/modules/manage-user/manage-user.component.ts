@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faCircleNotch, faFilter, faPenToSquare, faTableColumns } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCircleNotch, faFilter, faPenToSquare, faTableColumns } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from '../../../../shared/http.service';
 import { formatDate } from '@angular/common';
 
@@ -13,6 +13,7 @@ export class ManageUserComponent implements OnInit {
   faTableColumns = faTableColumns;
   faFilter = faFilter;
   faCircleNotch = faCircleNotch;
+  faArrowLeft = faArrowLeft;
 
   userList: any = [];
   meta!: any;
@@ -39,11 +40,12 @@ export class ManageUserComponent implements OnInit {
     this.isLoading = true;
     let params: any = {};
     params['page'] = page ?? 1;
+    params['user_info'] = 1;
     if(this.is_verified) params['is_verified'] = this.is_verified;
     if(this.lib_cat_id) params['lib_cat_id'] = this.lib_cat_id;
     if(this.start_date) params['start_date'] = this.start_date;
     if(this.end_date) params['end_date'] = this.end_date;
-
+    // let params: any = { user_info: 1 };
     this.http.get('user-information', { params }).subscribe({
       next: (data:any) => {
         console.log(data);
@@ -54,6 +56,10 @@ export class ManageUserComponent implements OnInit {
       },
       error: err => console.log(err)
     })
+  }
+
+  toggleActive() {
+    // console.log('test')
   }
 
   modals: any = [];

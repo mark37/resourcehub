@@ -21,9 +21,17 @@
   </div> -->
 
   <div class="flex flex-col mt-5 min-h-screen">
-    <span class="font-semibold text-xl">
-      User Accounts
-    </span>
+    <div class="flex justify-between">
+      <span class="font-semibold text-xl">
+        User Accounts
+      </span>
+      <span *ngIf="modals['user-information']" class="text-blue-600">
+        <button (click)="toggleModal('user-information')">
+          <fa-icon [icon]="faArrowLeft"></fa-icon>
+          Back
+        </button>
+      </span>
+    </div>
     <span class="text-sm">
       Listing of Users, List of User Reports, Delete User Accounts, Data Backups, Audit Trail
     </span>
@@ -82,7 +90,7 @@
             <tr *ngFor="let item of userList; let i = index; let odd = odd" class="hover:bg-sky-200">
               <td>{{ item.last_name }}, {{ item.first_name }} {{ item.middle_name }} {{ item.suffix_name !== 'NA' ? item.suffix_name : '' }}</td>
               <td>{{ item.email }} <br />{{ item.contact_number }}</td>
-              <td>{{ item.school }}</td>
+              <td>{{ item.school.desc }}</td>
               <td>
                 <button (click)="toggleModal('user-information', item)" class="rounded-full bg-blue-500 px-2 py-0.5 text-xs text-white hover:opacity-75">
                   view details
@@ -90,7 +98,7 @@
               </td>
               <td>
                 <label class="inline-flex relative items-center cursor-pointer">
-                  <input  type="checkbox" class="sr-only peer">
+                  <input  type="checkbox" class="sr-only peer" (click)="toggleActive()">
                   <div class="w-12 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300  rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[3px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 disabled:opacity-7"></div>
                 </label>
               </td>

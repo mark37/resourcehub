@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { HttpService } from '../../shared/http.service';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -11,7 +11,7 @@ import { faCakeCandles, faEnvelope, faLocationDot } from '@fortawesome/free-soli
   templateUrl: './user-information.component.html',
   styleUrl: './user-information.component.scss'
 })
-export class UserInformationComponent implements OnInit{
+export class UserInformationComponent implements OnChanges{
   @Input() selected_user!: any;
 
   faCakeCandles = faCakeCandles;
@@ -24,8 +24,7 @@ export class UserInformationComponent implements OnInit{
     private http: HttpService
   ) { }
 
-  ngOnInit(): void {
-    console.log(this.selected_user);
+  ngOnChanges(changes: SimpleChanges): void {
     this.user = this.selected_user;
   }
 }

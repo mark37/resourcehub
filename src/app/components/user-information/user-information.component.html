@@ -34,79 +34,85 @@
     </div>
   </div>
 
-  <fieldset class="border border-gray-300 rounded-md mt-3">
-    <legend class="text-center px-5 font-semibold text-sm">Parents Information</legend>
-    <div class="flex justify-between">
+  <fieldset class="border border-gray-300 rounded-md mt-3 text-base">
+    <legend class="text-center px-5 font-semibold text-sm bg-gray-200 py-1">Parents Information</legend>
+    <div class="flex justify-between m-3 bg-sky-100 rounded-md px-3">
+      <span class="w-1/2">OFW Status: {{ user.parents.ofw_flag ? 'Yes' : 'No' }}</span>
+      <span class="w-1/2">Average Montly Income: {{ user.parents.monthly_income.desc }}</span>
+    </div>
+    <div class="flex justify-between mb-3">
       <div class="flex flex-col text-center w-1/2">
-        <span>Father</span>
-        <span class="text-left mx-5">
-          {{ user.fathers_name ?? ''}}
+        <span class="font-semibold">Fathers Information</span>
+        <span>
+          {{ user.parents?.fathers_name ?? ''}}
         </span>
-        <span class="text-left mx-5">
-          {{ user.fathers_occupation ?? ''}}
+        <span class="text-sm">
+          {{ user.parents?.fathers_occupation ?? ''}}
         </span>
-        <span class="text-left mx-5">
-          {{ user.fathers_company ?? ''}}
+        <span>
+          {{ user.parents?.fathers_company ?? ''}}
         </span>
 
-        <span class="italic" *ngIf="!user.fathers_name && !user.fathers_occupation && !user.fathers_company">
+        <span class="italic" *ngIf="!user.parents?.fathers_name && !user.parents?.fathers_occupation && !user.parents?.fathers_company">
           No information was recorded.
         </span>
       </div>
       <div class="flex flex-col text-center w-1/2">
-        <span>Mother</span>
-        <span class="text-left mx-5">
-          {{ user.mothers_name ?? ''}}
+        <span class="font-semibold">Mothers Information</span>
+        <span>
+          {{ user.parents?.mothers_name ?? ''}}
         </span>
-        <span class="text-left mx-5">
-          {{ user.mothers_occupation ?? ''}}
+        <span class="text-sm">
+          {{ user.parents?.mothers_occupation ?? ''}}
         </span>
-        <span class="text-left mx-5">
-          {{ user.mothers_company ?? ''}}
+        <span>
+          {{ user.parents?.mothers_company ?? ''}}
         </span>
 
-        <span class="italic" *ngIf="!user.mothers_name && !user.mothers_occupation && !user.mothers_company">
+        <span class="italic" *ngIf="!user.parents?.mothers_name && !user.parents?.mothers_occupation && !user.parents?.mothers_company">
           No information was recorded.
         </span>
       </div>
     </div>
   </fieldset>
 
-  <!-- <fieldset class="border border-gray-300 rounded-md mt-3">
-    <legend class="text-center px-5 font-semibold text-sm">Education </legend>
-    <div class="flex justify-between">
-      <div class="flex flex-col text-center w-1/2">
-        <span>Father</span>
-        <span class="text-left mx-5">
-          {{ user.fathers_name ?? ''}}
-        </span>
-        <span class="text-left mx-5">
-          {{ user.fathers_occupation ?? ''}}
-        </span>
-        <span class="text-left mx-5">
-          {{ user.fathers_company ?? ''}}
-        </span>
-
-        <span class="italic" *ngIf="!user.fathers_name && !user.fathers_occupation && !user.fathers_company">
-          No information was recorded.
-        </span>
+  <div class="flex">
+    <fieldset class="border border-gray-300 rounded-md mt-3 mr-5 w-1/2">
+      <legend class="text-center px-5 font-semibold text-sm bg-blue-200 py-1">Education</legend>
+      <div class="w-11/12 pb-2 gap-x-4 grid grid-cols-12 mb-1 mx-4 border-b border-gray-200" *ngFor="let item of user.user_education">
+        <div class="col-span-3 text-right flex flex-col">
+          <span class="font-semibold text-sm mt-1">{{ item.start_year }} - {{ item.end_year }}</span>
+          <span class="italic">{{ item.education_level.desc}}</span>
+        </div>
+        <div class="col-span-9 flex flex-col">
+          <span class="text-base font-semibold">{{ item.school_name }}</span>
+          @if(item.academic_program) { <span>{{ item.academic_program.desc }}</span> }
+        </div>
       </div>
-      <div class="flex flex-col text-center w-1/2">
-        <span>Mother</span>
-        <span class="text-left mx-5">
-          {{ user.mothers_name ?? ''}}
-        </span>
-        <span class="text-left mx-5">
-          {{ user.mothers_occupation ?? ''}}
-        </span>
-        <span class="text-left mx-5">
-          {{ user.mothers_company ?? ''}}
-        </span>
+    </fieldset>
 
-        <span class="italic" *ngIf="!user.mothers_name && !user.mothers_occupation && !user.mothers_company">
-          No information was recorded.
-        </span>
+    <fieldset class="border border-gray-300 rounded-md mt-3 w-1/2">
+      <legend class="text-center px-5 font-semibold text-sm bg-orange-200 py-1">Work Experience</legend>
+      <div class="w-11/12 pb-2 gap-x-4 grid grid-cols-12 mb-1 mx-4 border-b border-gray-200" *ngFor="let item of user.employment">
+        <div class="col-span-3 text-right flex flex-col">
+          <span class="font-semibold text-sm mt-1">{{ item.start_date | date: 'MMM yyyy' }} - {{ item.end_date ? (item.end_date | date: 'MMM yyyy') : 'Present' }}</span>
+        </div>
+        <div class="col-span-9 flex flex-col">
+          <span class="text-base font-semibold">{{ item.employer_name }}</span>
+          <span class="font-semibold mb-3">{{ item.position }}</span>
+          <span class="">{{ item.job_description }}</span>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <fieldset class="border border-gray-300 rounded-md mt-3">
+    <legend class="text-center px-5 font-semibold text-sm bg-green-300 py-1">References</legend>
+    <div class="grid grid-cols-4 gap-5 m-5">
+      <div class="p-3 border border-gray-300 shadow-md flex flex-col rounded-md" *ngFor="let item of user.reference">
+        <span class="font-semibold">{{ item.full_name }}</span>
+        <span>{{ item.company_name }}</span>
+        <span>{{ item.contact_number }}</span>
       </div>
     </div>
-  </fieldset> -->
+  </fieldset>
 </div>

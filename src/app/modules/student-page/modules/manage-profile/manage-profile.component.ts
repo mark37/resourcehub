@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../../../shared/http.service';
 import { faAdd, faCircleNotch, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { educationForm, referenceForm, workExperienceForm } from './UserForm';
+import { educationForm, parentsForm, referenceForm, workExperienceForm } from './UserForm';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-manage-profile',
@@ -17,6 +18,7 @@ export class ManageProfileComponent implements OnInit {
   educationForm:FormGroup = educationForm();
   referenceForm:FormGroup = referenceForm();
   workExperienceForm:FormGroup = workExperienceForm();
+  parentsForm:FormGroup = parentsForm();
 
   educationList!: any;
   referenceList!: any;
@@ -26,14 +28,17 @@ export class ManageProfileComponent implements OnInit {
   showUpdateForm: boolean = false;
   education_levels!: {id: string, desc: string}[];
   academic_programs!: {id: string, desc: string}[];
+  income_list!: {id: string, desc: string}[];
 
   isFormSaving: any = [];
+  convertDates(date: string): string | null {
+    return date ? formatDate(date, 'yyyy-MM', 'en', 'Asia/manila') : null;
+  }
+
   onSubmit(url: string, formData: FormGroup, listName: string, formName:string) {
-    this.isFormSaving[url] = true;
-    formData.patchValue({ user_id: this.selected_user.id });
+    if(formData.value.start_date) formData.patchValue({ start_date: this.convertDates(formData.value.start_date), end_date: this.convertDates(formData.value.end_date) })
     this.http.post(url, formData.value).subscribe({
       next: (data: any) => {
-        console.log(data);
         (this as any)[formName].reset();
         this.loadData(url, listName);
       },
@@ -42,13 +47,12 @@ export class ManageProfileComponent implements OnInit {
   }
 
   loadData(url: string, listName: string) {
+    this.isFormSaving[url] = true;
     let params: any = { user_id: this.selected_user.id }
     this.http.get(url, { params }).subscribe({
       next: (data: any) => {
-        console.log(listName, data.data);
         (this as any)[listName] = data.data;
-
-        console.log(this.educationList);
+        if(listName === 'parentsInformation') this.parentsForm.patchValue({...data.data});
         this.isFormSaving[url] = false;
       },
       error: err => console.log(err)
@@ -59,27 +63,36 @@ export class ManageProfileComponent implements OnInit {
     form_name.patchValue({...data});
   }
 
-  loadUserInformation() {
+  loadUserInformation(reloadOnly?: boolean) {
     this.show_form = false;
     let params: any = { user_info: 1 };
 
     this.http.get('user-information', { params }).subscribe({
       next: (data: any) => {
         this.selected_user = data.data[0];
-        console.log(this.selected_user);
         this.show_form = true;
-        this.loadData('user-education', 'educationList');
-        // this.toggleEditForm();
+        if(!reloadOnly) this.createForms();
       },
       error: err => console.log(err)
     })
+  }
+
+  createForms() {
+    this.loadData('user-education', 'educationList');
+    this.loadData('user-employment', 'workExperienceList');
+    this.loadData('user-reference', 'referenceList');
+    this.loadData('parent-information', 'parentsInformation');
+
+    this.createEducationForm();
+    this.createReferenceForm();
+    this.createWorkExperienceForm();
+    this.createParentsForm();
   }
 
   loadLibraries(url: string, listName: string) {
     this.http.get('libraries/' + url).subscribe({
       next: (data: any) => {
         (this as any)[listName] = data.data;
-        console.log(this.education_levels)
       },
       error: err => console.log(err)
     })
@@ -88,7 +101,6 @@ export class ManageProfileComponent implements OnInit {
   createEducationForm() {
     this.educationForm = this.formBuilder.group({
       id: [null],
-      user_id: [null, Validators.required],
       lib_education_level_id: [null, Validators.required],
       lib_academic_program_id: [null],
       school_name: [null, Validators.required],
@@ -98,20 +110,45 @@ export class ManageProfileComponent implements OnInit {
   }
 
   createReferenceForm() {
-
+    this.referenceForm = this.formBuilder.group({
+      id: [null],
+      full_name: [null, Validators.required],
+      company_name: [null],
+      contact_number: [null, Validators.required]
+    });
   }
 
   createWorkExperienceForm() {
+    this.workExperienceForm = this.formBuilder.group({
+      id: [null],
+      employer_name: [null, Validators.required],
+      position: [null, Validators.required],
+      job_description: [null],
+      start_date: [null, Validators.required],
+      end_date: [null, Validators.required]
+    })
+  }
 
+  createParentsForm() {
+    this.parentsForm = this.formBuilder.group({
+      ofw_flag: [false],
+      fathers_name: [null],
+      fathers_occupation: [null],
+      fathers_company: [null],
+      mothers_name: [null],
+      mothers_occupation: [null],
+      mothers_company: [null],
+      average_monthly_income: [null, Validators.required],
+    });
   }
 
   toggleEditForm() {
     this.showUpdateForm = !this.showUpdateForm;
     if(!this.education_levels) this.loadLibraries('education-level', 'education_levels');
     if(!this.academic_programs) this.loadLibraries('academic-programs', 'academic_programs');
-    this.createEducationForm();
-    this.createReferenceForm();
-    this.createWorkExperienceForm();
+    if(!this.income_list) this.loadLibraries('monthly-income', 'income_list');
+
+    this.loadUserInformation(true);
   }
 
   constructor (
