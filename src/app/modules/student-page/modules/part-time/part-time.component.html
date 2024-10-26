@@ -57,12 +57,40 @@
 
 
     <div class="flex flex-col md:w-1/2 h-3/4 shadow-md overflow-y-auto mr-5 mt-5 md:mt-0">
-      <google-map height="620px" width="574px" class="w-fit" [options]="options">
-        @for (item of markerPositions; track item.position) {
-          <map-marker #marker="mapMarker" (mapClick)="openInfoWindow(marker, item.title)"
-            [position]="item.position"
-            [options]="markerOptions" />
+      <div class="flex justify-between my-1">
+        <div>
+          Radius ({{ radius }}m): <input type="range" min="500" max="5000" [(ngModel)]="radius" class="ml-2 slider" id="myRange">
+        </div>
+        <div>
+          <button [disabled]="gettingLocation" (click)="useDeviceLocation()" class="text-white bg-blue-600 rounded-md py-1 px-2 disabled:bg-gray-300">
+            <fa-icon *ngIf="gettingLocation" [icon]="faCircleNotch" animation="spin"></fa-icon>
+            <fa-icon *ngIf="!gettingLocation" [icon]="faLocationCrosshairs"></fa-icon>
+          </button>
+          <button [disabled]="gettingLocation" (click)="toggleLocationSelection()" class="bg-orange-500 text-white px-2 py-1.5 text-sm rounded-md ml-2 disabled:bg-gray-300">
+            {{ updatingLocation ? 'Save Location' : 'Manual Location' }}
+          </button>
+        </div>
+      </div>
+      <google-map #map (mapClick)="updatingLocation ? adjustCenterLocation($event) : null" [center]="center" height="620px" width="574px" class="w-fit" [options]="options">
+        <map-circle *ngIf="!updatingLocation"
+          [center]="center"
+          [radius]="radius"
+          [options]="circleOptions"
+        ></map-circle>
+        @if(!updatingLocation) {
+          @for (item of markerPositions; track item.position.position) {
+            <map-marker #marker="mapMarker" (mapClick)="openInfoWindow(marker, item.title)"
+              [position]="item.position.position"
+              [options]="markerOptions"
+              *ngIf="isMarkerWithinRadius(item.position.position)"
+            />
+          }
         }
+        <map-marker
+          [position]="center"
+          [options]="centerMarkerOptions"
+        ></map-marker>
+
         <map-info-window>
           {{ marker_title }}
         </map-info-window>
