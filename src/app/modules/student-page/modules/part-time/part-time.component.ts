@@ -50,6 +50,7 @@ export class PartTimeComponent implements OnInit {
   markerPositions: any[] = [];
 
   addMarker() {
+    this.markerPositions = [];
     if(Object.entries(this.partTimeList).length > 0) {
       Object.entries(this.partTimeList).forEach(([key, value]:any, index) => {
         let marker = { position : {lat: value.latitude, lng: value.longitude}, visible: false}
@@ -68,9 +69,14 @@ export class PartTimeComponent implements OnInit {
   loadPartTime(page?: number){
     this.isLoading = true;
     let params: any = {};
+
+    if(this.search) params['search'] = this.search
     params['page'] = page ?? 1;
     params['per_page'] = 10;
     params['lib_posting_category_id'] = 1;
+    params['radius'] = this.radius;
+    params['lat'] = this.center.lat;
+    params['lng'] = this.center.lng;
 
     if(this.search) params['search'] = this.search;
 
@@ -133,6 +139,7 @@ export class PartTimeComponent implements OnInit {
             lng: position.coords.longitude
           };
           this.zoom = 14; // Adjust zoom level to focus on the location
+          this.loadPartTime();
           this.gettingLocation = false;
         },
         error => {
@@ -148,6 +155,7 @@ export class PartTimeComponent implements OnInit {
   updatingLocation: boolean = false;
   toggleLocationSelection() {
     this.updatingLocation = !this.updatingLocation;
+    this.loadPartTime()
   }
 
   adjustCenterLocation(event?: google.maps.MapMouseEvent) {
