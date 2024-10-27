@@ -7,6 +7,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ViewDetailsComponent } from './components/view-details/view-details.component';
 import { ApplyNowComponent } from './components/apply-now/apply-now.component';
 import { PostDetailsComponent } from '../../../../components/post-details/post-details.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { PostDetailsComponent } from '../../../../components/post-details/post-d
     FontAwesomeModule,
     ViewDetailsComponent,
     ApplyNowComponent,
-    PostDetailsComponent
+    PostDetailsComponent,
+    FormsModule
   ]
 })
 export class ScholarshipModule { }

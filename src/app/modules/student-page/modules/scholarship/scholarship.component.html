@@ -8,7 +8,7 @@
       <div class="input-txt rounded-l-md rounded-r-none border-r-0 w-8 p-1 pl-2">
         <fa-icon [icon]="faSearch"></fa-icon>
       </div>
-      <input type="text" class="input-txt  rounded-l-none placeholder:italic rounded-md rounded-l-none border-l-0" placeholder="Search scholarhip"/>
+      <input (keydown.enter)="loadScholarship()" [(ngModel)]="searchTerm" type="text" class="input-txt  rounded-l-none placeholder:italic rounded-md border-l-0" placeholder="Search scholarhip"/>
     </div>
 
     <div class="w-1/6 flex item-start ">
