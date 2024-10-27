@@ -86,10 +86,9 @@ export class DashboardComponent implements OnInit{
     if(this.category) params['lib_posting_category_id'] = this.category;
     if(this.is_published) params['is_published'] = this.is_published;
 
-    console.log(this.is_published)
     this.http.get('posting-information', { params }).subscribe({
       next: (data: any) => {
-        console.log(data);
+        // console.log(data);
         this.postList = data.data;
         this.meta = data.meta;
         this.isLoading = false;
