@@ -10,6 +10,7 @@ import { PostingPageComponent } from './components/posting-page/posting-page.com
 import { GoogleMapsModule } from '@angular/google-maps';
 import { ApplicantListComponent } from './components/applicant-list/applicant-list.component';
 import { PageControllerComponent } from '../../../../components/page-controller/page-controller.component';
+import { UserInformationComponent } from '../../../../components/user-information/user-information.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { PageControllerComponent } from '../../../../components/page-controller/
     FormsModule,
     GoogleMapsModule,
     ReactiveFormsModule,
-    PageControllerComponent
+    PageControllerComponent,
+    UserInformationComponent
   ]
 })
 export class DashboardModule { }
