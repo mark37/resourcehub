@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
-import { faArrowRight, faCheckCircle, faCircleNotch, faFilter, faLocationCrosshairs, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faCheckCircle, faCircleNotch, faFilter, faLocationCrosshairs, faLocationDot, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from '../../../../shared/http.service';
 
 @Component({
@@ -18,6 +18,7 @@ export class PartTimeComponent implements OnInit {
   faSearch = faSearch;
   faFilter = faFilter;
   faCheckCircle = faCheckCircle;
+  faLocationDot = faLocationDot;
 
   partTimeList: any[] = [];
   modals: any[string] = [];
