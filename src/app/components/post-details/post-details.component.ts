@@ -5,11 +5,12 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HttpService } from '../../shared/http.service';
 import { faArrowLeft, faFileLines, faSave, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { QuillEditorComponent, QuillModule } from 'ngx-quill';
 
 @Component({
   selector: 'app-post-details',
   standalone: true,
-  imports: [CommonModule, FormsModule, FontAwesomeModule],
+  imports: [CommonModule, FormsModule, FontAwesomeModule, QuillEditorComponent],
   templateUrl: './post-details.component.html',
   styleUrl: './post-details.component.scss'
 })
@@ -23,6 +24,10 @@ export class PostDetailsComponent {
   faXmark = faXmark;
   public htmlContent: SafeHtml | null = null;
   showConfirmation: boolean = false;
+
+  editorConfig = {
+    toolbar: [ ]
+  };
 
   toggleConfirmation() {
     this.showConfirmation = !this.showConfirmation;
