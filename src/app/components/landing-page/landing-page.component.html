@@ -16,32 +16,28 @@
 
   <div class="flex flex-col">
     <div class="relative">
-      <div class="absolute top-0" >
-        <img class="hidden md:block" src="../assets/img/landing-page.png">
-        <img class="block md:hidden" src="../assets/img/landing-page-mobile.png">
+      <div>
+        <img class="block" src="../assets/img/landing-page.png">
       </div>
 
-      <div class="absolute top-0 w-full bg-blue-700 h-[632px] opacity-75 hidden md:block landing-image-md"></div>
-      <div class="absolute top-0 w-full bg-blue-700 h-[632px] opacity-75 block md:hidden landing-image-mobile"></div>
-
-      <div class="w-full absolute top-0 mt-20 md:mt-60 flex flex-col justify-center text-white text-lg">
+      <div class="w-full absolute top-0 mt-10 md:mt-60 flex flex-col justify-center text-white text-lg">
         <div class="flex justify-center w-full text-normal md:text-xl">WELCOME TO FINANCIAL RESOURCE HUB</div>
-        <div class="flex justify-center w-full px-5 text-4xl md:text-6xl text-center font-semibold md:font-bold">EMPOWERING STUDENTS <br />FINANCIALLY</div>
+        <div class="flex justify-center w-full px-5 text-3xl md:text-6xl text-center font-semibold md:font-bold">EMPOWERING STUDENTS <br />FINANCIALLY</div>
       </div>
     </div>
   </div>
 
 
-  <div class="relative top-[350px] md:top-[632px] flex justify-between mt-5 text-sm md:text-normal">
+  <div class="flex justify-between mt-5 text-sm md:text-normal">
     <div></div>
     <div class="flex justify-between">
-      <button class="btn-blue mr-10 md:mr-64 text-sm md:text-normal" (click)="navigateTo('student/scholarship')">FIND SCHOLARSHIP</button>
+      <button class="btn-blue mr-10 text-sm md:text-normal" (click)="navigateTo('student/scholarship')">FIND SCHOLARSHIP</button>
       <button class="btn-blue" (click)="navigateTo('student/part-time')">FIND PART-TIME JOBS</button>
     </div>
     <div></div>
   </div>
 
-  <div class="relative top-[350px] md:top-[632px] flex flex-col mt-10 mx-5 md:mx-20">
+  <div class="flex flex-col mt-10 mx-5 md:mx-20">
     <span>
       Recognizing the challenges faced by college students in locating both scholarships and part-time job
       opportunities in one place, this research will delve into the development and implementation of an
@@ -78,7 +74,7 @@
     </span><br />
   </div>
 
-  <app-footer class="relative top-[350px] md:top-[632px] bottom-0"></app-footer>
+  <app-footer class="relative bottom-0"></app-footer>
 </div>
 
 @if(modals['menuList']) {
