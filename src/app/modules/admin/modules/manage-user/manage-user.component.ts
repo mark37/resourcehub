@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faArrowLeft, faCircleNotch, faFilter, faPenToSquare, faTableColumns } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCircleCheck, faCircleNotch, faClock, faFilter, faPenToSquare, faTableColumns, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from '../../../../shared/http.service';
 import { formatDate } from '@angular/common';
 
@@ -14,13 +14,17 @@ export class ManageUserComponent implements OnInit {
   faFilter = faFilter;
   faCircleNotch = faCircleNotch;
   faArrowLeft = faArrowLeft;
+  faCircleCheck = faCircleCheck;
+  faXmarkCircle = faXmarkCircle;
+  faClock = faClock;
 
   userList: any = [];
   meta!: any;
   is_active: boolean = false;
   category: any[] = [
-    { id: 'verified', title: 'Verified'},
     { id: 'pending', title: 'Pending'},
+    { id: 'verified', title: 'Verified'},
+    { id: 'rejected', title: 'Rejected'},
     // { id: 'applied', title: 'Applied'},
   ];
 
@@ -66,7 +70,22 @@ export class ManageUserComponent implements OnInit {
   selected_user!: any;
   toggleModal(name: string, data?: any) {
     this.selected_user = data;
+    console.log(this.selected_user)
     this.modals[name] = !this.modals[name];
+  }
+
+  updating_user: boolean = false;
+  verifyUser(value: boolean) {
+    this.updating_user = true;
+    this.selected_user['user_verified'] = value === true ? 1 : 0 ;
+
+    this.http.update('user-information/', this.selected_user.id, this.selected_user).subscribe({
+      next: (data: any) => {
+        console.log(this.selected_user);
+        this.updating_user = false;
+      },
+      error: err => console.log(err)
+    })
   }
 
   constructor (

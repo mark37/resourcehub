@@ -28,7 +28,7 @@ export class HttpService {
   }
 
   update(loc: string, id: string, data: any) {
-    return this.http.put(`${this.baseUrl}` + loc + id, data)
+    return this.http.put(`${this.baseUrl}` + 'v1/' + loc + id, data)
   }
 
   constructor(

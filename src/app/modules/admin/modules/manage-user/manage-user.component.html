@@ -22,15 +22,16 @@
 
   <div class="flex flex-col mt-5 min-h-screen">
     <div class="flex justify-between">
-      <span class="font-semibold text-xl">
-        User Accounts
-      </span>
-      <span *ngIf="modals['user-information']" class="text-blue-600">
-        <button (click)="toggleModal('user-information')">
-          <fa-icon [icon]="faArrowLeft"></fa-icon>
-          Back
-        </button>
-      </span>
+      <div>
+        <span *ngIf="modals['user-information']" class="text-blue-600">
+          <button (click)="toggleModal('user-information')">
+            <fa-icon [icon]="faArrowLeft"></fa-icon>
+          </button>
+        </span>
+        <span class="font-semibold text-xl">
+          User Accounts
+        </span>
+      </div>
     </div>
     <span class="text-sm">
       Listing of Users, List of User Reports, Delete User Accounts, Data Backups, Audit Trail
@@ -56,7 +57,7 @@
             </select>
           </div> -->
 
-          <div class="flex flex-row">
+          <!-- <div class="flex flex-row">
             <span class="pt-2 mx-1">Date</span>
             <input type="date" [(ngModel)]="start_date" [max]="max_date" class="input-txt" />
           </div>
@@ -64,7 +65,7 @@
           <div class="flex flex-row">
             <span class="pt-2"></span>
             <input type="date" [(ngModel)]="end_date" [max]="max_date" class="input-txt" />
-          </div>
+          </div> -->
 
           <div>
             <button (click)="loadList()" class="mt-1 bg-blue-600 rounded-md px-2 text-white mx-2 py-1">
@@ -80,20 +81,30 @@
           <thead>
             <tr>
               <th class="w-4/12">Name</th>
-              <th class="w-2/12">Student Email <br /> Contact #</th>
-              <th class="w-3/12">School</th>
-              <th class="w-2/12">Action</th>
+              <th class="w-4/12">Details</th>
+              <th class="w-2/12">Status</th>
+              <th class="w-1/12">Action</th>
               <th class="w-1/12">Active Status</th>
             </tr>
           </thead>
           <tbody *ngIf="!isLoading">
-            <tr *ngFor="let item of userList; let i = index; let odd = odd" class="hover:bg-sky-200">
-              <td>{{ item.last_name }}, {{ item.first_name }} {{ item.middle_name }} {{ item.suffix_name !== 'NA' ? item.suffix_name : '' }}</td>
-              <td>{{ item.email }} <br />{{ item.contact_number }}</td>
-              <td>{{ item.school.desc }}</td>
-              <td>
+            <tr *ngFor="let item of userList; let i = index; let odd = odd" class="hover:bg-sky-200 text-sm" [ngClass]="{'bg-orange-200 hover:bg-orange-300' : item.user_verified === null, 'bg-red-200 hover:bg-red-300' : item.user_verified === 0}">
+              <td class="text-center">{{ item.last_name }}, {{ item.first_name }} {{ item.middle_name }} {{ item.suffix_name !== 'NA' ? item.suffix_name : '' }}</td>
+              <td class="text-left text-xs">
+                {{ item.school.desc }} <br />
+                <span class="italic mt-5">
+                  {{ item.email }} <br />
+                  {{ item.contact_number }}
+                </span>
+              </td>
+              <td class="text-center italic text-xs">
+                @if( item.user_verified === null) { Unverified }
+                @if( item.user_verified === 0) { Rejected }
+                @if( item.user_verified === 1) { Verified }
+              </td>
+              <td class="text-center">
                 <button (click)="toggleModal('user-information', item)" class="rounded-full bg-blue-500 px-2 py-0.5 text-xs text-white hover:opacity-75">
-                  view details
+                  details
                 </button>
               </td>
               <td>
@@ -123,8 +134,44 @@
       <app-page-controller *ngIf="userList.length > 0" (movePage)="loadList($event)" [meta]="meta"></app-page-controller>
     </div>
 
-    <app-user-information *ngIf="modals['user-information']"
-      [selected_user]="selected_user"
-    ></app-user-information>
+    <div class="flex flex-col">
+      @if( selected_user) {
+        <div class="flex justify-end bg-white rounded-md -mb-3 p-3">
+          <span class="px-3 py-1 rounded-full text-sm text-white select-none"
+            [ngClass]="{
+              'bg-orange-500' : selected_user.user_verified === null,
+              'bg-green-500' : selected_user.user_verified === 1,
+              'bg-red-500' : selected_user.user_verified === 0,
+            }">
+            <fa-icon [icon]="selected_user.user_verified === null ? faClock : ( selected_user.user_verified === 1 ? faCircleCheck : faXmarkCircle )"
+            ></fa-icon>
+            {{ selected_user.user_verified === null
+              ? 'Pending'
+              : ( selected_user.user_verified === 1
+                  ? 'Verified'
+                  : 'Rejected'
+                )
+            }}
+          </span>
+        </div>
+      }
+
+      <app-user-information *ngIf="modals['user-information']"
+        [selected_user]="selected_user"
+      ></app-user-information>
+
+      @if(updating_user || selected_user && selected_user.user_verified === null) {
+        <div class="flex justify-center bg-white rounded-md shadow-md my-3 py-3 px-3 -mt-3">
+          <button [disabled]="updating_user" (click)="verifyUser(false)" class="btn-blue bg-red-500 mr-3 px-10">
+            <fa-icon *ngIf="updating_user" [icon]="faCircleNotch" animation="spin"></fa-icon>
+            Reject
+          </button>
+          <button [disabled]="updating_user" (click)="verifyUser(true)" class="btn-blue px-10">
+            <fa-icon *ngIf="updating_user" [icon]="faCircleNotch" animation="spin"></fa-icon>
+            Verify
+          </button>
+        </div>
+      }
+    </div>
   </div>
 </div>
