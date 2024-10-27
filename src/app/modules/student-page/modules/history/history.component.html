@@ -32,21 +32,18 @@
             Date Applied: {{ item.date_applied | date: 'MMM dd, yyyy' }}
           </span>
         </div>
-        <div class="w-2/12 mt-5">
+        <div class="w-4/12 mt-5">
           <span>
             <fa-icon *ngIf="item.is_approved !== null" [icon]="faCircleCheck" [ngClass]="{ 'text-green-500':item.is_approved === 1, 'text-red-500': item.is_approved === 0 }"></fa-icon>
-            {{ item.is_approved !== null ? (item.is_approved === 1 ? 'Approved' : 'Denied') : '' }}
+            {{ item.is_approved !== null ? (item.is_approved === 1 ? 'Approved' : 'Denied') : 'Pending' }}
           </span>
         </div>
-        <div class="w-2/12">
-          <!-- <button class="btn-blue mt-3 text-xs">
-            View Post Details
-          </button> -->
+        <!-- <div class="w-2/12">
           <button *ngIf="!item.is_approved" class="btn-blue bg-red-500 mt-3 text-xs">
             <fa-icon [icon]="faXmark"></fa-icon>
             Cancel Application
           </button>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
