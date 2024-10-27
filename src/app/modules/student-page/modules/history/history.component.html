@@ -42,7 +42,7 @@
           <!-- <button class="btn-blue mt-3 text-xs">
             View Post Details
           </button> -->
-          <button class="btn-blue bg-red-500 mt-3 text-xs">
+          <button *ngIf="!item.is_approved" class="btn-blue bg-red-500 mt-3 text-xs">
             <fa-icon [icon]="faXmark"></fa-icon>
             Cancel Application
           </button>
