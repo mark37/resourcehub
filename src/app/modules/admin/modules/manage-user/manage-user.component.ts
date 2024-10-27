@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faArrowLeft, faCircleCheck, faCircleNotch, faClock, faFilter, faPenToSquare, faTableColumns, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRight, faArrowUpRightFromSquare, faCircleCheck, faCircleNotch, faClock, faFilter, faPenToSquare, faTableColumns, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from '../../../../shared/http.service';
 import { formatDate } from '@angular/common';
 
@@ -17,16 +17,13 @@ export class ManageUserComponent implements OnInit {
   faCircleCheck = faCircleCheck;
   faXmarkCircle = faXmarkCircle;
   faClock = faClock;
+  faArrowRight = faArrowRight;
 
   userList: any = [];
   meta!: any;
-  is_active: boolean = false;
-  category: any[] = [
-    { id: 'pending', title: 'Pending'},
-    { id: 'verified', title: 'Verified'},
-    { id: 'rejected', title: 'Rejected'},
-    // { id: 'applied', title: 'Applied'},
-  ];
+  active_status: boolean = false;
+  category: string[] = ['pending', 'verified', 'rejected'];
+  activeStatus: string[] = ['active', 'inactive'];
 
   scholarPartTime: any[] = [
     { id: 2, title: 'Scholarship'},
@@ -45,6 +42,7 @@ export class ManageUserComponent implements OnInit {
     let params: any = {};
     params['page'] = page ?? 1;
     params['user_info'] = 1;
+    if(this.active_status) params['active_status'] = this.active_status;
     if(this.is_verified) params['is_verified'] = this.is_verified;
     if(this.lib_cat_id) params['lib_cat_id'] = this.lib_cat_id;
     if(this.start_date) params['start_date'] = this.start_date;
@@ -62,8 +60,12 @@ export class ManageUserComponent implements OnInit {
     })
   }
 
-  toggleActive() {
-    // console.log('test')
+  toggleActive(data: any) {
+    data['is_active'] = !data['is_active'];
+    this.http.update('user-information/', data.id, data).subscribe({
+      next: () => console.log('updated successfully'),
+      error: err => console.log(err)
+    })
   }
 
   modals: any = [];

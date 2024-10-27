@@ -41,11 +41,18 @@
       <div class="bg-white w-full">
         <div class="flex flex-row justify-end bg-gray-200 m-3 rounded-md py-2 text-xs">
           <!-- <span class="font-semibold pt-1  mr-1">Filter:</span> -->
-          <div class="flex flex-row">
+          <div class="mr-3">
             <span class="pt-2 mr-1">Category</span>
-            <select [(ngModel)]="is_verified" class="input-txt">
+            <select [(ngModel)]="is_verified" class="input-txt capitalize">
               <option [ngValue]="null">All</option>
-              <option *ngFor="let item of category" [value]="item.id">{{ item.title }}</option>
+              <option *ngFor="let item of category" [value]="item">{{ item }}</option>
+            </select>
+          </div>
+          <div class="">
+            <span class="pt-2 mr-1">Active Status</span>
+            <select [(ngModel)]="active_status" class="input-txt capitalize">
+              <option [ngValue]="null">All</option>
+              <option *ngFor="let item of activeStatus" [value]="item">{{ item }}</option>
             </select>
           </div>
 
@@ -67,9 +74,9 @@
             <input type="date" [(ngModel)]="end_date" [max]="max_date" class="input-txt" />
           </div> -->
 
-          <div>
+          <div class="mt-2.5">
             <button (click)="loadList()" class="mt-1 bg-blue-600 rounded-md px-2 text-white mx-2 py-1">
-              <fa-icon [icon]="faFilter"></fa-icon>
+              <fa-icon [icon]="faFilter" class="mr-1"></fa-icon>
               <span class="text-sm">Apply</span>
             </button>
           </div>
@@ -83,13 +90,19 @@
               <th class="w-4/12">Name</th>
               <th class="w-4/12">Details</th>
               <th class="w-2/12">Status</th>
-              <th class="w-1/12">Action</th>
+              <!-- <th class="w-1/12">Action</th> -->
               <th class="w-1/12">Active Status</th>
             </tr>
           </thead>
           <tbody *ngIf="!isLoading">
-            <tr *ngFor="let item of userList; let i = index; let odd = odd" class="hover:bg-sky-200 text-sm" [ngClass]="{'bg-orange-200 hover:bg-orange-300' : item.user_verified === null, 'bg-red-200 hover:bg-red-300' : item.user_verified === 0}">
-              <td class="text-center">{{ item.last_name }}, {{ item.first_name }} {{ item.middle_name }} {{ item.suffix_name !== 'NA' ? item.suffix_name : '' }}</td>
+            <tr *ngFor="let item of userList; let i = index; let odd = odd" class="hover:bg-sky-50 text-sm" [ngClass]="{'bg-orange-200 hover:bg-orange-300' : item.user_verified === null, 'bg-red-200 hover:bg-red-300' : item.user_verified === 0}">
+              <td class="text-center">
+                <button (click)="toggleModal('user-information', item)" class="rounded-md bg-blue-500 px-5 py-1 text-xs text-white hover:opacity-75">
+
+                  {{ item.last_name }}, {{ item.first_name }} {{ item.middle_name }} {{ item.suffix_name !== 'NA' ? item.suffix_name : '' }}
+                  <fa-icon [icon]="faArrowRight" class="ml-3"></fa-icon>
+                </button>
+              </td>
               <td class="text-left text-xs">
                 {{ item.school.desc }} <br />
                 <span class="italic mt-5">
@@ -97,19 +110,22 @@
                   {{ item.contact_number }}
                 </span>
               </td>
-              <td class="text-center italic text-xs">
-                @if( item.user_verified === null) { Unverified }
-                @if( item.user_verified === 0) { Rejected }
-                @if( item.user_verified === 1) { Verified }
-              </td>
               <td class="text-center">
-                <button (click)="toggleModal('user-information', item)" class="rounded-full bg-blue-500 px-2 py-0.5 text-xs text-white hover:opacity-75">
-                  details
-                </button>
+                <span class="px-2 py-1 text-xs rounded-full text-white" [ngClass]="{ 'bg-orange-500' : !item.user_verified, 'bg-green-500' : item.user_verified === 1, 'bg-red-500' : item.user_verified === 0 }">
+                  <fa-icon [icon]="!item.user_verified ? faClock : (item.user_verified === 1 ? faCircleCheck : faXmarkCircle)" class="mr-2"></fa-icon>
+                  @if( item.user_verified === null) { Unverified }
+                  @if( item.user_verified === 0) { Rejected }
+                  @if( item.user_verified === 1) { Verified }
+                </span>
               </td>
+              <!-- <td class="text-center">
+                <button (click)="toggleModal('user-information', item)" class="w-32 rounded-md bg-blue-500 px-2 py-0.5 text-xs text-white hover:opacity-75">
+                  View details
+                </button>
+              </td> -->
               <td>
                 <label class="inline-flex relative items-center cursor-pointer">
-                  <input  type="checkbox" class="sr-only peer" (click)="toggleActive()">
+                  <input [(ngModel)]="item.is_active" type="checkbox" class="sr-only peer" (click)="toggleActive(item)">
                   <div class="w-12 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300  rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[3px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 disabled:opacity-7"></div>
                 </label>
               </td>
