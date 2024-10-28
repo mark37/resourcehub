@@ -6,11 +6,11 @@ export const httpInterceptor: HttpInterceptorFn = (request, next) => {
   const router = inject(Router); // Inject Router
   const authToken = localStorage.getItem('access_token');
 
-  if (!authToken) {
+  /* if (!authToken) {
     router.navigate(['/']); // Redirect to home if no token is found
     return next(request); // Optional: Only proceed if necessary or return an error
   }
-
+ */
   const clonedRequest = request.clone({
     headers: request.headers
       .set('Accept', 'application/json')
