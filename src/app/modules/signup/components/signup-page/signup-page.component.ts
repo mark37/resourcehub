@@ -185,7 +185,7 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
       irregular_flag: [false],
       place_of_birth: [null],
       lib_school_id: [null],
-      lib_education_level_id: [null],
+      lib_year_level_id: [null],
       lib_academic_program_id: [null],
       photo: ['x'],
       report_of_grade: ['x'],
