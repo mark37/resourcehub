@@ -5,6 +5,7 @@ import { provideQuillConfig } from 'ngx-quill/config';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { httpInterceptor } from './shared/interceptor/http.interceptor';
 import { QuillModule } from 'ngx-quill';
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,6 +20,6 @@ export const appConfig: ApplicationConfig = {
         whitelist: ['mirza', 'roboto', 'aref', 'serif', 'sansserif', 'monospace']
       }]
     }),
-
+    provideEnvironmentNgxMask()
   ]
 };
