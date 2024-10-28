@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { AfterViewChecked, Component, ElementRef, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { faArrowLeft, faBell, faComment, faHouse, faTableColumns, faUser, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faBell, faComment, faGear, faHouse, faTableColumns, faUser, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { filter, tap } from 'rxjs';
 
 @Component({
@@ -14,6 +14,7 @@ export class SidenavComponent  {
 
   faXmark = faXmark;
   faArrowLeft = faArrowLeft;
+  faGear = faGear;
 
   menuList: any[] = [
     { name: 'Home', location: 'home' , icon: faHouse},
@@ -36,13 +37,12 @@ export class SidenavComponent  {
   }
 
   toggleMenu(name: string, location?: boolean) {
-    /* console.log(name, this.modals[name], location)
-    if(this.modals[name] === true && location) {
-      this.modals[name] = false;
-    } else { */
-      this.modals[name] = !this.modals[name];
-    /* }
-    console.log(name, this.modals[name], location) */
+    this.modals[name] = !this.modals[name];
+  }
+
+  signOut() {
+    localStorage.clear();
+    this.router.navigate(['/'])
   }
 
   constructor(

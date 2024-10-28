@@ -16,6 +16,11 @@
       <fa-icon class="pr-2" [icon]="item.icon"></fa-icon>
       {{ item.name }}
     </div>
+
+    <div class="py-3 font-semibold hover:cursor-pointer hover:opacity-60 mt-20 text-center" (click)="signOut()">
+      <!-- <fa-icon [icon]="faGear" class="mr-2"></fa-icon> -->
+      Sign Out
+    </div>
   </div>
 
   <div class="absolute bottom-10 w-full text-center">
@@ -26,7 +31,7 @@
 
 @if(modals['menuList']) {
   <div >
-    <div class="border-2 border-blue-400 fixed block w-1/4 top-56 rounded-lg left-60  bg-white h-3/5 z-50 border border overflow-y-auto">
+    <div class="border-2 border-blue-400 fixed block w-1/4 top-56 rounded-lg left-60  bg-white h-3/5 z-50 overflow-y-auto">
       <div class="flex flex-col mx-3">
         <div class="text-blue-600 text-2xl flex justify-between mt-5 font-semibold">
           <div>Notifications</div>
