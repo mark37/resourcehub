@@ -6,6 +6,7 @@ import { HttpService } from '../../shared/http.service';
 import { faArrowLeft, faFileLines, faSave, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { QuillEditorComponent, QuillModule } from 'ngx-quill';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-details',
@@ -17,6 +18,7 @@ import { QuillEditorComponent, QuillModule } from 'ngx-quill';
 export class PostDetailsComponent {
   @Output() toggleModal = new EventEmitter<any>();
   @Input() selected_posting!: any;
+  @Input() isAuthenticated!: boolean;
 
   faSave = faSave;
   faFileLines = faFileLines;
@@ -28,6 +30,10 @@ export class PostDetailsComponent {
   editorConfig = {
     toolbar: [ ]
   };
+
+  navigateTo() {
+    this.router.navigate(['login'])
+  }
 
   toggleConfirmation() {
     this.showConfirmation = !this.showConfirmation;
@@ -54,7 +60,8 @@ export class PostDetailsComponent {
 
   constructor(
     private http: HttpService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private router: Router
   ) { }
 
   ngOnInit(): void {

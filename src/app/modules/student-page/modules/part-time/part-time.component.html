@@ -125,6 +125,7 @@
 <app-post-details *ngIf="modals['view-details']"
   (toggleModal)="toggleModal('view-details')"
   [selected_posting]="selected_posting"
+  [isAuthenticated]="isAuthenticated"
 ></app-post-details>
 <!-- <app-job-details *ngIf="modals['view-details']"
   (toggleModal)="toggleModal('view-details')"

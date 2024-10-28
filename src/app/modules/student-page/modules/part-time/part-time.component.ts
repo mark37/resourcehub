@@ -24,7 +24,7 @@ export class PartTimeComponent implements OnInit {
   modals: any[string] = [];
   isLoading: boolean = false;
   search!: string;
-
+  isAuthenticated: boolean = false;
   options: google.maps.MapOptions = {
     mapId: "DEMO_MAP_ID",
     // center: { lat: 15.475578308105469, lng: 120.59635162353516 },
@@ -170,5 +170,6 @@ export class PartTimeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadPartTime();
+    if(localStorage.getItem('access_token')) { this.isAuthenticated = true; } else { this.isAuthenticated = false; }
   }
 }

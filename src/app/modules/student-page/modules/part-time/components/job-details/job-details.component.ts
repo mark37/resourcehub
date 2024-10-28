@@ -22,6 +22,7 @@ export class JobDetailsComponent implements OnInit {
 
   @Output() toggleModal = new EventEmitter<any>();
   @Input() selected_posting!: any;
+  @Input() isAuthenticated!: boolean;
 
   faSave = faSave;
   faFileLines = faFileLines;

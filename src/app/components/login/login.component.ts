@@ -32,14 +32,15 @@ export class LoginComponent {
       this.isLoading = true;
       this.http.login(this.loginForm.value).subscribe({
         next: (data: any) => {
-          const parts = data.data.token.split('.');
-          const header = JSON.parse(atob(parts[0]));
-          const payload = JSON.parse(atob(parts[1]));
-
-          console.log(header, payload)
+          // console.log(data)
           this.isLoading = false
           localStorage.setItem('access_token', data.data.token);
-          this.router.navigate(['/student'])
+
+          if(data.data.user.is_admin) {
+            this.router.navigate(['/admin'])
+          } else {
+            this.router.navigate(['/student'])
+          }
         },
         error: err => {console.log(err)
           this.showError = true;

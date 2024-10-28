@@ -17,7 +17,7 @@
         <!-- Modal body -->
         <div class="overflow-y-auto min-h-[300px] max-h-[620px] scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 px-5 pb-5 flex flex-col md:flex-row">
           <!-- <div *ngIf="!showConfirmation" [innerHTML]="htmlContent"></div> -->
-          <div class="w-full ">
+          <div *ngIf="!showConfirmation" class="w-full">
             <quill-editor disabled class="h-96 w-full rounded hover:cursor-default" [(ngModel)]="selected_posting.description" [modules]="editorConfig"></quill-editor>
           </div>
           <div *ngIf="showConfirmation" class="flex flex-col w-full my-auto">
@@ -49,12 +49,12 @@
               Cancel Application
             </button> -->
           } @else {
-            <button class="btn-blue bg-orange-500" (click)="onSubmit()">
+            <button *ngIf="isAuthenticated" class="btn-blue bg-orange-500" (click)="onSubmit()">
               <fa-icon [icon]="faSave"></fa-icon>
               Save post
             </button>
 
-            <button class="btn-blue" (click)="toggleConfirmation()">
+            <button class="btn-blue" (click)="isAuthenticated ? toggleConfirmation() : navigateTo()">
               <fa-icon [icon]="faFileLines"></fa-icon>
               Apply now
             </button>
