@@ -2,4 +2,5 @@
   {{ f[childFormName].errors?.['email'] ? 'not a valid email format' : ''}}
   {{ f[childFormName].errors?.['required'] ? 'this is required' : ''}}
   {{ f[childFormName].errors?.['minlength'] ? 'minimum length: ' + f[childFormName].errors?.['minlength'].requiredLength : ''}}
+  {{ f[childFormName].errors?.['maxlength'] ? 'maximum length: ' + f[childFormName].errors?.['maxlength'].requiredLength : ''}}
 </span>
