@@ -1,4 +1,4 @@
-<div class="h-fit fixed pt-10 w-full md:h-full justify-center items-center flex flex-col">
+<div class="h-fit w-full md:h-full justify-center items-center flex flex-col">
   <div class="flex items-start py-3 px-5 w-4/5 justify-center md:justify-between">
     <div class="flex flex-row">
       <img class="h-11" src="../assets/img/resourcehub-log.png" />
@@ -114,7 +114,7 @@
         </div>
       </div>
     } @else if(page >= 1 && page <= 3) {
-      <div class="relative p-4 w-full max-w-5xl h-96">
+      <div class="relative p-4 w-full max-w-5xl">
         <div class="flex flex-col">
           <div class="grid grid-cols-3 font-semibold text-center text-gray-500">
             <div class="border-b-2 hover:cursor-pointer" (click)="navigatePage(1)" [class]="{'border-b-blue-600' : +page === 1}">
@@ -134,7 +134,8 @@
                 <div>
                   <label for="first_name" class="text-xs text-gray-400">First Name</label>
                   <input id="first_name" formControlName="first_name" type="text" class="input-txt -mb-2" />
-                  <span *ngIf="formSubmitted && f['first_name'].invalid" class="error-label">this is required</span>
+
+                  <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'first_name'"></app-error-label>
                 </div>
 
                 <div>
@@ -146,7 +147,8 @@
                   <div class="col-span-4">
                     <label for="last_name" class="text-xs text-gray-400">Last Name</label>
                     <input id="last_name" formControlName="last_name" type="text" class="input-txt -mb-2" />
-                    <span *ngIf="formSubmitted && f['last_name'].invalid" class="error-label">this is required</span>
+
+                    <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'last_name'"></app-error-label>
                   </div>
                   <div class="col-span-2">
                     <label for="suffix_name" class="text-xs text-gray-400">Suffix</label>
@@ -160,7 +162,8 @@
                   <div>
                     <label for="birthdate" class="text-xs text-gray-400">Date of Birth</label>
                     <input id="birthdate" formControlName="birthdate" type="date" class="input-txt text-sm placeholder:text-gray-400" placeholder="mm/dd/yyyy" />
-                    <span *ngIf="formSubmitted && f['birthdate'].invalid" class="error-label">this is required</span>
+
+                    <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'birthdate'"></app-error-label>
                   </div>
 
                   <div>
@@ -169,57 +172,51 @@
                       <option value="M">Male</option>
                       <option value="F">Female</option>
                     </select>
-                    <span *ngIf="formSubmitted && f['sex'].invalid" class="error-label">this is required</span>
+                    <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'gender'"></app-error-label>
                   </div>
                 </div>
 
                 <div>
                   <label for="contact_number" class="text-xs text-gray-400">Contact Number</label>
-                  <input id="contact_number" formControlName="contact_number" type="text" class="input-txt -mb-2" />
-                  <span *ngIf="formSubmitted && f['contact_number'].invalid" class="error-label">this is required</span>
+                  <input id="contact_number" mask="(9999) 999-9999" [showMaskTyped]="true" formControlName="contact_number" type="text" class="input-txt -mb-2" />
+                  <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'contact_number'"></app-error-label>
                 </div>
 
                 <div></div>
                 <div>
                   <label for="province_code" class="text-xs text-gray-400">Province</label>
-                  <select id="province_code" formControlName="province_code" class="input-txt -mb-2">
+                  <select (change)="getDemog('psgc/provinces', signUpForm.value.province_code, 'municipalities')" id="province_code" formControlName="province_code" class="input-txt -mb-2">
                     <option *ngFor="let item of provinces" [value]="item.code">{{ item.name }}</option>
                   </select>
-                  <span *ngIf="formSubmitted && f['province_code'].invalid" class="error-label">this is required</span>
+                  <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'province_code'"></app-error-label>
                 </div>
 
                 <div>
                   <label for="municipality_code" class="text-xs text-gray-400">Municipality</label>
-                  <select id="municipality_code" formControlName="municipality_code" class="input-txt -mb-2">
-                    <option></option>
-                    <option>Test</option>
-                    <option>Test 2</option>
-                    <option>Test 3</option>
+                  <select (change)="getDemog('psgc/municipalities', signUpForm.value.municipality_code, 'barangays')" id="municipality_code" formControlName="municipality_code" class="input-txt -mb-2">
+                    <option *ngFor="let item of municipalities" [value]="item.code">{{ item.name }}</option>
                   </select>
-                  <span *ngIf="formSubmitted && f['municipality_code'].invalid" class="error-label">this is required</span>
+                  <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'municipality_code'"></app-error-label>
                 </div>
 
                 <div>
                   <label for="barangay_code" class="text-xs text-gray-400">Barangay</label>
                   <select id="barangay_code" formControlName="barangay_code" class="input-txt -mb-2">
-                    <option></option>
-                    <option>Test</option>
-                    <option>Test 2</option>
-                    <option>Test 3</option>
+                    <option *ngFor="let item of barangays" [value]="item.code"> {{ item.name }}</option>
                   </select>
-                  <span *ngIf="formSubmitted && f['barangay_code'].invalid" class="error-label">this is required</span>
+                  <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'barangay_code'"></app-error-label>
                 </div>
 
                 <div class="col-span-2">
                   <label for="address" class="text-xs text-gray-400">Address</label>
                   <input id="address" formControlName="address" type="text" class="input-txt -mb-2" />
-                  <span *ngIf="formSubmitted && f['address'].invalid" class="error-label">this is required</span>
+                  <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'address'"></app-error-label>
                 </div>
 
-                <div class="col-span-3">
+                <div>
                   <label for="place_of_birth" class="text-xs text-gray-400">Place of Birth</label>
                   <input id="place_of_birth" formControlName="place_of_birth" type="text" class="input-txt -mb-2" />
-                  <span *ngIf="formSubmitted && f['place_of_birth'].invalid" class="error-label">this is required</span>
+                  <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'place_of_birth'"></app-error-label>
                 </div>
 
                 <div class="md:col-span-3 flex justify-end mt-5">
@@ -236,7 +233,7 @@
                   <select id="lib_school_id" formControlName="lib_school_id" class="input-txt -mb-2">
                     <option *ngFor="let item of schools" [value]="item.id">{{ item.desc }}</option>
                   </select>
-                  <span *ngIf="formSubmitted && f['lib_school_id'].invalid" class="error-label">this is required</span>
+                  <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'lib_school_id'"></app-error-label>
                 </div>
 
                 <div>
@@ -244,7 +241,7 @@
                   <select id="lib_academic_program_id" formControlName="lib_academic_program_id" class="input-txt -mb-2">
                     <option *ngFor="let item of courses" [value]="item.id">{{ item.desc }}</option>
                   </select>
-                  <span *ngIf="formSubmitted && f['lib_academic_program_id'].invalid" class="error-label">this is required</span>
+                  <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'lib_academic_program_id'"></app-error-label>
                 </div>
 
                 <div>
@@ -252,7 +249,7 @@
                   <select id="lib_education_level_id" formControlName="lib_education_level_id" class="input-txt -mb-2">
                     <option *ngFor="let item of year_levels" [value]="item.id">{{ item.desc }}</option>
                   </select>
-                  <span *ngIf="formSubmitted && f['lib_education_level_id'].invalid" class="error-label">this is required</span>
+                  <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'lib_education_level_id'"></app-error-label>
                 </div>
 
                 <div class="grid grid-col-3 gap-x-4 mt-3">
@@ -348,6 +345,7 @@
                   <select id="average_monthly_income" formControlName="average_monthly_income" type="text" class="input-txt -mb-2">
                     <option *ngFor="let item of incomes" [value]="item.id">{{ item.desc }}</option>
                   </select>
+                  <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'average_monthly_income'"></app-error-label>
                 </div>
 
                 <div class="md:col-span-2 flex justify-end mt-5">

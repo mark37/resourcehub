@@ -9,6 +9,7 @@ import { TermsOfUseComponent } from '../../components/terms-of-use/terms-of-use.
 import { UserAgreementComponent } from '../../components/user-agreement/user-agreement.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ErrorLabelComponent } from '../../shared/components/error-label/error-label.component';
+import { NgxMaskDirective } from 'ngx-mask';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { ErrorLabelComponent } from '../../shared/components/error-label/error-l
     TermsOfUseComponent,
     UserAgreementComponent,
     ReactiveFormsModule,
-    ErrorLabelComponent
+    ErrorLabelComponent,
+    NgxMaskDirective
   ]
 })
 export class SignupModule { }

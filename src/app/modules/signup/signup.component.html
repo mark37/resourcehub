@@ -1,7 +1,7 @@
 @if(showSignupPage) {
   <app-signup-page [withStudentEmail]="withStudentEmail" (closeSignUpPage)="closeSignUpPage()"></app-signup-page>
 } @else {
-  <div class="h-full bg-gray-100 fixed w-full h-modal md:h-full justify-center items-center flex flex-col" aria-modal="true" role="dialog" style="z-index:60">
+  <div class="h-full bg-gray-100 w-full h-modal md:h-full justify-center items-center flex flex-col" aria-modal="true" role="dialog" style="z-index:60">
     <div class="flex items-start py-3 px-5 w-4/5 justify-center md:justify-between">
       <div>
         <img class="h-11" src="../assets/img/resourcehub-log.png" />

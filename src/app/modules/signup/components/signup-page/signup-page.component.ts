@@ -42,7 +42,7 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
   }
 
   navigatePage(page_value: number) {
-    console.log(page_value, this.signUpForm, !this.signUpForm.valid)
+    console.log(page_value, this.signUpForm, this.signUpForm.valid)
     if(page_value >= 1 && page_value <= 3) {
       if(!this.signUpForm.valid) {
         this.formSubmitted = true;
@@ -72,8 +72,8 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
       case 1:
         validatorArray = [
           'first_name', 'last_name', 'contact_number',
-          'sex', 'birthdate'/* , 'municipality_code',
-          'barangay_code', 'adress', 'place_of_birth' */
+          'gender', 'birthdate', 'province_code', 'municipality_code',
+          'barangay_code', 'address', 'place_of_birth'
         ];
         this.addValidator(validatorArray);
         break;
@@ -81,6 +81,12 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
         validatorArray = [
           'lib_school_id', 'course_code', 'year_level',
           'photo', 'report_of_grade'
+        ];
+        this.addValidator(validatorArray);
+        break;
+      case 3:
+        validatorArray = [
+          'average_monthly_income'
         ];
         this.addValidator(validatorArray);
         break;
@@ -95,7 +101,11 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
 
   addValidator(validatorArray: string[]) {
     validatorArray.forEach(value => {
-      this.signUpForm.get(value)?.setValidators([Validators.required]);
+      if(value === 'contact_number') {
+        this.signUpForm.get(value)?.setValidators([Validators.required, Validators.minLength(11), Validators.maxLength(11)]);
+      } else {
+        this.signUpForm.get(value)?.setValidators([Validators.required]);
+      }
       this.signUpForm.get(value)?.updateValueAndValidity();
     });
   }
@@ -105,10 +115,9 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
   courses!: {id: string, desc: string}[];
   year_levels!: {id: string, desc: string}[];
   provinces!: {code: string, name: string}[];
-  municipalities!: {code: string, name: string}[];
-  barangays!: {id: string, desc: string}[];
+  municipalities!: {code: string, name: string}[] | null;
+  barangays!: {code: string, name: string}[] | null;
   incomes!: {id: string, desc: string}[];
-
   loadLibraries(){
     const getSuffixes = this.http.get('libraries/suffix-names');
     const getProvinces = this.http.get('psgc/provinces', { params: {per_page: 'all'}});
@@ -133,13 +142,26 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
   }
 
   handleKeyPress(event: KeyboardEvent, button: HTMLButtonElement) {
-    console.log('kypress')
     if(event.key === 'Enter') {
       button.click();
-      // this.showOTPPage ? this.toggleOTPPage() : this.navigatePage(1);
     }
   }
 
+  getDemog(loc: string, code: string, include: string){
+    console.log(loc)
+    if (loc === 'psgc/provinces') {
+      console.log('clear');
+      this.municipalities = null;
+      this.barangays = null;
+    }
+
+    this.http.get(loc+'/'+code,{params:{'include':include}}).subscribe({
+      next: (data: any) => {console.log(data.data); (this as any)[include] = data.data[include]},
+      error: err => console.log(err)
+    });
+  }
+
+  // Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-_]).{6,}$')
   show_form: boolean = false;
   createForm() {
     this.signUpForm = this.formBuilder.nonNullable.group({
@@ -147,7 +169,7 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
       first_name: [null],
       middle_name: [null],
       last_name: [null],
-      suffix_name: [null],
+      suffix_name: ['NA'],
       contact_number: [null],
       email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required, Validators.minLength(6)]],
