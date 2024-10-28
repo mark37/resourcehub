@@ -7,6 +7,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PageControllerComponent } from '../../../../components/page-controller/page-controller.component';
 import { FormsModule } from '@angular/forms';
 import { UserInformationComponent } from '../../../../components/user-information/user-information.component';
+import { MessagingSmsComponent } from '../../../../components/messaging-sms/messaging-sms.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { UserInformationComponent } from '../../../../components/user-informatio
     FontAwesomeModule,
     PageControllerComponent,
     FormsModule,
-    UserInformationComponent
+    UserInformationComponent,
+    MessagingSmsComponent
   ]
 })
 export class ManageUserModule { }

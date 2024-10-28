@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faArrowLeft, faArrowRight, faArrowUpRightFromSquare, faCircleCheck, faCircleNotch, faClock, faFilter, faPenToSquare, faTableColumns, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRight, faArrowUpRightFromSquare, faCircleCheck, faCircleNotch, faClock, faFilter, faPaperPlane, faPenToSquare, faTableColumns, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from '../../../../shared/http.service';
 import { formatDate } from '@angular/common';
 
@@ -18,6 +18,7 @@ export class ManageUserComponent implements OnInit {
   faXmarkCircle = faXmarkCircle;
   faClock = faClock;
   faArrowRight = faArrowRight;
+  faPaperPlane = faPaperPlane;
 
   userList: any = [];
   meta!: any;

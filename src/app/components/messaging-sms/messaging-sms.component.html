@@ -1,0 +1,25 @@
+<div class="bg-white p-3">
+  <div class="flex flex-col">
+    <div class="flex flex-col">
+      <div>
+        <div >
+          <label>Message Content</label>
+          <textarea rows="4" [(ngModel)]="message" class="input-txt"></textarea>
+        </div>
+        <div class="flex justify-end mb-5">
+          {{ message ? message.length : 0 }}/{{ message ? getSegmentCount(message.length) : 1 }}
+        </div>
+      </div>
+      <div>
+        <div class="flex justify-end">
+          <button (click)="sendSMS()" [disabled]="is_saving || (!message && message !== '')" class="btn-blue">
+            <fa-icon *ngIf="is_saving" [icon]="faCircleNotch" animation="spin" class="mr-1"></fa-icon>
+            <fa-icon *ngIf="!is_saving" [icon]="faPaperPlane" class="mr-1"></fa-icon>
+            Send
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

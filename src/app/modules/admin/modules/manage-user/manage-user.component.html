@@ -37,7 +37,7 @@
       Listing of Users, List of User Reports, Delete User Accounts, Data Backups, Audit Trail
     </span>
 
-    <div *ngIf="!modals['user-information']" class="bg-white select-none">
+    <div *ngIf="!modals['user-information'] && !modals['show-sms']" class="bg-white select-none">
       <div class="bg-white w-full">
         <div class="flex flex-row justify-end bg-gray-200 m-3 rounded-md py-2 text-xs">
           <!-- <span class="font-semibold pt-1  mr-1">Filter:</span> -->
@@ -90,7 +90,7 @@
               <th class="w-4/12">Name</th>
               <th class="w-4/12">Details</th>
               <th class="w-2/12">Status</th>
-              <!-- <th class="w-1/12">Action</th> -->
+              <th class="w-1/12">Action</th>
               <th class="w-1/12 text-xs">Active Status</th>
             </tr>
           </thead>
@@ -98,10 +98,10 @@
             <tr *ngFor="let item of userList; let i = index; let odd = odd" class="hover:bg-sky-50 text-sm" [ngClass]="{'bg-orange-200 hover:bg-orange-300' : item.user_verified === null, 'bg-red-200 hover:bg-red-300' : item.user_verified === 0}">
               <td class="text-center">
                 <button (click)="toggleModal('user-information', item)" class="rounded-md bg-blue-500 px-5 py-1 text-xs text-white hover:opacity-75">
-
                   {{ item.last_name }}, {{ item.first_name }} {{ item.middle_name }} {{ item.suffix_name !== 'NA' ? item.suffix_name : '' }}
                   <fa-icon [icon]="faArrowRight" class="ml-3"></fa-icon>
                 </button>
+
               </td>
               <td class="text-left text-xs">
                 {{ item.school.desc }} <br />
@@ -118,11 +118,12 @@
                   @if( item.user_verified === 1) { Verified }
                 </span>
               </td>
-              <!-- <td class="text-center">
-                <button (click)="toggleModal('user-information', item)" class="w-32 rounded-md bg-blue-500 px-2 py-0.5 text-xs text-white hover:opacity-75">
-                  View details
+              <td class="text-center">
+                <button (click)="toggleModal('show-sms', item)" class="rounded-md bg-gray-500 w-14 py-1 text-xs text-white hover:opacity-75">
+                  SMS
+                  <fa-icon [icon]="faPaperPlane" class="ml-1"></fa-icon>
                 </button>
-              </td> -->
+              </td>
               <td class="text-center">
                 <label class="inline-flex relative items-center cursor-pointer">
                   <input [(ngModel)]="item.is_active" type="checkbox" class="sr-only peer" (click)="toggleActive(item)">
@@ -172,11 +173,15 @@
         </div>
       }
 
+      <app-messaging-sms *ngIf="modals['show-sms']"
+        [selected_user]="selected_user"
+      ></app-messaging-sms>
+
       <app-user-information *ngIf="modals['user-information']"
         [selected_user]="selected_user"
       ></app-user-information>
 
-      @if(updating_user || selected_user && selected_user.user_verified === null) {
+      @if(modals['user-information'] && (updating_user || selected_user && selected_user.user_verified === null)) {
         <div class="flex justify-center bg-white rounded-md shadow-md my-3 py-3 px-3 -mt-3">
           <button [disabled]="updating_user" (click)="verifyUser(false)" class="btn-blue bg-red-500 mr-3 px-10">
             <fa-icon *ngIf="updating_user" [icon]="faCircleNotch" animation="spin"></fa-icon>
