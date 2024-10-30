@@ -23,6 +23,10 @@ export class HttpService {
     return this.http.post(`${this.baseUrl}`+ 'register', data);
   }
 
+  checkEmail(data: any) {
+    return this.http.get(`${this.baseUrl}`+ 'check-email', data);
+  }
+
   login(data: any) {
     return this.http.post(`${this.baseUrl}`+ 'login', data);
   }

@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  <form *ngIf="show_form" [formGroup]="signUpForm">
+  <form *ngIf="show_form && !loading_libraries" [formGroup]="signUpForm">
     @if(page === 0) {
       <div class="relative p-4 w-full max-w-xl h-auto">
         <div class="bg-white h-auto p-5 md:p-10 rounded-xl border border-slate-200 shadow-2xl">
@@ -30,12 +30,12 @@
               <div>
                 Sign Up
               </div>
-              <button tabindex="0" (click)="closeSignUp()">
+              <a tabindex="0" href="/#">
                 x
-              </button>
+              </a>
             </div>
 
-            @if(showOTPPage) {
+            <!-- @if(showOTPPage) {
               <div class="flex flex-col p-3 md:p-10">
                 <div class="flex justify-center text-xl text-blue-600">
                   Authentication
@@ -55,10 +55,10 @@
                   Resend Code
                 </div>
               </div>
-            } @else {
+            } @else { -->
               <div class="flex flex-col p-3 md:p-10">
                 <div class="mb-5">
-                  <label id="email" class="text-xs text-gray-400">{{ withStudentEmail ? 'Student email' : 'Personal email' }}</label>
+                  <label id="email" class="text-xs text-gray-400">Email</label>
                   <input #emailInput (keypress)="handleKeyPress($event, proceedBtn)" id="email" formControlName="email" type="text" class="input-txt -mb-2" placeholder="Enter your email"/>
                   <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'email'"></app-error-label>
                 </div>
@@ -66,33 +66,37 @@
                 <div>
                   <label for="password" class="text-xs text-gray-400">Password (6+ Character)</label>
                   <input (keypress)="handleKeyPress($event, proceedBtn)" id="password" formControlName="password" type="password" class="input-txt -mb-2" placeholder="Enter your Password"/>
-                  <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'password'"></app-error-label>
+                  <app-error-label [childForm]="signUpForm" [childFormName]="'password'"></app-error-label>
                 </div>
 
                 <div>
                   <label for="password_confirmation" class="text-xs text-gray-400">Confirm Password</label>
                   <input (keypress)="handleKeyPress($event, proceedBtn)" id="password_confirmation" formControlName="password_confirmation" type="password" class="input-txt -mb-2" placeholder="Confirm your Password"/>
-                  <span *ngIf="formSubmitted && (signUpForm.value.password !== signUpForm.value.password_confirmation)" class="error-label">
+                  <span *ngIf="(signUpForm.value.password !== signUpForm.value.password_confirmation)" class="error-label">
                     Password does not match
                   </span>
+
+                  <span class="text-sm italic text-red-600 pt-2">{{ email_err }}</span>
                 </div>
 
                 <div class="flex flex-col md:flex-row  justify-center">
-                  @if (!withStudentEmail) {
+                  <!-- @if (!withStudentEmail) {
                     <div class="flex flex-col w-full md:w-3/5 mr-3">
-                      <button class="btn-blue-nr bg-gray-300 text-gray-900 mt-5">
+                      <input #fileCor type="file" accept=".pdf,.doc,.docx" (change)="onFileChange($event, 'cor')" class="hidden" />
+                      <button (click)="fileCor.click()" class="btn-blue-nr bg-gray-300 text-gray-900 mt-5">
                         <fa-icon [icon]="faArrowUpFromBracket"></fa-icon> Upload <br />
                         <span class="text-[.6em]">COR/SOA/Entrollment Certificate</span>
                       </button>
                       <span class="text-center text-xs mt-1">
-                        Supporer format PDF, DOC, DOCX <br />
+                        Supported format PDF, DOC, DOCX <br />
                         Maximum size 5MB
                       </span>
-                    </div>
-                  }
+                    </div>|| !signUpForm.valid
+                  } -->
                   <div class="flex flex-col w-full md:w-3/5 ">
-                    <button #proceedBtn [disabled]="(signUpForm.value.password !== signUpForm.value.password_confirmation)" (click)="showOTPPage ? toggleOTPPage() : navigatePage(1)" class="btn-blue-nr mt-5 h-14">
-                      Proceed
+                    <button #proceedBtn [disabled]="checking_email  || (signUpForm.value.password !== signUpForm.value.password_confirmation)" (click)="navigatePage(1)" class="btn-blue-nr mt-5 h-14">
+                      <fa-icon *ngIf="checking_email" [icon]="faCircleNotch" animation="spin" class="mr-1"></fa-icon>
+                      {{ checking_email ? 'Checking Email' : 'Proceed' }}
                     </button>
                     <span class="text-center text-xs mt-1">
                       By proceeding you agree to
@@ -109,7 +113,7 @@
                   <span class="text-blue-600 hover:cursor-pointer">Sign In</span>
                 </span>
               </div>
-            }
+            <!-- } -->
           </div>
         </div>
       </div>
@@ -191,7 +195,7 @@
                   <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'province_code'"></app-error-label>
                 </div>
 
-                <div>
+                <div [ngClass]="{'invisible' : !signUpForm.value.province_code}">
                   <label for="municipality_code" class="text-xs text-gray-400">Municipality</label>
                   <select (change)="getDemog('psgc/municipalities', signUpForm.value.municipality_code, 'barangays')" id="municipality_code" formControlName="municipality_code" class="input-txt -mb-2">
                     <option *ngFor="let item of municipalities" [value]="item.code">{{ item.name }}</option>
@@ -199,7 +203,7 @@
                   <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'municipality_code'"></app-error-label>
                 </div>
 
-                <div>
+                <div [ngClass]="{'invisible' : !signUpForm.value.municipality_code}">
                   <label for="barangay_code" class="text-xs text-gray-400">Barangay</label>
                   <select id="barangay_code" formControlName="barangay_code" class="input-txt -mb-2">
                     <option *ngFor="let item of barangays" [value]="item.code"> {{ item.name }}</option>
@@ -227,7 +231,7 @@
               </div>
             }
             @case (2) {
-              <div class="flex flex-col">
+              <div class="flex flex-col w-full">
                 <div>
                   <label for="lib_school_id" class="text-xs text-gray-400">School/ University Enrolled at</label>
                   <select id="lib_school_id" formControlName="lib_school_id" class="input-txt -mb-2">
@@ -268,22 +272,32 @@
                     <label for="irregular_flag">Irregular</label>
                   </div>
                 </div>
-                <div class="flex flex-col md:grid md:grid-cols-2 md:gap-4 mt-3">
-                  <div>
-                    <span class="text-sm text-gray-700">Upload 2x2 Picture</span>
-                    <button class="btn-blue-nr bg-gray-300 text-gray-900 w-full">
+                <div class="flex flex-col mt-3 w-full">
+                  <div *ngIf="!student_email">
+                    <input  #fileCOR (change)="onFileSelected($event, 'cor_url')" type="file" class="hidden" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" />
+                    <button (click)="fileCOR.click()" class="btn-blue-nr bg-gray-300 text-gray-900 w-full text-sm mt-2">
                       <fa-icon [icon]="faArrowUpFromBracket"></fa-icon>
-                      Upload File
+                      {{ signUpForm.value.cor_url ? 'Change' : 'Upload' }} COR/SOA/Enrollment Certificate
                     </button>
                   </div>
 
                   <div>
-                    <span class="text-sm text-gray-700">Report of Grade (Latest/Last Released)</span>
-                    <button class="btn-blue-nr bg-gray-300 text-gray-900 w-full">
+                    <input #filePhoto (change)="onFileSelected($event, 'photo_url')" type="file" class="hidden" accept=".jpg,.jpeg,.png" />
+                    <button (click)="filePhoto.click()" class="btn-blue-nr bg-gray-300 text-gray-900 w-full text-sm mt-2">
                       <fa-icon [icon]="faArrowUpFromBracket"></fa-icon>
-                      Upload File
+                      Upload File 2x2 Picture
                     </button>
                   </div>
+
+                  <div>
+                    <input #fileRog (change)="onFileSelected($event, 'grade_url')" type="file" class="hidden" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" />
+                    <button (click)="fileRog.click()" class="btn-blue-nr bg-gray-300 text-gray-900 w-full text-sm mt-2">
+                      <fa-icon [icon]="faArrowUpFromBracket"></fa-icon>
+                      Upload Report of Grade
+                    </button>
+                  </div>
+
+                  <span class="italic text-red-500 text-xs">{{ file_err_message }}</span>
                 </div>
 
                 <div class="md:col-span-2 flex justify-end mt-5">
@@ -348,9 +362,14 @@
                   <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'average_monthly_income'"></app-error-label>
                 </div>
 
+                <div *ngIf="submit_message" class="flex italic text-sm text-red-600">
+                  {{ submit_message }}
+                </div>
+
                 <div class="md:col-span-2 flex justify-end mt-5">
-                  <button class="btn-blue" [disabled]="!signUpForm.valid" (click)="onSubmit()">
-                    Finish
+                  <button [disabled]="is_saving" class="btn-blue" [disabled]="!signUpForm.valid" (click)="onSubmit()">
+                    <fa-icon *ngIf="is_saving" [icon]="faCircleNotch" animation="spin" class="mr-1"></fa-icon>
+                    Submit
                   </button>
                 </div>
               </div>
@@ -381,7 +400,7 @@
     }
   </form>
 
-  <div class="flex flex-col justify-center h-96" *ngIf="!show_form">
+  <div class="flex flex-col justify-center h-96" *ngIf="!show_form || loading_libraries">
     <div class="flex justify-center">
       <fa-icon class="text-blue-600" [icon]="faCircleNotch" animation="spin"></fa-icon>
     </div>

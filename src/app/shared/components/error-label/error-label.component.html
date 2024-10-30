@@ -1,4 +1,12 @@
 <span *ngIf="f[childFormName]?.errors" class="error-label">
+  @if( f[childFormName].errors?.['pattern'] ) {
+    <ul class="list-disc mt-2 ml-3">
+      <li>Password should have atleast 6 characters</li>
+      <li>Password should contain atleast 1 special character</li>
+      <li>Password should contain atleast 1 numeric value</li>
+    </ul>
+  }
+  <!-- {{ f[childFormName].errors?.['pattern'] ? 'this is required' : ''}} -->
   {{ f[childFormName].errors?.['email'] ? 'not a valid email format' : ''}}
   {{ f[childFormName].errors?.['required'] ? 'this is required' : ''}}
   {{ f[childFormName].errors?.['minlength'] ? 'minimum length: ' + f[childFormName].errors?.['minlength'].requiredLength : ''}}

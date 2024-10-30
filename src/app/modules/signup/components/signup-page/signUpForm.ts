@@ -27,8 +27,6 @@ export function signUpForm() {
     irregular_flag: new FormControl<boolean>(false),
     course_code: new FormControl<string|null>(null),
     year_level: new FormControl<string|null>(null),
-    photo: new FormControl<string|null>(null),
-    report_of_grade: new FormControl<string|null>(null),
     ofw_flag: new FormControl<boolean>(false),
     fathers_name: new FormControl<string|null>(null),
     fathers_occupation: new FormControl<string|null>(null),
@@ -36,7 +34,11 @@ export function signUpForm() {
     mothers_name: new FormControl<string|null>(null),
     mothers_occupation: new FormControl<string|null>(null),
     mothers_company: new FormControl<string|null>(null),
-    average_monthly_income: new FormControl<string|null>(null)
+    average_monthly_income: new FormControl<string|null>(null),
+
+    cor_url: new FormControl<string|null>(null),
+    photo_url: new FormControl<string|null>(null),
+    grade_url: new FormControl<string|null>(null),
   });
 }
 
