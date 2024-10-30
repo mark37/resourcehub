@@ -274,8 +274,8 @@
                 </div>
                 <div class="flex flex-col mt-3 w-full">
                   <div *ngIf="!student_email">
-                    <input  #fileCOR (change)="onFileSelected($event, 'cor_url')" type="file" class="hidden" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" />
-                    <button (click)="fileCOR.click()" class="btn-blue-nr bg-gray-300 text-gray-900 w-full text-sm mt-2">
+                    <input  #fileCOR (change)="onFileSelected($event, 'cor_url')" type="file" class="hidden" accept=".pdf,.doc,.docx" />
+                    <button (click)="fileCOR.click()" class="btn-blue-nr text-white w-full text-sm mt-2"  [ngClass]="{'bg-gray-300': signUpForm.value.cor_url}">
                       <fa-icon [icon]="faArrowUpFromBracket"></fa-icon>
                       {{ signUpForm.value.cor_url ? 'Change' : 'Upload' }} COR/SOA/Enrollment Certificate
                     </button>
@@ -283,17 +283,17 @@
 
                   <div>
                     <input #filePhoto (change)="onFileSelected($event, 'photo_url')" type="file" class="hidden" accept=".jpg,.jpeg,.png" />
-                    <button (click)="filePhoto.click()" class="btn-blue-nr bg-gray-300 text-gray-900 w-full text-sm mt-2">
+                    <button (click)="filePhoto.click()" class="btn-blue-nr text-white w-full text-sm mt-2" [ngClass]="{'bg-gray-300': signUpForm.value.photo_url}">
                       <fa-icon [icon]="faArrowUpFromBracket"></fa-icon>
-                      Upload File 2x2 Picture
+                      {{ signUpForm.value.photo_url ? 'Change' : 'Upload' }} File 2x2 Picture
                     </button>
                   </div>
 
                   <div>
-                    <input #fileRog (change)="onFileSelected($event, 'grade_url')" type="file" class="hidden" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" />
-                    <button (click)="fileRog.click()" class="btn-blue-nr bg-gray-300 text-gray-900 w-full text-sm mt-2">
+                    <input #fileRog (change)="onFileSelected($event, 'grade_url')" type="file" class="hidden" accept=".pdf,.doc,.docx" />
+                    <button (click)="fileRog.click()" class="btn-blue-nr text-white w-full text-sm mt-2"  [ngClass]="{'bg-gray-300': signUpForm.value.grade_url}">
                       <fa-icon [icon]="faArrowUpFromBracket"></fa-icon>
-                      Upload Report of Grade
+                      {{ signUpForm.value.grade_url ? 'Change' : 'Upload' }} Report of Grade
                     </button>
                   </div>
 
@@ -301,7 +301,7 @@
                 </div>
 
                 <div class="md:col-span-2 flex justify-end mt-5">
-                  <button class="btn-blue" (click)="navigatePage(3)">
+                  <button [disabled]="!signUpForm.valid" class="btn-blue" (click)="navigatePage(3)">
                     Next
                   </button>
                 </div>
