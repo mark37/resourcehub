@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { AfterViewChecked, Component, ElementRef, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { faArrowLeft, faBell, faComment, faGear, faHouse, faTableColumns, faUser, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRightFromBracket, faBell, faComment, faGear, faHouse, faTableColumns, faUser, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { filter, tap } from 'rxjs';
 
 @Component({
@@ -15,7 +15,7 @@ export class SidenavComponent  {
   faXmark = faXmark;
   faArrowLeft = faArrowLeft;
   faGear = faGear;
-
+  faArrowRightFromBracket = faArrowRightFromBracket;
   menuList: any[] = [
     { name: 'Home', location: 'home' , icon: faHouse},
     { name: 'Notifications', location: '', icon: faBell },

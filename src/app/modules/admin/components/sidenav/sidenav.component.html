@@ -1,31 +1,38 @@
-<div class="flex flex-col w-full relative h-full select-none" >
-  <div class="bg-blue-600 p-3 rounded-xl flex flex-col justify-center w-full">
-    <div class="basis-full flex justify-center">
-      <img src="../assets/img/resourcehub-logo-inv.png" class="h-10" >
-    </div>
-    <span class="flex justify-center text-white pb-3">Welcome to the Admin Interface</span>
-    <hr class="pb-1" />
-  </div>
-
-  <div class="flex flex-col mt-5 mx-5">
-    <div *ngFor="let item of menuList" class="py-3 font-semibold hover:cursor-pointer hover:opacity-60" (click)="item.location === '' ? toggleMenu('menuList') : navigateTo(item.location)"
-      [ngClass]="{
-        'bg-blue-500 px-2 rounded-lg text-white' : current_url === '/admin/'+item.location,
-        'text-blue-500' : this.modals['menuList'] && item.location === ''
-      }">
-      <fa-icon class="pr-2" [icon]="item.icon"></fa-icon>
-      {{ item.name }}
+<div class="fixed flex flex-col w-2/12 ml-1.5 h-full select-none" >
+  <div class="static">
+    <div class="static bg-blue-600 p-3 rounded-xl flex flex-col justify-center w-full">
+      <div class="basis-full flex justify-center">
+        <img src="../assets/img/resourcehub-logo-inv.png" class="h-10" >
+      </div>
+      <span class="flex justify-center text-white pb-3">Welcome to the Admin Interface</span>
+      <hr class="pb-1" />
     </div>
 
-    <div class="py-3 font-semibold hover:cursor-pointer hover:opacity-60 mt-20 text-center" (click)="signOut()">
-      <!-- <fa-icon [icon]="faGear" class="mr-2"></fa-icon> -->
-      Sign Out
-    </div>
-  </div>
+    <div class="flex flex-col mt-5 mx-5">
+      <div *ngFor="let item of menuList" class="py-3 font-semibold hover:cursor-pointer hover:opacity-60" (click)="item.location === '' ? toggleMenu('menuList') : navigateTo(item.location)"
+        [ngClass]="{
+          'bg-blue-500 px-2 rounded-lg text-white' : current_url === '/admin/'+item.location,
+          'text-blue-500' : this.modals['menuList'] && item.location === ''
+        }">
+        <fa-icon class="pr-2" [icon]="item.icon"></fa-icon>
+        {{ item.name }}
+      </div>
 
-  <div class="absolute bottom-10 w-full text-center">
-    ResourceHub &#xA9; 2025 <br />
-    All rights reserved
+
+    </div>
+
+    <div class="absolute bottom-10 w-full text-center flex flex-col">
+      <div class="flex justify-center">
+        <div class="py-2 mb-5 w-3/5 font-semibold hover:cursor-pointer hover:opacity-60 text-center border-2 rounded-lg" (click)="signOut()">
+          <fa-icon [icon]="faArrowRightFromBracket" class="mr-2"></fa-icon>
+          Sign Out
+        </div>
+      </div>
+      <div>
+        ResourceHub &#xA9; 2025 <br />
+        All rights reserved
+      </div>
+    </div>
   </div>
 </div>
 
