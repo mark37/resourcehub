@@ -43,6 +43,14 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  goToLogin() {
+    this.router.navigate(['/login']);
+  }
+
+  goToSignup() {
+    this.router.navigate(['/signup'])
+  }
+
   signout() {
     localStorage.clear();
     this.router.navigate(['/']);

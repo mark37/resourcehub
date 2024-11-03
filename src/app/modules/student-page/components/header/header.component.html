@@ -38,10 +38,10 @@
         <button class="text-right mr-3 mt-3" (click)="toggleModal('menuList')">
           <fa-icon [icon]="faXmark"></fa-icon>
         </button>
-        <button class="text-right mt-12 mr-4">
+        <button *ngIf="!withCred" (click)="goToLogin()" class="text-right mt-12 mr-4" >
           Log In
         </button>
-        <button class="text-right mr-4">
+        <button *ngIf="!withCred" (click)="goToSignup()" class="text-right mr-4">
           Sign Up
         </button>
       </div>
