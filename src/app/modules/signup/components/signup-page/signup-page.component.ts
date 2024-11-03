@@ -42,6 +42,7 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
     if(page_value >= 1 && page_value <= 3) {
       if(!this.email_valid && page_value === 1) {
         console.log('test')
+        this.toggleRequired(page_value);
         this.checkEmail();
       } else {
         if(page_value === 1) this.loadLibraries();
@@ -83,6 +84,7 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
 
   is_saving: boolean = false;
   submit_message!: any;
+  sucess_form: boolean = false;
   onSubmit() {
     this.signUpForm.patchValue({
       ofw_flag: this.signUpForm.value.ofw_flag ? 1 : 0,
@@ -105,6 +107,8 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
     this.is_saving = true;
     this.http.register(formData).subscribe({
       next: (data: any) => {
+        this.sucess_form = true;
+        this.signUpForm.disable();
         this.submit_message = data.message;
         this.is_saving = false;
       },
@@ -240,7 +244,7 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
       suffix_name: ['NA'],
       contact_number: [null],
       email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-_]).{6,}$')]],
+      password: [null, [Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[#?!@$%^&*\\-_]).{6,}$')]],
       password_confirmation: [null, [Validators.required, Validators.minLength(6)]],
       gender: [null],
       birthdate: [null],

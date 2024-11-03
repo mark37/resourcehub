@@ -80,19 +80,6 @@
                 </div>
 
                 <div class="flex flex-col md:flex-row  justify-center">
-                  <!-- @if (!withStudentEmail) {
-                    <div class="flex flex-col w-full md:w-3/5 mr-3">
-                      <input #fileCor type="file" accept=".pdf,.doc,.docx" (change)="onFileChange($event, 'cor')" class="hidden" />
-                      <button (click)="fileCor.click()" class="btn-blue-nr bg-gray-300 text-gray-900 mt-5">
-                        <fa-icon [icon]="faArrowUpFromBracket"></fa-icon> Upload <br />
-                        <span class="text-[.6em]">COR/SOA/Entrollment Certificate</span>
-                      </button>
-                      <span class="text-center text-xs mt-1">
-                        Supported format PDF, DOC, DOCX <br />
-                        Maximum size 5MB
-                      </span>
-                    </div>|| !signUpForm.valid
-                  } -->
                   <div class="flex flex-col w-full md:w-3/5 ">
                     <button #proceedBtn [disabled]="checking_email  || (signUpForm.value.password !== signUpForm.value.password_confirmation)" (click)="navigatePage(1)" class="btn-blue-nr mt-5 h-14">
                       <fa-icon *ngIf="checking_email" [icon]="faCircleNotch" animation="spin" class="mr-1"></fa-icon>
@@ -113,7 +100,6 @@
                   <span class="text-blue-600 hover:cursor-pointer">Sign In</span>
                 </span>
               </div>
-            <!-- } -->
           </div>
         </div>
       </div>
@@ -121,15 +107,15 @@
       <div class="relative p-4 w-full max-w-5xl">
         <div class="flex flex-col">
           <div class="grid grid-cols-3 font-semibold text-center text-gray-500">
-            <div class="border-b-2 hover:cursor-pointer" (click)="navigatePage(1)" [class]="{'border-b-blue-600' : +page === 1}">
+            <button [disabled]="!signUpForm.valid" class="border-b-2 hover:cursor-pointer" (click)="navigatePage(1)" [class]="{'border-b-blue-600' : +page === 1}">
               Part 1
-            </div>
-            <div class="border-b-2 hover:cursor-pointer" (click)="navigatePage(2)" [class]="{'border-b-blue-600' : +page === 2}">
+            </button>
+            <button [disabled]="!signUpForm.valid" class="border-b-2 hover:cursor-pointer" (click)="navigatePage(2)" [class]="{'border-b-blue-600' : +page === 2}">
               Part 2
-            </div>
-            <div class="border-b-2 hover:cursor-pointer" (click)="navigatePage(3)" [class]="{'border-b-blue-600' : +page === 3}">
+            </button>
+            <button [disabled]="!signUpForm.valid" class="border-b-2 hover:cursor-pointer" (click)="navigatePage(3)" [class]="{'border-b-blue-600' : +page === 3}">
               Part 3
-            </div>
+            </button>
           </div>
 
           @switch (page) {
@@ -362,12 +348,13 @@
                   <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'average_monthly_income'"></app-error-label>
                 </div>
 
-                <div *ngIf="submit_message" class="flex italic text-sm text-red-600">
+                <div *ngIf="submit_message" class="flex italic text-sm " [ngClass]="{'text-blue-500': sucess_form, 'text-red-600' : !sucess_form}">
                   {{ submit_message }}
                 </div>
 
                 <div class="md:col-span-2 flex justify-end mt-5">
-                  <button [disabled]="is_saving" class="btn-blue" [disabled]="!signUpForm.valid" (click)="onSubmit()">
+                  <a class="btn-blue" *ngIf="signUpForm.disabled" href="/#">Back to landing page</a>
+                  <button *ngIf="signUpForm.enabled" [disabled]="is_saving" class="btn-blue" [disabled]="!signUpForm.valid" (click)="onSubmit()">
                     <fa-icon *ngIf="is_saving" [icon]="faCircleNotch" animation="spin" class="mr-1"></fa-icon>
                     Submit
                   </button>
