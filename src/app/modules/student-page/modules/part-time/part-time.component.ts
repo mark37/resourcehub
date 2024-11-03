@@ -66,7 +66,8 @@ export class PartTimeComponent implements OnInit {
     if(this.infoWindow) this.infoWindow.open(marker);
   }
 
-  loadPartTime(page?: number){
+  with_radius: boolean = true;
+  loadPartTime(show_all: boolean, page?: number){
     this.isLoading = true;
     let params: any = {};
 
@@ -74,9 +75,14 @@ export class PartTimeComponent implements OnInit {
     params['page'] = page ?? 1;
     params['per_page'] = 10;
     params['lib_posting_category_id'] = 1;
-    params['radius'] = this.radius;
-    params['lat'] = this.center.lat;
-    params['lng'] = this.center.lng;
+    if(show_all === false) {
+      this.with_radius = true;
+      params['radius'] = this.radius;
+      params['lat'] = this.center.lat;
+      params['lng'] = this.center.lng;
+    } else {
+      this.with_radius = false;
+    }
 
     if(this.search) params['search'] = this.search;
 
@@ -140,7 +146,7 @@ export class PartTimeComponent implements OnInit {
             lng: position.coords.longitude
           };
           this.zoom = 14; // Adjust zoom level to focus on the location
-          this.loadPartTime();
+          this.loadPartTime(false, 1);
           this.gettingLocation = false;
         },
         error => {
@@ -156,7 +162,7 @@ export class PartTimeComponent implements OnInit {
   updatingLocation: boolean = false;
   toggleLocationSelection() {
     this.updatingLocation = !this.updatingLocation;
-    this.loadPartTime()
+    this.loadPartTime(false, 1)
   }
 
   adjustCenterLocation(event?: google.maps.MapMouseEvent) {
@@ -170,7 +176,7 @@ export class PartTimeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadPartTime();
+    this.loadPartTime(false, 1);
     if(localStorage.getItem('access_token')) { this.isAuthenticated = true; } else { this.isAuthenticated = false; }
   }
 }

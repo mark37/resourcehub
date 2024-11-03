@@ -1,30 +1,14 @@
 <div class="flex flex-col mt-5 mx-5 md:mx-20">
   <div class="flex flex-col md:flex-row justify-between">
     <div class="font-semibold text-2xl text-blue-600 block basis-1/2">Part-time jobs</div>
-
-    <!-- <div class="flex flex-row justify-between text-base w-full mt-3 md:mt-0">
-      <div class="w-5/6 flex item-start">
-        <div class="input-txt rounded-l-md rounded-r-none border-r-0 w-8 p-1 pl-2">
-          <fa-icon [icon]="faSearch"></fa-icon>
-        </div>
-        <input type="text" [(ngModel)]="search" (keydown.enter)="loadPartTime()" class="input-txt placeholder:italic rounded-md rounded-l-none border-l-0" placeholder="Search scholarhip"/>
-      </div>
-
-      <div class="w-1/6 flex item-start ">
-        <button [disabled]="isLoading" (click)="loadPartTime()" class="px-3 btn-blue-nr ml-3">
-          <fa-icon [icon]="faFilter"></fa-icon>
-          <span class="hidden md:inline md:pl-1">Filter</span>
-        </button>
-      </div>
-    </div> -->
   </div>
 
   <div class="flex flex-col md:flex-row mt-5">
-    <div class="flex flex-col w-full md:w-1/2 mr-0 md:mr-5 mt-5 md:mt-0">
+    <div class="h-4/5 flex flex-col w-full md:w-3/5 mr-0 md:mr-5 mt-5 md:mt-0 mb-5">
       <div class="flex justify-between my-1">
         <div class="flex flex-col">
           <div>
-            Radius ({{ radius }}m): <input type="range" min="500" max="5000" (change)="loadPartTime()" [(ngModel)]="radius" class="ml-2 slider" id="myRange">
+            Radius ({{ radius }}m): <input type="range" min="500" max="5000" (change)="loadPartTime(false, 1)" [(ngModel)]="radius" class="ml-2 slider" id="myRange">
           </div>
         </div>
         <div class="w-1/2 flex justify-end">
@@ -38,9 +22,9 @@
           </button>
         </div>
       </div>
-      <div class="h-3/4 overflow-y-auto">
-        <google-map #map (mapClick)="updatingLocation ? adjustCenterLocation($event) : null" [center]="center"  class="w-full" [options]="options">
-          <map-circle *ngIf="!updatingLocation"
+      <div class="overflow-y-auto">
+        <google-map #map (mapClick)="updatingLocation ? adjustCenterLocation($event) : null" [center]="center" [width]="'620px'" height="700px" [options]="options">
+          <map-circle *ngIf="!updatingLocation && with_radius"
             [center]="center"
             [radius]="radius"
             [options]="circleOptions"
@@ -66,24 +50,27 @@
       </div>
     </div>
 
-    <div class="w-full md:w-1/2 mt-5 md:mt-0">
+    <div class="h-4/5 md:w-2/5 mt-5 md:mt-0">
       <div class="flex flex-row justify-between text-base w-full my-3 md:mt-0">
-        <div class="w-5/6 flex item-start">
+        <div class="w-8/12 flex item-start">
           <div class="input-txt rounded-l-md rounded-r-none border-r-0 w-8 p-1 pl-2">
             <fa-icon [icon]="faSearch"></fa-icon>
           </div>
-          <input type="text" [(ngModel)]="search" (keydown.enter)="loadPartTime()" class="input-txt placeholder:italic rounded-md rounded-l-none border-l-0" placeholder="Search part-time jobs"/>
+          <input type="text" [(ngModel)]="search" (keydown.enter)="loadPartTime(false, 1)" class="input-txt placeholder:italic rounded-md rounded-l-none border-l-0" placeholder="Search part-time jobs"/>
         </div>
 
         <div class="flex item-start text-xs">
-          <button [disabled]="isLoading" (click)="loadPartTime()" class="px-3 btn-blue-nr ml-3">
-            <fa-icon [icon]="faFilter"></fa-icon>
-            <span class="hidden md:inline md:pl-1">Filter</span>
+          <button [disabled]="isLoading" (click)="loadPartTime(false, 1)" class="px-3 btn-blue-nr ml-3">
+            <!-- <fa-icon [icon]="faSearch"></fa-icon> -->
+            <span class="hidden md:inline md:pl-1">Search</span>
+          </button>
+          <button [disabled]="isLoading" (click)="loadPartTime(true, 1)" class="px-3 btn-blue-nr ml-3">
+            <span class="hidden md:inline md:pl-1">All</span>
           </button>
         </div>
       </div>
 
-      <div class="h-3/5 overflow-y-auto border-b-2 border-gray-300">
+      <div class="h-4/5 overflow-y-auto ">
         <div *ngFor="let item of partTimeList" class="flex flex-col md:mr-3 mt-3 p-5 border border-gray-300 shadow-md rounded-lg ">
           <span class="text-gray-500 text-xs flex justify-between">
             <div>
