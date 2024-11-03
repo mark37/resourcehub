@@ -59,9 +59,11 @@
   (toggleModal)="toggleModal('apply-now')"
 ></app-apply-now>
 
+
 <app-post-details *ngIf="modals['view-details']"
   (toggleModal)="toggleModal('view-details')"
   [selected_posting]="selected_posting"
+  [isAuthenticated]="isAuthenticated"
 ></app-post-details>
 <!-- <app-view-details *ngIf="modals['view-details']"
   (toggleModal)="toggleModal('view-details')"

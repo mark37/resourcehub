@@ -25,7 +25,7 @@ export class ScholarshipComponent implements OnInit {
   from!: number;
   to!: number;
   total!: number;
-
+  isAuthenticated: boolean = false;
   selected_posting!: any;
   toggleModal(name: string, data?: any) {
     this.selected_posting = data;
@@ -59,6 +59,7 @@ export class ScholarshipComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if(localStorage.getItem('access_token')) { this.isAuthenticated = true; } else { this.isAuthenticated = false; }
     this.loadScholarship();
   }
 }
