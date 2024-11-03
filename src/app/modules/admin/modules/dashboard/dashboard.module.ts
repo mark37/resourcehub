@@ -11,13 +11,15 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { ApplicantListComponent } from './components/applicant-list/applicant-list.component';
 import { PageControllerComponent } from '../../../../components/page-controller/page-controller.component';
 import { UserInformationComponent } from '../../../../components/user-information/user-information.component';
+import { MessagingComponent } from './components/messaging/messaging.component';
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
     PostingPageComponent,
-    ApplicantListComponent
+    ApplicantListComponent,
+    MessagingComponent
   ],
   imports: [
     CommonModule,

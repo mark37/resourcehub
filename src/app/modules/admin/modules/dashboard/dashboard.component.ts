@@ -55,10 +55,6 @@ export class DashboardComponent implements OnInit{
 
   sms_message!: string | null;
 
-  getSegmentCount(char_count: number) : number {
-    return Math.ceil(char_count / 160);
-  }
-
   toggleMessaging(data?: any) {
     this.showMessaging = !this.showMessaging;
   }
@@ -75,65 +71,6 @@ export class DashboardComponent implements OnInit{
     if(name !== 'show-email' && name !== 'show-sms') {
       this.loadList();
     }
-
-    if(name === 'show-email' || name === 'show-sms') {
-      if(data) {
-        this.getMessageTemplate(data);
-      } else {
-        this.message_template = null;
-        this.sms_message = null;
-      }
-    }
-  }
-
-  message_template!: any;
-  is_saving: boolean = false;
-  getMessageTemplate(data: any) {
-    this.is_saving = true;
-    let params: any = {posting_id: data.id};
-    this.http.get('message-template', { params }).subscribe({
-      next: (data: any) => {
-        console.log(data);
-        this.message_template = data.data[0];
-
-        if(this.message_template && this.message_template.message) this.sms_message = this.message_template.message;
-        this.is_saving = false;
-      },
-      error: err => console.log(err)
-    })
-  }
-
-  saveTemplate() {
-    this.is_saving = true;
-    let params: any ={
-      posting_id: this.selected_posting.id,
-      is_approved: 1,
-      message: this.sms_message
-    };
-
-    this.http.post('message-template', params).subscribe({
-      next: (data: any) => {
-        console.log(data);
-        this.message_template = data.data;
-        if(this.message_template.message) this.sms_message = this.message_template.message;
-        this.is_saving = false;
-      },
-      error: err => console.log(err)
-    })
-  }
-
-  job_sent: boolean = false;
-  sendMessage() {
-    this.is_saving = true;
-    let params: any = { posting_id: this.selected_posting.id };
-    this.http.post('send-bulk-sms', params).subscribe({
-      next:(data: any) => {
-        console.log(data)
-        this.job_sent = true;
-        this.is_saving = false;
-      },
-      error: err => console.log(err)
-    })
   }
 
   togglePosting(data?: any){
