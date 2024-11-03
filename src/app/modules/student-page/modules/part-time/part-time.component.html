@@ -34,7 +34,7 @@
               <map-marker #marker="mapMarker" (mapClick)="openInfoWindow(marker, item.title)"
                 [position]="item.position.position"
                 [options]="markerOptions"
-                *ngIf="isMarkerWithinRadius(item.position.position)"
+                *ngIf="with_radius ? isMarkerWithinRadius(item.position.position) : true"
               />
             }
           }

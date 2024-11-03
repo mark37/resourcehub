@@ -88,9 +88,8 @@ export class PartTimeComponent implements OnInit {
 
     this.http.get('posting-information', { params }).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.partTimeList = data.data;
-        console.log(this.partTimeList);
+        // console.log(this.partTimeList);
         this.addMarker()
         this.isLoading = false;
       },
