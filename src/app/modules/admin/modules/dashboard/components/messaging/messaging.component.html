@@ -1,0 +1,138 @@
+<div class="flex flex-col mt-5 min-h-screen">
+  <span class="font-bold text-xl text-blue-600">
+    <button (click)="closeModal()">
+      <fa-icon [icon]="faArrowLeft"></fa-icon>
+    </button>
+    Bulk Messaging (SMS/Email)
+  </span>
+
+  <div class="flex flex-col rounded-lg">
+    <div class="flex flex-row w-full bg-white">
+      <div class="w-8/12 p-3 flex flex-col">
+        <span class="font-semibold">{{ selected_posting.title }}</span>
+        <span class="text-gray-400 text-sm">{{ selected_posting.lib_posting_category_id === '1' ? 'Part-time' : 'Scholarship' }}</span>
+      </div>
+
+      <div class="w-4/12 p-3 flex flex-col text-right">
+        <span class="font-semibold">Message will be sent to </span>
+        <span>{{ selected_posting.posting_applications_count }} Applicant{{ selected_posting.posting_applications_count > 1 ? 's' : '' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col bg-white py-3 px-5 mt-3 rounded-lg">
+    <div class="flex justify-between text-left">
+      <div class="flex flex-col">
+        <span class="font-semibold">SMS Message</span>
+        <!-- <span class="text-sm">Add texts and information for the content</span> -->
+      </div>
+      <div>
+        @if( job_sent ) {
+          <span class="bg-green-500 text-white rounded-full px-2 py-1 text-xs">
+            SMS Sending Queued
+          </span>
+        }
+      </div>
+    </div>
+
+    <div>
+      <div class="flex flex-col mt-5">
+        <span class="font-semibold text-sm">Approved Message</span>
+        <div class="w-full">
+          <textarea class="input-txt" rows="4" [(ngModel)]="approved_sms_message"></textarea>
+        </div>
+        <div class="flex justify-end">
+          {{ approved_sms_message ? approved_sms_message.length : 0 }}/{{ approved_sms_message ? getSegmentCount(approved_sms_message.length) : 1 }}
+        </div>
+      </div>
+
+      <div class="flex flex-col mt-2">
+        <span class="font-semibold text-sm">Reject Message</span>
+        <div class="w-full">
+          <textarea class="input-txt" rows="4" [(ngModel)]="rejected_sms_message"></textarea>
+        </div>
+        <div class="flex justify-end">
+          {{ rejected_sms_message ? rejected_sms_message.length : 0 }}/{{ rejected_sms_message ? getSegmentCount(rejected_sms_message.length) : 1 }}
+        </div>
+      </div>
+
+      <!-- <div class="flex justify-end my-3">
+        <button [disabled]="is_saving" *ngIf="!message_template?.message" class="bg-blue-600 text-white px-4 py-1 font-semibold rounded-full disabled:bg-gray-300 text-sm" (click)="saveTemplate()">
+          <fa-icon *ngIf="is_saving" [icon]="faCircleNotch" animation="spin" class="mr-2"></fa-icon>
+          <fa-icon *ngIf="!is_saving" [icon]="faSave"></fa-icon>
+          Save Template
+        </button>
+
+        <button [disabled]="is_saving || (message_template?.message === approved_sms_message)" *ngIf="message_template?.message" class="bg-orange-600 text-white px-4 py-1 font-semibold rounded-full mr-3 disabled:bg-gray-300 text-sm" (click)="saveTemplate()">
+          <fa-icon *ngIf="is_saving" [icon]="faCircleNotch" animation="spin" class="mr-2"></fa-icon>
+          <fa-icon *ngIf="!is_saving" [icon]="faSave"></fa-icon>
+          Update Template
+        </button>
+      </div> -->
+    </div>
+  </div>
+
+  <div class="flex flex-col bg-white py-3 px-5 mt-3 rounded-lg">
+    <div class="flex justify-between text-left">
+      <div class="flex flex-col">
+        <span class="font-semibold">Email Message</span>
+        <!-- <span class="text-sm">Add texts and information for the content</span> -->
+      </div>
+    </div>
+
+    <div>
+      <div class="flex flex-col mt-5">
+        <span class="font-semibold text-sm">Approved Message</span>
+        <div class="w-full">
+          <textarea class="input-txt" rows="4" [(ngModel)]="approved_email_message"></textarea>
+        </div>
+        <div class="flex justify-end">
+          {{ approved_email_message ? approved_email_message.length : 0 }}
+        </div>
+      </div>
+
+      <div class="flex flex-col mt-2">
+        <span class="font-semibold text-sm">Reject Message</span>
+        <div class="w-full">
+          <textarea class="input-txt" rows="4" [(ngModel)]="rejected_email_message"></textarea>
+        </div>
+        <div class="flex justify-end">
+          {{ rejected_email_message ? rejected_email_message.length : 0 }}
+        </div>
+      </div>
+
+      <!-- <div class="flex justify-end my-3">
+        <button [disabled]="is_saving" *ngIf="!message_template?.message" class="bg-blue-600 text-white px-4 py-1 font-semibold rounded-full disabled:bg-gray-300 text-sm" (click)="saveTemplate()">
+          <fa-icon *ngIf="is_saving" [icon]="faCircleNotch" animation="spin" class="mr-2"></fa-icon>
+          <fa-icon *ngIf="!is_saving" [icon]="faSave"></fa-icon>
+          Save Template
+        </button>
+
+        <button [disabled]="is_saving || (message_template?.message === approved_sms_message)" *ngIf="message_template?.message" class="bg-orange-600 text-white px-4 py-1 font-semibold rounded-full mr-3 disabled:bg-gray-300 text-sm" (click)="saveTemplate()">
+          <fa-icon *ngIf="is_saving" [icon]="faCircleNotch" animation="spin" class="mr-2"></fa-icon>
+          <fa-icon *ngIf="!is_saving" [icon]="faSave"></fa-icon>
+          Update Template
+        </button>
+      </div> -->
+    </div>
+  </div>
+
+  <div class="flex justify-end text-sm">
+    <button [disabled]="is_saving" *ngIf="message_template?.approved_sms_message || message_template?.rejected_sms_message || message_template?.approved_email_message || message_template?.rejected_email_message" class="mr-2 mt-3 mb-5 bg-blue-600 text-white px-8 py-2 font-semibold rounded-full disabled:bg-gray-300" (click)="saveTemplate()">
+      <fa-icon *ngIf="is_saving" [icon]="faCircleNotch" animation="spin" class="mr-2"></fa-icon>
+      <fa-icon *ngIf="!is_saving" [icon]="faSave"></fa-icon>
+      Update Template
+    </button>
+    <button [disabled]="is_saving || (message_template?.message !== approved_sms_message)" *ngIf="!message_template?.approved_sms_message || !message_template?.rejected_sms_message || !message_template?.approved_email_message || !message_template?.rejected_email_message"  class="mr-2 mt-3 mb-5 bg-blue-600 text-white px-8 py-2 font-semibold rounded-full disabled:bg-gray-300" (click)="saveTemplate()">
+      <fa-icon *ngIf="is_saving" [icon]="faCircleNotch" animation="spin" class="mr-2"></fa-icon>
+      <fa-icon *ngIf="!is_saving" [icon]="faSave"></fa-icon>
+      Sve Template
+    </button>
+    <button [disabled]="is_saving || (message_template?.message !== approved_sms_message)"  *ngIf="message_template?.approved_sms_message && message_template?.rejected_sms_message && message_template?.approved_email_message && message_template?.rejected_email_message" class="mt-3 mb-5 bg-blue-600 text-white px-8 py-2 font-semibold rounded-full disabled:bg-gray-300" (click)="sendMessage()">
+      <fa-icon *ngIf="is_saving" [icon]="faCircleNotch" animation="spin" class="mr-2"></fa-icon>
+      <fa-icon *ngIf="!is_saving" [icon]="faPaperPlane"></fa-icon>
+      Send Messages
+    </button>
+  </div>
+
+</div>
