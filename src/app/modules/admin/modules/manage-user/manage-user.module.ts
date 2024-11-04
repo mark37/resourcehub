@@ -21,7 +21,7 @@ import { MessagingSmsComponent } from '../../../../components/messaging-sms/mess
     PageControllerComponent,
     FormsModule,
     UserInformationComponent,
-    MessagingSmsComponent
+    MessagingSmsComponent,
   ]
 })
 export class ManageUserModule { }

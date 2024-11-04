@@ -1,6 +1,10 @@
-<div class="w-full bg-white p-4 min-h-96 text-xs rounded-lg shadow">
+<button (click)="onPrint1(tableElement)">
+
+</button>
+<div #tableRef ngxPrintElement class="w-full bg-white p-4 min-h-96 text-xs rounded-lg">
   <div class="flex justify-between border-b-2 border-gray-300 pb-1">
     <div class="flex flex-col">
+      <!-- <img src="http://localhost/resource-hub/storage/app/public/uploads/photos/01JBDF2XTBSJNAK2R3F92H786B.png" /> -->
       <span class="font-semibold text-xl">
         {{ user.first_name }} {{ user.middle_name }} {{ user.last_name }} {{ user.suffix_name !== 'NA' ? user.siffix_name : ''}}
       </span>
@@ -89,6 +93,10 @@
           @if(item.academic_program) { <span>{{ item.academic_program.desc }}</span> }
         </div>
       </div>
+
+      <div class="italic text-center py-5" *ngIf="!user.user_education || user.user_education.length === 0">
+        No Recorded Education History
+      </div>
     </fieldset>
 
     <fieldset class="border border-gray-300 rounded-md mt-3 w-1/2">
@@ -103,8 +111,13 @@
           <span class="">{{ item.job_description }}</span>
         </div>
       </div>
+
+      <div class="italic text-center py-5" *ngIf="!user.employment || user.employment.length === 0">
+        No Recorded Employment History
+      </div>
     </fieldset>
   </div>
+
   <fieldset class="border border-gray-300 rounded-md mt-3">
     <legend class="text-center px-5 font-semibold text-sm bg-green-300 py-1">References</legend>
     <div class="grid grid-cols-4 gap-5 m-5">
@@ -113,6 +126,10 @@
         <span>{{ item.company_name }}</span>
         <span>{{ item.contact_number }}</span>
       </div>
+    </div>
+
+    <div class="italic text-center pb-5" *ngIf="!user.reference || user.reference.length === 0">
+      No Recorded References
     </div>
   </fieldset>
 </div>

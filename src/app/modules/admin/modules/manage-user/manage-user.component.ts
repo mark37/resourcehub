@@ -48,14 +48,13 @@ export class ManageUserComponent implements OnInit {
     if(this.lib_cat_id) params['lib_cat_id'] = this.lib_cat_id;
     if(this.start_date) params['start_date'] = this.start_date;
     if(this.end_date) params['end_date'] = this.end_date;
-    // let params: any = { user_info: 1 };
+
     this.http.get('user-information', { params }).subscribe({
       next: (data:any) => {
         console.log(data);
         this.userList = data.data;
         this.meta = data.meta;
         this.isLoading = false;
-        // this.toggleModal('user-information', this.userList[0])
       },
       error: err => console.log(err)
     })
