@@ -97,10 +97,13 @@
           <tbody *ngIf="!isLoading">
             <tr *ngFor="let item of userList; let i = index; let odd = odd" class="hover:bg-sky-50 text-sm" [ngClass]="{'bg-orange-100 hover:bg-orange-300' : item.user_verified === null, 'bg-red-200 hover:bg-red-300' : item.user_verified === 0}">
               <td class="">
-                <button (click)="toggleModal('user-information', item)" class="rounded-md bg-blue-500 px-3 py-1 text-xs text-white hover:opacity-75">
-                  <fa-icon [icon]="faArrowRight"></fa-icon>
+                <button (click)="toggleModal('user-information', item)"  class="mt-2 mr-3 name-icon hover:opacity-75">
+                  <span class="font-medium text-gray-900 text-sm xl:text-lg select-none">{{ item.first_name[0] }}{{ item.last_name[0] }}</span>
                 </button>
-                {{ item.last_name }}, {{ item.first_name }} {{ item.middle_name }} {{ item.suffix_name !== 'NA' ? item.suffix_name : '' }}
+                <!-- <button (click)="toggleModal('user-information', item)" class="rounded-md bg-blue-500 px-3 py-1 text-xs text-white hover:opacity-75">
+                  <fa-icon [icon]="faArrowRight"></fa-icon>
+                </button> -->
+                {{ item.first_name }} {{ item.middle_name }} {{ item.suffix_name !== 'NA' ? item.suffix_name : '' }} {{ item.last_name }}
 
               </td>
               <td class="text-left text-xs">
