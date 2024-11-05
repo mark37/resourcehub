@@ -4,6 +4,10 @@
       User Profile
     </div>
     <div class="flex justify-end text-sm">
+      <button class="btn-blue bg-gray-400"  (click)="deactivateAccount()">
+        <!-- <fa-icon *ngIf="!showUpdateForm" [icon]="faEdit" class="text-white"></fa-icon> -->
+        Deactivate Account
+      </button>
       <button class="btn-blue " [ngClass]="{'bg-gray-400' : showUpdateForm, 'bg-orange-500' : !showUpdateForm }" (click)="toggleEditForm()">
         <fa-icon *ngIf="!showUpdateForm" [icon]="faEdit" class="text-white"></fa-icon>
         {{ showUpdateForm ? 'Cancel' : 'Update' }}
