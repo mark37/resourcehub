@@ -16,10 +16,10 @@ export class MessagingComponent implements OnInit {
   faPaperPlane = faPaperPlane;
   faArrowLeft = faArrowLeft;
 
-  approved_sms_message!: string;
-  rejected_sms_message!: string;
-  approved_email_message!: string;
-  rejected_email_message!: string;
+  mobile_message_approved!: string;
+  mobile_message_rejected!: string;
+  email_message_approved!: string;
+  email_message_rejected!: string;
 
   is_saving: boolean = false;
 
@@ -45,11 +45,10 @@ export class MessagingComponent implements OnInit {
     this.is_saving = true;
     let params: any ={
       posting_id: this.selected_posting.id,
-      is_approved: 1,
-      approved_sms_message: this.approved_sms_message,
-      rejected_sms_message: this.rejected_sms_message,
-      approved_email_message: this.approved_email_message,
-      rejected_email_message: this.rejected_email_message
+      mobile_message_approved: this.mobile_message_approved,
+      mobile_message_rejected: this.mobile_message_rejected,
+      email_message_approved: this.email_message_approved,
+      email_message_rejected: this.email_message_rejected
     };
 
     this.http.post('message-template', params).subscribe({
@@ -57,10 +56,10 @@ export class MessagingComponent implements OnInit {
         console.log(data);
         this.message_template = data.data;
         if(this.message_template) {
-          this.approved_sms_message = this.message_template.approved_sms_message;
-          this.rejected_sms_message = this.message_template.rejected_sms_message;
-          this.approved_email_message = this.message_template.approved_email_message;
-          this.rejected_email_message = this.message_template.rejected_email_message;
+          this.mobile_message_approved = this.message_template.mobile_message_approved;
+          this.mobile_message_rejected = this.message_template.mobile_message_rejected;
+          this.email_message_approved = this.message_template.email_message_approved;
+          this.email_message_rejected = this.message_template.email_message_rejected;
         }
         this.is_saving = false;
       },
@@ -77,7 +76,12 @@ export class MessagingComponent implements OnInit {
         console.log(data);
         this.message_template = data.data[0];
 
-        if(this.message_template && this.message_template.message) this.approved_sms_message = this.message_template.message;
+        if(this.message_template) {
+          this.mobile_message_approved = this.message_template.mobile_message_approved;
+          this.mobile_message_rejected = this.message_template.mobile_message_rejected;
+          this.email_message_approved = this.message_template.email_message_approved;
+          this.email_message_rejected = this.message_template.email_message_rejected;
+        }
         this.is_saving = false;
       },
       error: err => console.log(err)
