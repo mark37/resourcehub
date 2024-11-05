@@ -2,7 +2,7 @@ import { Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } fro
 import { HttpService } from '../../shared/http.service';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCakeCandles, faEnvelope, faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { faCakeCandles, faEnvelope, faLocationDot, faPrint } from '@fortawesome/free-solid-svg-icons';
 import { NgxPrintElementComponent, NgxPrintElementDirective, NgxPrintElementService } from 'ngx-print-element';
 
 @Component({
@@ -21,6 +21,7 @@ export class UserInformationComponent implements OnChanges{
   faCakeCandles = faCakeCandles;
   faEnvelope = faEnvelope;
   faLocationDot = faLocationDot;
+  faPrint = faPrint;
 
   user!: any;
 
