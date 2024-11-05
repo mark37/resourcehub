@@ -23,7 +23,7 @@ export class PartTimeComponent implements OnInit {
   partTimeList: any[] = [];
   modals: any[string] = [];
   isLoading: boolean = false;
-  search!: string;
+  search!: string | null;
   isAuthenticated: boolean = false;
   options: google.maps.MapOptions = {
     mapId: "DEMO_MAP_ID",
@@ -71,7 +71,7 @@ export class PartTimeComponent implements OnInit {
     this.isLoading = true;
     let params: any = {};
 
-    if(this.search) params['search'] = this.search
+
     params['page'] = page ?? 1;
     params['per_page'] = 10;
     params['lib_posting_category_id'] = 1;
@@ -81,6 +81,7 @@ export class PartTimeComponent implements OnInit {
       params['lat'] = this.center.lat;
       params['lng'] = this.center.lng;
     } else {
+      this.search = null;
       this.with_radius = false;
     }
 
@@ -164,6 +165,23 @@ export class PartTimeComponent implements OnInit {
     this.loadPartTime(false, 1)
   }
 
+  getMapWidth() : string {
+    let screenWidth = this.screenWidth
+    if(screenWidth >= 768) {
+      screenWidth = ((this.screenWidth/5)*2.73);
+    }
+
+    const map_size = screenWidth - 40
+    return map_size+'px'
+  }
+
+  screenWidth!: number;
+  screenHeight!: number;
+  getMapHeight(): string {
+    const map_size = this.screenHeight*.73;
+    return map_size+'px'
+  }
+
   adjustCenterLocation(event?: google.maps.MapMouseEvent) {
     if (event?.latLng) {
       this.center = event?.latLng?.toJSON();
@@ -172,7 +190,10 @@ export class PartTimeComponent implements OnInit {
 
   constructor(
     private http: HttpService
-  ) { }
+  ) {
+    this.screenWidth = window.innerWidth;
+    this.screenHeight = window.innerHeight;
+  }
 
   ngOnInit(): void {
     this.loadPartTime(false, 1);

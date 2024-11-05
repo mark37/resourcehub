@@ -22,8 +22,8 @@
           </button>
         </div>
       </div>
-      <div class="overflow-y-auto">
-        <google-map #map (mapClick)="updatingLocation ? adjustCenterLocation($event) : null" [center]="center" [width]="'620px'" height="700px" [options]="options">
+      <div class="overflow-y-auto"><!-- 372px -->
+        <google-map #map (mapClick)="updatingLocation ? adjustCenterLocation($event) : null" [center]="center" [width]="getMapWidth()" [height]="getMapHeight()" [options]="options">
           <map-circle *ngIf="!updatingLocation && with_radius"
             [center]="center"
             [radius]="radius"
@@ -62,15 +62,15 @@
         <div class="flex item-start text-xs">
           <button [disabled]="isLoading" (click)="loadPartTime(false, 1)" class="px-3 btn-blue-nr ml-3">
             <!-- <fa-icon [icon]="faSearch"></fa-icon> -->
-            <span class="hidden md:inline md:pl-1">Search</span>
+            <span class="md:pl-1">Search</span>
           </button>
           <button [disabled]="isLoading" (click)="loadPartTime(true, 1)" class="px-3 btn-blue-nr ml-3">
-            <span class="hidden md:inline md:pl-1">All</span>
+            <span class="md:pl-1">All</span>
           </button>
         </div>
       </div>
 
-      <div class="h-4/5 overflow-y-auto ">
+      <div class="h-3/5 overflow-y-auto">
         <div *ngFor="let item of partTimeList" class="flex flex-col md:mr-3 mt-3 p-5 border border-gray-300 shadow-md rounded-lg ">
           <span class="text-gray-500 text-xs flex justify-between">
             <div>
@@ -100,6 +100,19 @@
             <button class="btn-blue" (click)="toggleModal('view-details', item)">
               view details
               <fa-icon [icon]="faArrowRight"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="partTimeList.length === 0" class="flex flex-col w-full">
+          <div class="flex justify-center">
+            <img src="../assets/img/no-recent.png" class="h-18"/>
+          </div>
+          <div class="flex flex-col justify-center mb-5 w-3/5 mx-auto text-center">
+            <span class="font-semibold">No scanned Part-time Job Posts</span>
+            <div class="mt-3 text-sm">Scanned part-time job posting show up here</div>
+            <button (click)="loadPartTime(true, 1)" class="text-blue-600 font-semibold mt-3">
+              VIEW ALL POSTING
             </button>
           </div>
         </div>
