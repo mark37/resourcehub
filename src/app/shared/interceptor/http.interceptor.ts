@@ -11,12 +11,14 @@ export const httpInterceptor: HttpInterceptorFn = (request, next) => {
     return next(request); // Optional: Only proceed if necessary or return an error
   }
  */
+  const isCheckEmailRoute = request.url.includes('check-email');
+
   const clonedRequest = request.clone({
     headers: request.headers
       .set('Accept', 'application/json')
-      .set('withCredentials', 'true')
       .set('Authorization', `Bearer ${authToken}`)
-      .set('Access-Control-Allow-Origin', '*')
+      .set('Access-Control-Allow-Origin', '*'),
+    withCredentials: !isCheckEmailRoute
   });
 
   return next(clonedRequest);
