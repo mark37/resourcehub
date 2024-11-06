@@ -77,6 +77,16 @@ export class ManageProfileComponent implements OnInit {
     })
   }
 
+  deactivateAccount() {
+    console.log('test')
+    /* this.http.post('deactivate', {params:{}}).subscribe({
+      next:(data: any) => {
+        console.log(data)
+      },
+      error: err => console.log(err)
+    }) */
+  }
+
   createForms() {
     this.loadData('user-education', 'educationList');
     this.loadData('user-employment', 'workExperienceList');
