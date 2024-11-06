@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { faArrowLeft, faCircleNotch, faEllipsis, faFilter, faPaperPlane, faPenToSquare, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCircleNotch, faEllipsis, faFileExcel, faFilter, faPaperPlane, faPenToSquare, faPrint, faSave } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from '../../../../shared/http.service';
 import { formatDate } from '@angular/common';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,6 +18,8 @@ export class DashboardComponent implements OnInit{
   faPenToSquare = faPenToSquare;
   faCircleNotch = faCircleNotch;
   faSave = faSave;
+  faPrint = faPrint;
+  faFileExcel = faFileExcel;
 
   max_date = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/manila');
   showMessaging: boolean = false;
@@ -90,13 +94,67 @@ export class DashboardComponent implements OnInit{
 
     this.http.get('posting-information', { params }).subscribe({
       next: (data: any) => {
-        // console.log(data);
+        console.log(data);
         this.postList = data.data;
         this.meta = data.meta;
         this.isLoading = false;
       },
       error: err => console.log(err)
     });
+  }
+
+  allPostingArray!: {title: string, date_published: string, date_end: string, slot: number, address: string}[];
+  getAllData() {
+    let params: any = {};
+    params['include'] = 'applicants';
+    params['per_page'] = 10;
+    if(this.start_date) params['start_date'] = this.start_date;
+    if(this.end_date) params['end_date'] = this.end_date;
+    if(this.category) params['lib_posting_category_id'] = this.category;
+    if(this.is_published) params['is_published'] = this.is_published;
+
+    this.allPostingArray = [];
+
+    const fetchPage = (page: number) => {
+      params['page'] = page;
+
+      this.http.get('posting-information', { params }).subscribe({
+        next: (data: any) => {
+          const filteredData = data.data.map((item: any) => ({
+            title: item.title,
+            address: item.address,
+            applied_slot: item.posting_applications_count,
+            slot: item.slot,
+            date_published: item.date_published,
+            date_end: item.date_end
+          }));
+
+          this.allPostingArray.push(...filteredData);
+          if( page < data.meta.last_page ) {
+            fetchPage( page + 1 );
+          } else {
+            this.exportToExcel(this.allPostingArray)
+          }
+        },
+        error: err => console.log(err)
+      });
+    };
+
+    fetchPage(1);
+  }
+
+  exportToExcel(data: any) {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    const workBook: XLSX.WorkBook = { Sheets: {'data': worksheet}, SheetNames: ['data'] };
+    const excelBuffer: any = XLSX.write(workBook, { bookType: 'xlsx', type: 'array' });
+
+    this.saveAsExcelFile(excelBuffer, 'posting_list');
+  }
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
+    saveAs(data, `${fileName}.xlsx`);
   }
 
   constructor(
