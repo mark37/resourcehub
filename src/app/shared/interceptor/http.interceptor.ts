@@ -16,8 +16,8 @@ export const httpInterceptor: HttpInterceptorFn = (request, next) => {
   const clonedRequest = request.clone({
     headers: request.headers
       .set('Accept', 'application/json')
-      .set('Authorization', `Bearer ${authToken}`)
-      .set('Access-Control-Allow-Origin', '*'),
+      .set('Authorization', `Bearer ${authToken}`),
+      // .set('Access-Control-Allow-Origin', '*'),
     withCredentials: !isCheckEmailRoute
   });
 
