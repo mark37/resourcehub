@@ -18,9 +18,9 @@
       </div>
 
       <div *ngIf="!modals['show-email'] && !modals['show-applicants'] && !modals['show-posting']">
-        <button class="btn-blue-nr bg-green-700 my-3 px-2 mr-3" (click)="getAllData()">
+        <!-- <button class="btn-blue-nr bg-green-700 my-3 px-2 mr-3" (click)="getAllData()">
           <fa-icon [icon]="faFileExcel"></fa-icon>
-        </button>
+        </button> -->
         <button class="btn-blue-nr my-3 px-2" (click)="toggleModal('show-posting')">
           <fa-icon [icon]="faPenToSquare"></fa-icon>
           Create Post
