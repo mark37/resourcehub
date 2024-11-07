@@ -87,7 +87,8 @@ export class PartTimeComponent implements OnInit {
 
     if(this.search) params['search'] = this.search;
 
-    this.http.get('posting-information', { params }).subscribe({
+    const access_url = this.isAuthenticated ? 'posting-information' : 'public-info';
+    this.http.get(access_url, { params }).subscribe({
       next: (data: any) => {
         this.partTimeList = data.data;
         // console.log(this.partTimeList);
@@ -177,11 +178,15 @@ export class PartTimeComponent implements OnInit {
 
   screenWidth!: number;
   screenHeight!: number;
-  getMapHeight(): string {
+  getMapHeight(): any {
     const map_size = this.screenHeight*.73;
     return map_size+'px'
   }
 
+  getMapHeightStr(): string {
+    const map_size = this.screenHeight*.73;
+    return 'h-'+map_size+'px'
+  }
   adjustCenterLocation(event?: google.maps.MapMouseEvent) {
     if (event?.latLng) {
       this.center = event?.latLng?.toJSON();
