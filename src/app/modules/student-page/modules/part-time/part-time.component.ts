@@ -75,6 +75,7 @@ export class PartTimeComponent implements OnInit {
     params['page'] = page ?? 1;
     params['per_page'] = 10;
     params['lib_posting_category_id'] = 1;
+    params['is_published'] = 'published';
     if(show_all === false) {
       this.with_radius = true;
       params['radius'] = this.radius;
