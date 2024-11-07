@@ -33,7 +33,6 @@ export class LoginComponent {
       this.http.login(this.loginForm.value).subscribe({
         next: (data: any) => {
           // console.log(data)
-          this.isLoading = false
           localStorage.setItem('access_token', data.data.token);
 
           if(data.data.user.is_admin) {
@@ -41,6 +40,8 @@ export class LoginComponent {
           } else {
             this.router.navigate(['/student'])
           }
+
+          this.isLoading = false
         },
         error: err => {console.log(err)
           this.showError = true;

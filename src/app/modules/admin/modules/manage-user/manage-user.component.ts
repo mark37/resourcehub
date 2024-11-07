@@ -30,7 +30,7 @@ export class ManageUserComponent implements OnInit {
 
   category: string[] = ['pending', 'verified', 'rejected'];
   activeStatus: string[] = ['active', 'inactive'];
-  studentEmailList: string[] = ['student', 'personal'];
+  studentEmailList: string[] = ['school', 'personal'];
 
   scholarPartTime: any[] = [
     { id: 2, title: 'Scholarship'},
@@ -50,12 +50,13 @@ export class ManageUserComponent implements OnInit {
     params['page'] = page ?? 1;
     params['user_info'] = 1;
     if(this.active_status) params['active_status'] = this.active_status;
-    if(this.emailType) params['emailType'] = this.emailType;
+    if(this.emailType) params['email_used'] = this.emailType;
     if(this.is_verified) params['is_verified'] = this.is_verified;
     if(this.lib_cat_id) params['lib_cat_id'] = this.lib_cat_id;
     if(this.start_date) params['start_date'] = this.start_date;
     if(this.end_date) params['end_date'] = this.end_date;
 
+    console.log(params)
     this.http.get('user-information', { params }).subscribe({
       next: (data:any) => {
         console.log(data);
