@@ -2,24 +2,39 @@
 
   <div class="flex flex-col mt-5 min-h-screen">
     <div class="flex justify-between">
-      <div>
-        <span *ngIf="modals['user-information']" class="text-blue-600">
-          <button (click)="toggleModal('user-information')">
-            <fa-icon [icon]="faArrowLeft"></fa-icon>
+      <div class="flex justify-between w-full">
+        <div>
+          <span *ngIf="modals['user-information']" class="text-blue-600">
+            <button (click)="toggleModal('user-information')">
+              <fa-icon [icon]="faArrowLeft"></fa-icon>
+            </button>
+          </span>
+          <span class="font-semibold text-xl">
+            User Accounts <br />
+            <span class="text-sm font-normal">
+              Listing of Users, List of User Reports, Delete User Accounts, Data Backups, Audit Trail
+            </span>
+          </span>
+        </div>
+        <div *ngIf="!modals['user-information']">
+          <button class="btn-blue-nr bg-green-700 my-3 px-2 ml-1" (click)="getAllData()">
+            <fa-icon [icon]="faFileExcel"></fa-icon>
           </button>
-        </span>
-        <span class="font-semibold text-xl">
-          User Accounts
-        </span>
+        </div>
       </div>
     </div>
-    <span class="text-sm">
-      Listing of Users, List of User Reports, Delete User Accounts, Data Backups, Audit Trail
-    </span>
 
     <div *ngIf="!modals['user-information'] && !modals['show-sms']" class="bg-white select-none">
       <div class="bg-white w-full">
         <div class="flex flex-row justify-end bg-gray-200 m-3 rounded-md py-2 text-xs">
+          <div class="mr-3">
+            <span class="pt-2 mr-1">Email Type</span>
+            <select [(ngModel)]="is_verified" class="input-txt capitalize">
+              <option [ngValue]="null">All</option>
+              <option *ngFor="let item of studentEmailList" [value]="item">{{ item }}</option>
+            </select>
+          </div>
+
           <div class="mr-3">
             <span class="pt-2 mr-1">Category</span>
             <select [(ngModel)]="is_verified" class="input-txt capitalize">
