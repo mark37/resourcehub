@@ -29,8 +29,8 @@
               <fa-icon [icon]="faCheckCircle" class="text-green-500" *ngIf="item.is_applied"></fa-icon>
             </td>
             <td>
-              <fa-icon [icon]="faCheckCircle" class="text-green-500" *ngIf="item.is_approved"></fa-icon>
-              <fa-icon [icon]="faCircleXmark" class="text-red-500" *ngIf="item.is_approved && item.is_approved === 0"></fa-icon>
+              <fa-icon [icon]="faCheckCircle" class="text-green-500" *ngIf="item?.is_approved === 1"></fa-icon>
+              <fa-icon [icon]="faCircleXmark" class="text-red-500" *ngIf="item?.is_approved === 0"></fa-icon>
             </td>
           </tr>
         </tbody>

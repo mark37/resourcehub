@@ -27,7 +27,12 @@
             <app-error-label *ngIf="formSubmitted" [childForm]="loginForm" [childFormName]="'email'"></app-error-label>
           </div>
           <div>
-            <input type="password" class="input-txt" formControlName="password" placeholder="Enter your Password"/>
+            <div class="flex">
+              <input [type]="isInputPass ? 'password' : 'text'" class="input-txt rounded-r-none border-r-0" formControlName="password" placeholder="Enter your Password"/>
+              <button (click)="togglePassword()" class="input-txt w-12 rounded-l-none border-l-0">
+                <fa-icon [icon]="isInputPass ? faEye : faEyeSlash"></fa-icon>
+              </button>
+            </div>
             <app-error-label *ngIf="formSubmitted" [childForm]="loginForm" [childFormName]="'password'"></app-error-label>
           </div>
           <span class="hover:cursor-pointer text-blue-600 mt-1 text-xs text-right">Forgot password?</span>

@@ -70,13 +70,18 @@
 
                 <div>
                   <label for="password" class="text-xs text-gray-400">Password (6+ Character)</label>
-                  <input (keypress)="handleKeyPress($event, proceedBtn)" id="password" formControlName="password" type="password" class="input-txt -mb-2" placeholder="Enter your Password"/>
+                  <div class="flex">
+                    <input (keypress)="handleKeyPress($event, proceedBtn)" id="password" formControlName="password" [type]="isInputPass ? 'password' : 'text'" class="input-txt rounded-r-none border-r-0" placeholder="Enter your Password"/>
+                    <button (click)="togglePassword()" class="input-txt w-12 rounded-l-none border-l-0">
+                      <fa-icon [icon]="isInputPass ? faEye : faEyeSlash"></fa-icon>
+                    </button>
+                  </div>
                   <app-error-label [childForm]="signUpForm" [childFormName]="'password'"></app-error-label>
                 </div>
 
                 <div>
                   <label for="password_confirmation" class="text-xs text-gray-400">Confirm Password</label>
-                  <input (keypress)="handleKeyPress($event, proceedBtn)" id="password_confirmation" formControlName="password_confirmation" type="password" class="input-txt -mb-2" placeholder="Confirm your Password"/>
+                  <input (keypress)="handleKeyPress($event, proceedBtn)" id="password_confirmation" formControlName="password_confirmation" [type]="isInputPass ? 'password' : 'text'" class="input-txt" placeholder="Confirm your Password"/>
                   <span *ngIf="(signUpForm.value.password !== signUpForm.value.password_confirmation)" class="error-label">
                     Password does not match
                   </span>

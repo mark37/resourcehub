@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { faArrowUpFromBracket, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUpFromBracket, faCircleNotch, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { signUpForm } from './signUpForm';
 import { HttpService } from '../../../../shared/http.service';
 import { forkJoin } from 'rxjs';
@@ -17,7 +17,8 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
 
   faArrowUpFromBracket = faArrowUpFromBracket;
   faCircleNotch = faCircleNotch;
-
+  faEye = faEye;
+  faEyeSlash = faEyeSlash;
   modals: any[string] = [];
   page: number = 0;
 
@@ -215,6 +216,11 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
       next: (data: any) => { (this as any)[include] = data.data[include] },
       error: err => console.log(err)
     });
+  }
+
+  isInputPass: boolean = true;
+  togglePassword() {
+    this.isInputPass = !this.isInputPass
   }
 
   file_err_message!: string | null;

@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { ErrorLabelComponent } from '../../shared/components/error-label/error-label.component';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
@@ -16,6 +16,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 })
 export class LoginComponent {
   faCircleNotch = faCircleNotch;
+  faEye = faEye;
+  faEyeSlash = faEyeSlash;
 
   formSubmitted: boolean = false;
   isLoading: boolean = false;
@@ -26,6 +28,11 @@ export class LoginComponent {
     email: new FormControl<string|null>(null),
     password: new FormControl<string|null>(null)
   });
+
+  isInputPass: boolean = true;
+  togglePassword() {
+    this.isInputPass = !this.isInputPass
+  }
 
   onSubmit() {
     if(this.loginForm.valid) {
