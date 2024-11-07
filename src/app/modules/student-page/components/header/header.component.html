@@ -10,6 +10,11 @@
           <span class="hover:cursor-pointer px-5 align-middle text-indigo-800" [ngClass]="{'border-b-4 border-indigo-800' : current_url === '/student/' + menu.location}" (click)="navigateTo(menu.location)">{{ menu.name }}</span>
         }
       }
+      @if(!withCred) {
+        |
+        <a class="hover:cursor-pointer px-5 align-middle text-indigo-800" [ngClass]="{'border-b-4 border-indigo-800' : current_url === '/signup' }" href="#/signup">Signup</a>
+        <a class="hover:cursor-pointer px-5 align-middle text-indigo-800" [ngClass]="{'border-b-4 border-indigo-800' : current_url === '/signup' }" href="#/login">Login</a>
+      }
     </div>
     @if(withCred) {
       <button (click)="toggleModal('accountMenuList')">

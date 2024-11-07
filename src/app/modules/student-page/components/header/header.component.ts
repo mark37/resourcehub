@@ -20,10 +20,11 @@ export class HeaderComponent implements OnInit {
     {name: 'Scholarships', location: 'scholarship', requiredCred: false},
     {name: 'Part-time Jobs', location: 'part-time', requiredCred: false},
     {name: 'History', location: 'history', requiredCred: true},
+    // {name: 'Login', location: 'part-time', requiredCred: false},
+    // {name: 'Signup', location: 'part-time', requiredCred: false},
   ];
 
   accountMenuList: {name:string, location:string, requiredCred:boolean}[] = [
-    // {name: 'Manage Account', location: 'manage', requiredCred: true},
     {name: 'Update Profile', location: 'manage-profile', requiredCred: true},
     {name: 'Deactivate Account', location: 'deactivate', requiredCred: true},
     {name: 'Sign Out', location: 'signout', requiredCred: true},
@@ -37,9 +38,14 @@ export class HeaderComponent implements OnInit {
     if(location === 'signout') {
       this.signout();
     } else {
-      if(location === 'manage-profile' || location === 'deactivate') this.toggleModal('accountMenuList')
-      if(this.modals['menuList']) this.toggleModal('menuList');
-      this.router.navigate(['student/'+location])
+      console.log(location)
+      if(!this.withCred && location === '') {
+
+      } else {
+        if(location === 'manage-profile' || location === 'deactivate') this.toggleModal('accountMenuList')
+          if(this.modals['menuList']) this.toggleModal('menuList');
+          this.router.navigate(['student/'+location])
+      }
     }
   }
 
