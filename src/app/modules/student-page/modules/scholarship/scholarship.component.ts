@@ -39,7 +39,8 @@ export class ScholarshipComponent implements OnInit {
     params['lib_posting_category_id'] = 2;
     if(this.searchTerm) params['search'] = this.searchTerm;
 
-    this.http.get('posting-information', { params }).subscribe({
+    const access_url = this.isAuthenticated ? 'posting-information' : 'public-info';
+    this.http.get(access_url, { params }).subscribe({
       next: (data: any) => {
         console.log(data);
         this.scholarList = data.data;
