@@ -40,76 +40,55 @@
               </a>
             </div>
 
-            <!-- @if(showOTPPage) {
-              <div class="flex flex-col p-3 md:p-10">
-                <div class="flex justify-center text-xl text-blue-600">
-                  Authentication
-                </div>
-                <div class="text-center">
-                  Please check the code sent to your Student Email Address then enter them below
-                </div>
+            <div class="flex flex-col p-3 md:p-10">
+              <div class="mb-5">
+                <label id="email" class="text-xs text-gray-400">Email</label>
+                <input #emailInput (keypress)="handleKeyPress($event, proceedBtn)" id="email" formControlName="email" type="text" class="input-txt -mb-2" placeholder="Enter your email"/>
+                <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'email'"></app-error-label>
+              </div>
 
-                <div class="mt-8">
-                  <input type="text" class="input-txt text-2xl text-center" placeholder="Enter the given code" />
-                  <button class="btn-blue-nr w-full mt-3 text-xl" (click)="navigatePage(1)">
-                    Verify
+              <div>
+                <label for="password" class="text-xs text-gray-400">Password (6+ Character)</label>
+                <div class="flex">
+                  <input (keypress)="handleKeyPress($event, proceedBtn)" id="password" formControlName="password" [type]="isInputPass ? 'password' : 'text'" class="input-txt rounded-r-none border-r-0" placeholder="Enter your Password"/>
+                  <button (click)="togglePassword()" class="input-txt w-12 rounded-l-none border-l-0">
+                    <fa-icon [icon]="isInputPass ? faEye : faEyeSlash"></fa-icon>
                   </button>
                 </div>
-
-                <div class="text-center mt-10 font-semibold text-blue-600" (click)="resendCode()">
-                  Resend Code
-                </div>
+                <app-error-label [childForm]="signUpForm" [childFormName]="'password'"></app-error-label>
               </div>
-            } @else { -->
-              <div class="flex flex-col p-3 md:p-10">
-                <div class="mb-5">
-                  <label id="email" class="text-xs text-gray-400">Email</label>
-                  <input #emailInput (keypress)="handleKeyPress($event, proceedBtn)" id="email" formControlName="email" type="text" class="input-txt -mb-2" placeholder="Enter your email"/>
-                  <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'email'"></app-error-label>
-                </div>
 
-                <div>
-                  <label for="password" class="text-xs text-gray-400">Password (6+ Character)</label>
-                  <div class="flex">
-                    <input (keypress)="handleKeyPress($event, proceedBtn)" id="password" formControlName="password" [type]="isInputPass ? 'password' : 'text'" class="input-txt rounded-r-none border-r-0" placeholder="Enter your Password"/>
-                    <button (click)="togglePassword()" class="input-txt w-12 rounded-l-none border-l-0">
-                      <fa-icon [icon]="isInputPass ? faEye : faEyeSlash"></fa-icon>
-                    </button>
-                  </div>
-                  <app-error-label [childForm]="signUpForm" [childFormName]="'password'"></app-error-label>
-                </div>
-
-                <div>
-                  <label for="password_confirmation" class="text-xs text-gray-400">Confirm Password</label>
-                  <input (keypress)="handleKeyPress($event, proceedBtn)" id="password_confirmation" formControlName="password_confirmation" [type]="isInputPass ? 'password' : 'text'" class="input-txt" placeholder="Confirm your Password"/>
-                  <span *ngIf="(signUpForm.value.password !== signUpForm.value.password_confirmation)" class="error-label">
-                    Password does not match
-                  </span>
-
-                  <span class="text-sm italic text-red-600 pt-2">{{ email_err }}</span>
-                </div>
-
-                <div class="flex flex-col md:flex-row  justify-center">
-                  <div class="flex flex-col w-full md:w-3/5 ">
-                    <button #proceedBtn [disabled]="checking_email  || (signUpForm.value.password !== signUpForm.value.password_confirmation)" (click)="navigatePage(1)" class="btn-blue-nr mt-5 h-14">
-                      <fa-icon *ngIf="checking_email" [icon]="faCircleNotch" animation="spin" class="mr-1"></fa-icon>
-                      {{ checking_email ? 'Checking Email' : 'Proceed' }}
-                    </button>
-                    <span class="text-center text-xs mt-1">
-                      By proceeding you agree to
-                      <span class="text-sky-400 hover:cursor-pointer" (click)="toggleModal('terms-of-use')">Terms of Use</span>
-                      and
-                      <span class="text-sky-400 hover:cursor-pointer" (click)="toggleModal('user-agreement')">User Agreement</span>
-                    </span>
-                  </div>
-
-                </div>
-
-                <span class="hover:cursor-pointer ml-3 mt-5 text-xs text-center">
-                  Already on ResourceHub?
-                  <a href="#/login" class="text-blue-600 hover:cursor-pointer">Sign In</a>
+              <div>
+                <label for="password_confirmation" class="text-xs text-gray-400">Confirm Password</label>
+                <input (keypress)="handleKeyPress($event, proceedBtn)" id="password_confirmation" formControlName="password_confirmation" [type]="isInputPass ? 'password' : 'text'" class="input-txt" placeholder="Confirm your Password"/>
+                <span *ngIf="(signUpForm.value.password !== signUpForm.value.password_confirmation)" class="error-label">
+                  Password does not match
                 </span>
+
+                <span class="text-sm italic text-red-600 pt-2">{{ email_err }}</span>
               </div>
+
+              <div class="flex flex-col md:flex-row  justify-center">
+                <div class="flex flex-col w-full md:w-3/5 ">
+                  <button #proceedBtn [disabled]="checking_email  || (signUpForm.value.password !== signUpForm.value.password_confirmation)" (click)="navigatePage(1)" class="btn-blue-nr mt-5 h-14">
+                    <fa-icon *ngIf="checking_email" [icon]="faCircleNotch" animation="spin" class="mr-1"></fa-icon>
+                    {{ checking_email ? 'Checking Email' : 'Proceed' }}
+                  </button>
+                  <span class="text-center text-xs mt-1">
+                    By proceeding you agree to
+                    <span class="text-sky-400 hover:cursor-pointer" (click)="toggleModal('terms-of-use')">Terms of Use</span>
+                    and
+                    <span class="text-sky-400 hover:cursor-pointer" (click)="toggleModal('user-agreement')">User Agreement</span>
+                  </span>
+                </div>
+
+              </div>
+
+              <span class="hover:cursor-pointer ml-3 mt-5 text-xs text-center">
+                Already on ResourceHub?
+                <a href="#/login" class="text-blue-600 hover:cursor-pointer">Sign In</a>
+              </span>
+            </div>
           </div>
         </div>
       </div>
