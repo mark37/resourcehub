@@ -38,6 +38,7 @@ export class ScholarshipComponent implements OnInit {
     params['page'] = page ?? 1;
     params['lib_posting_category_id'] = 2;
     params['is_published'] = 'published';
+    // params['include'] = 'applicants';
     if(this.searchTerm) params['search'] = this.searchTerm;
 
     const access_url = this.isAuthenticated ? 'posting-information' : 'public-info';
