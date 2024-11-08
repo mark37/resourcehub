@@ -56,7 +56,6 @@ export class ManageUserComponent implements OnInit {
     if(this.start_date) params['start_date'] = this.start_date;
     if(this.end_date) params['end_date'] = this.end_date;
 
-    console.log(params)
     this.http.get('user-information', { params }).subscribe({
       next: (data:any) => {
         console.log(data);
