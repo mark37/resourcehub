@@ -254,7 +254,7 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
       password_confirmation: [null, [Validators.required, Validators.minLength(6)]],
       gender: [null],
       birthdate: [null],
-      province_code: [null],
+      province_code: ['0306900000'],
       municipality_code: [null],
       barangay_code: [null],
       address: [null],
@@ -280,6 +280,7 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
       grade_url: [null],
     });
 
+    this.getDemog('psgc/provinces', this.signUpForm.value.province_code, 'municipalities');
     this.show_form = true;
   }
 
