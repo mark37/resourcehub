@@ -37,5 +37,7 @@ export class UserInformationComponent implements OnChanges{
 
   ngOnChanges(changes: SimpleChanges): void {
     this.user = this.selected_user;
+
+    if(!this.user.user_education && this.user.education) this.user.user_education = this.user.education;
   }
 }
