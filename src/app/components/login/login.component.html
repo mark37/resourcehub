@@ -29,7 +29,7 @@
           <div>
             <div class="flex">
               <input [type]="isInputPass ? 'password' : 'text'" class="input-txt rounded-r-none border-r-0" formControlName="password" placeholder="Enter your Password"/>
-              <button (click)="togglePassword()" class="input-txt w-12 rounded-l-none border-l-0">
+              <button (click)="togglePassword()" type="button" class="input-txt w-12 rounded-l-none border-l-0">
                 <fa-icon [icon]="isInputPass ? faEye : faEyeSlash"></fa-icon>
               </button>
             </div>

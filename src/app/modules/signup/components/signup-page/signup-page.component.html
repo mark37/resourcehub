@@ -51,7 +51,7 @@
                 <label for="password" class="text-xs text-gray-400">Password (6+ Character)</label>
                 <div class="flex">
                   <input (keypress)="handleKeyPress($event, proceedBtn)" id="password" formControlName="password" [type]="isInputPass ? 'password' : 'text'" class="input-txt rounded-r-none border-r-0" placeholder="Enter your Password"/>
-                  <button (click)="togglePassword()" class="input-txt w-12 rounded-l-none border-l-0">
+                  <button (click)="togglePassword()" type="button" class="input-txt w-12 rounded-l-none border-l-0">
                     <fa-icon [icon]="isInputPass ? faEye : faEyeSlash"></fa-icon>
                   </button>
                 </div>
