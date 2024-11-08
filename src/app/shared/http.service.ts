@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class HttpService {
-  baseUrl = 'http://127.0.0.1:8000/api/';
-  // baseUrl = 'https://api.resourcehub.cloud/api/';
+  // baseUrl = 'http://127.0.0.1:8000/api/';
+  baseUrl = 'https://api.resourcehub.cloud/api/';
 
   get(loc: string, data?: any) {
     return this.http.get(`${this.baseUrl}` + 'v1/' +loc, data ? data : '')
