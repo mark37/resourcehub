@@ -76,6 +76,7 @@ export class PartTimeComponent implements OnInit {
     params['per_page'] = 10;
     params['lib_posting_category_id'] = 1;
     params['is_published'] = 'published';
+    params['include'] = 'applicants';
     if(show_all === false) {
       this.with_radius = true;
       params['radius'] = this.radius;
@@ -92,7 +93,7 @@ export class PartTimeComponent implements OnInit {
     this.http.get(access_url, { params }).subscribe({
       next: (data: any) => {
         this.partTimeList = data.data;
-        // console.log(this.partTimeList);
+        console.log(this.partTimeList);
         this.addMarker()
         this.isLoading = false;
       },
