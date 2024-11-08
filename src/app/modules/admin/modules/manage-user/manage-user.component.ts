@@ -93,6 +93,7 @@ export class ManageUserComponent implements OnInit {
   verifyUser(value: boolean) {
     this.updating_user = true;
     this.selected_user['user_verified'] = value === true ? 1 : 0 ;
+    this.selected_user['is_active'] = value === true ? 1 : 0 ;
 
     this.http.update('user-information/', this.selected_user.id, this.selected_user).subscribe({
       next: (data: any) => {
