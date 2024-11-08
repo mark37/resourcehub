@@ -18,10 +18,9 @@ export class SidenavComponent  {
   faArrowRightFromBracket = faArrowRightFromBracket;
   menuList: any[] = [
     { name: 'Home', location: 'home' , icon: faHouse},
-    { name: 'Notifications', location: '', icon: faBell },
-    { name: 'Manage Users', location: 'manage-user', icon: faUser },
     { name: 'Dashboard', location: 'dashboard', icon: faTableColumns },
-    // { name: 'Communicate', location: 'communicate', icon: faComment }
+    { name: 'Notifications', location: '', icon: faBell },
+    { name: 'Manage Users', location: 'manage-user', icon: faUser }
   ];
 
   notfications: any[] = [
