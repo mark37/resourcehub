@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { faBars, faGear, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightFromBracket, faBars, faGear, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { filter, tap } from 'rxjs';
 
 @Component({
@@ -13,6 +13,8 @@ export class HeaderComponent implements OnInit {
   faBars = faBars;
   faXmark = faXmark;
   faGear = faGear;
+  faArrowRightFromBracket = faArrowRightFromBracket;
+
   modals: any[string] = [];
   withCred: boolean = false;
   menuList: {name:string, location:string, requiredCred:boolean}[] = [
@@ -20,13 +22,14 @@ export class HeaderComponent implements OnInit {
     {name: 'Scholarships', location: 'scholarship', requiredCred: false},
     {name: 'Part-time Jobs', location: 'part-time', requiredCred: false},
     {name: 'History', location: 'history', requiredCred: true},
+    // {name: 'Deactivate Account', location: 'deactivate', requiredCred: true},
     // {name: 'Login', location: 'part-time', requiredCred: false},
     // {name: 'Signup', location: 'part-time', requiredCred: false},
   ];
 
   accountMenuList: {name:string, location:string, requiredCred:boolean}[] = [
     {name: 'Update Profile', location: 'manage-profile', requiredCred: true},
-    {name: 'Deactivate Account', location: 'deactivate', requiredCred: true},
+    // {name: 'Deactivate Account', location: 'deactivate', requiredCred: true},
     {name: 'Sign Out', location: 'signout', requiredCred: true},
   ];
 
@@ -42,7 +45,7 @@ export class HeaderComponent implements OnInit {
       if(!this.withCred && location === '') {
 
       } else {
-        if(location === 'manage-profile' || location === 'deactivate') this.toggleModal('accountMenuList')
+        if(location === 'manage-profile') this.toggleModal('accountMenuList')
           if(this.modals['menuList']) this.toggleModal('menuList');
           this.router.navigate(['student/'+location])
       }
