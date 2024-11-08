@@ -17,10 +17,11 @@
       }
     </div>
     @if(withCred) {
-      <button (click)="toggleModal('accountMenuList')">
-        <div class="mt-4 mx-3 name-icon hover:opacity-75">
+      <button class="m-3 mr-5 text-xl" (click)="toggleModal('accountMenuList')">
+        <fa-icon [icon]="faGear"></fa-icon>
+        <!-- <div class="mt-4 mx-3 name-icon hover:opacity-75">
           <span class="font-medium text-gray-900 text-sm xl:text-lg select-none hover:cursor-pointer">MS</span>
-        </div>
+        </div> -->
       </button>
     }
   </div>

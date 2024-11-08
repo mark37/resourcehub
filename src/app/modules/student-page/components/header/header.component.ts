@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { faBars, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faGear, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { filter, tap } from 'rxjs';
 
 @Component({
@@ -12,8 +12,8 @@ import { filter, tap } from 'rxjs';
 export class HeaderComponent implements OnInit {
   faBars = faBars;
   faXmark = faXmark;
+  faGear = faGear;
   modals: any[string] = [];
-
   withCred: boolean = false;
   menuList: {name:string, location:string, requiredCred:boolean}[] = [
     {name: 'Dashboard', location: 'dashboard', requiredCred: true},
