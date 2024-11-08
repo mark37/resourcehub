@@ -18,8 +18,8 @@ export class HistoryComponent implements OnInit{
   isLoading: boolean = false;
 
   categoryList: { name: string, id: string}[] = [
-    { name: 'Scholarship', id: '1' },
-    { name: 'Part-time', id: '2' },
+    { name: 'Scholarship', id: '2' },
+    { name: 'Part-time', id: '1' },
   ];
 
   applicationList: any[] = [];
