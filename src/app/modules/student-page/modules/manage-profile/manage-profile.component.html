@@ -8,9 +8,9 @@
         <!-- <fa-icon *ngIf="!showUpdateForm" [icon]="faEdit" class="text-white"></fa-icon> -->
         Deactivate Account
       </button>
-      <button class="btn-blue " [ngClass]="{'bg-gray-400' : showUpdateForm, 'bg-orange-500' : !showUpdateForm }" (click)="toggleEditForm()">
+      <button class="btn-blue " [ngClass]="{'bg-blue-500' : showUpdateForm, 'bg-orange-500' : !showUpdateForm }" (click)="toggleEditForm()">
         <fa-icon *ngIf="!showUpdateForm" [icon]="faEdit" class="text-white"></fa-icon>
-        {{ showUpdateForm ? 'Cancel' : 'Update' }}
+        {{ showUpdateForm ? 'Back' : 'Update' }}
       </button>
     </div>
   </div>
@@ -23,7 +23,7 @@
     <fieldset class="rounded-md border border-gray-400 bg-white" >
       <legend class="ml-5 px-4 font-semibold bg-gray-200 py-2 rounded-mx">Parents Information</legend>
       <form [formGroup]="parentsForm" class="flex p-3 mx-4 border-b-2 border-gray-200">
-        <div class="grid grid-cols-2 gap-x-16 mx-24">
+        <div class="flex flex-col md:grid md:grid-cols-2 md:gap-x-16 md:mx-24">
           <div class="col-span-2 flex justify-center mb-3">
             <input id="ofw_flag" formControlName="ofw_flag" type="checkbox" class="rounded-md text-lg mr-1" />
             <label for="ofw_flag">One or both parents is an overseas filipino worker (OFW)</label>
@@ -63,7 +63,7 @@
             </select>
           </div>
 
-          <div class=" col-span-2 flex justify-center mt-3">
+          <div class=" col-span-2 flex justify-end md:justify-center mt-3">
             <button [disabled]="!parentsForm.valid || isFormSaving['parent-information']" (click)="onSubmit('parent-information', parentsForm, 'parentsInformation', 'parentsForm')" class="btn-blue-nr w-32 text-sm py-1.5">
               <fa-icon *ngIf="isFormSaving['parent-information']" [icon]="faCircleNotch" animation="spin"></fa-icon>
               Update
@@ -75,8 +75,8 @@
 
     <fieldset class="rounded-md border border-gray-400 bg-white mt-3" >
       <legend class="ml-5 px-4 font-semibold bg-blue-200 py-2 rounded-mx">Educational Background</legend>
-      <form [formGroup]="educationForm" class="flex p-3 mx-4 border-b-2 border-gray-200">
-        <div class="grid grid-cols-5 gap-x-4">
+      <form [formGroup]="educationForm" class="flex flex-col md:flex-row p-3 mx-4 border-b-2 border-gray-200">
+        <div class="flex flex-col md:grid md:grid-cols-5 md:gap-x-4">
           <div>
             <label>Name of School</label>
             <input formControlName="school_name" type="text" class="input-txt" />
@@ -104,7 +104,7 @@
             <input formControlName="end_year" type="number" class="input-txt" id="year" name="year" min="1900" max="2100" placeholder="YYYY">
           </div>
         </div>
-        <div class="ml-3 mt-6">
+        <div class="ml-3 mt-6 flex justify-end">
           <button [disabled]="!educationForm.valid || isFormSaving['user-education']" (click)="onSubmit('user-education', educationForm, 'educationList', 'educationForm')" class="btn-blue-nr w-20 text-sm py-1.5">
             <fa-icon *ngIf="!isFormSaving['user-education'] && !educationForm.value.id" [icon]="faAdd"></fa-icon>
             <fa-icon *ngIf="isFormSaving['user-education']" [icon]="faCircleNotch" animation="spin"></fa-icon>
@@ -147,7 +147,7 @@
     <fieldset class="rounded-md border border-gray-400 bg-white mt-3" >
       <legend class="ml-5 px-4 font-semibold bg-orange-200 py-2 rounded-mx">Work Experience</legend>
       <form [formGroup]="workExperienceForm" class="flex flex-col p-3 mx-4 border-b-2 border-gray-200">
-        <div class="grid grid-cols-4 gap-x-4">
+        <div class="flex flex-col md:grid grid-cols-4 gap-x-4">
           <div>
             <label for="employer_name">Employer name</label>
             <input formControlName="employer_name" id="employer_name" type="text" class="input-txt" />
@@ -218,8 +218,8 @@
 
     <fieldset class="rounded-md border border-gray-400 bg-white mt-3" >
       <legend class="ml-5 px-4 font-semibold bg-green-200 py-2 rounded-mx">References</legend>
-      <form [formGroup]="referenceForm" class="flex p-3 mx-4 border-b-2 border-gray-200">
-        <div class="grid grid-cols-3 gap-x-4">
+      <form [formGroup]="referenceForm" class="flex flex-col md:flex-row p-3 mx-4 border-b-2 border-gray-200">
+        <div class="flex flex-col md:grid grid-cols-3 gap-x-4">
           <div>
             <label>Name</label>
             <input formControlName="full_name" type="text" class="input-txt" />
@@ -233,7 +233,7 @@
             <input formControlName="contact_number" type="text" class="input-txt" />
           </div>
         </div>
-        <div class="ml-3 mt-6">
+        <div class="ml-3 mt-6 flex justify-end">
           <button [disabled]="!referenceForm.valid || isFormSaving['user-reference']" (click)="onSubmit('user-reference', referenceForm, 'referenceList', 'referenceForm')" class="btn-blue-nr w-20 text-sm py-1.5">
             <fa-icon *ngIf="!isFormSaving['user-reference'] && !referenceForm.value.id" [icon]="faAdd"></fa-icon>
             <fa-icon *ngIf="isFormSaving['user-reference']" [icon]="faCircleNotch" animation="spin"></fa-icon>

@@ -97,6 +97,8 @@ export class ManageProfileComponent implements OnInit {
     this.createReferenceForm();
     this.createWorkExperienceForm();
     this.createParentsForm();
+
+    this.toggleEditForm();
   }
 
   loadLibraries(url: string, listName: string) {
