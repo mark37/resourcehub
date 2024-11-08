@@ -1,28 +1,43 @@
 <div class="p-3 bg-white">
-  <div class="flex justify-center">
+  <div class="flex flex-col">
     <!-- <span>
       {{ selected_user }}
     </span> -->
-    <div class="flex flex-col w-3/5 shadow-md p-3 rounded-md border border-gray-300 my-5 bg-slate-50">
-      <div>
+    <div class="flex justify-center">
+      <div class="flex flex-col w-3/5 shadow-md p-3 rounded-md border border-gray-300 my-5 bg-slate-50">
         <div>
-          <label>Message Content</label>
-          <textarea rows="4" [(ngModel)]="message" class="input-txt"></textarea>
+          <div>
+            <label>Message Content</label>
+            <textarea rows="4" [(ngModel)]="message" class="input-txt"></textarea>
+          </div>
+          <div class="flex justify-end mb-5">
+            {{ message ? message.length : 0 }}/{{ message ? getSegmentCount(message.length) : 1 }}
+          </div>
         </div>
-        <div class="flex justify-end mb-5">
-          {{ message ? message.length : 0 }}/{{ message ? getSegmentCount(message.length) : 1 }}
-        </div>
-      </div>
-      <div class="pb-5">
-        <div class="flex justify-end">
-          <button (click)="sendSMS()" [disabled]="is_saving || (!message && message !== '')" class="btn-blue">
-            <fa-icon *ngIf="is_saving" [icon]="faCircleNotch" animation="spin" class="mr-1"></fa-icon>
-            <fa-icon *ngIf="!is_saving" [icon]="faPaperPlane" class="mr-1"></fa-icon>
-            Send
-          </button>
+        <div class="pb-5">
+          <div class="flex justify-end">
+            <button (click)="sendSMS()" [disabled]="is_saving || (!message && message !== '')" class="btn-blue">
+              <fa-icon *ngIf="is_saving" [icon]="faCircleNotch" animation="spin" class="mr-1"></fa-icon>
+              <fa-icon *ngIf="!is_saving" [icon]="faPaperPlane" class="mr-1"></fa-icon>
+              Send
+            </button>
+          </div>
         </div>
       </div>
     </div>
 
+    <div class="flex flex-col mx-20 border border-gray-200 rounded-lg mb-10">
+      <div class="font-semibold p-3">
+        SMS logs
+      </div>
+      <div class="px-3 py-2 border-t border-gray-100 mb-3" *ngFor="let item of selected_user.sms_logs">
+        <span class="text-xs">{{ item.created_at | date: 'MMM dd, yyyy HH:mm a' }}</span> <br />
+        <span class="font-semibold ml-5">{{ item.message }}</span>
+      </div>
+
+      <div *ngIf="selected_user?.sms_logs?.length === 0" class="flex justify-center italic text-center mb-3">
+        No Previous SMS Logged
+      </div>
+    </div>
   </div>
 </div>
