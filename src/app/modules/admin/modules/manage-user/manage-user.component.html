@@ -4,8 +4,8 @@
     <div class="flex justify-between">
       <div class="flex justify-between w-full">
         <div>
-          <span *ngIf="modals['user-information']" class="text-blue-600">
-            <button (click)="toggleModal('user-information')">
+          <span *ngIf="modals['user-information'] || modals['show-sms']" class="text-blue-600">
+            <button (click)="toggleModal('closeAll')">
               <fa-icon [icon]="faArrowLeft"></fa-icon>
             </button>
           </span>
@@ -16,7 +16,7 @@
             </span>
           </span>
         </div>
-        <div *ngIf="!modals['user-information']">
+        <div *ngIf="!modals['user-information'] || !modals['show-sms']">
           <button class="btn-blue-nr bg-green-700 my-3 px-2 ml-1" (click)="getAllData()">
             <fa-icon [icon]="faFileExcel"></fa-icon>
           </button>

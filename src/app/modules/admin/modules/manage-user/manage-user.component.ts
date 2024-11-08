@@ -80,8 +80,13 @@ export class ManageUserComponent implements OnInit {
   selected_user!: any;
   toggleModal(name: string, data?: any) {
     this.selected_user = data;
-    console.log(this.selected_user)
-    this.modals[name] = !this.modals[name];
+    if(name === 'closeAll') {
+      this.modals['user-information'] = false;
+      this.modals['show-sms'] = false;
+    } else {
+      console.log(this.selected_user)
+      this.modals[name] = !this.modals[name];
+    }
   }
 
   updating_user: boolean = false;
