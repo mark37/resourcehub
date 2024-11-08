@@ -87,7 +87,6 @@ export class ApplicantListComponent implements OnInit {
 
       this.http.get('posting-application', { params }).subscribe({
         next: (data: any) => {
-          console.log(data)
           const filteredData = data.data.map((item: any) => ({
             last_name: item.user.last_name,
             first_name: item.user.first_name,
