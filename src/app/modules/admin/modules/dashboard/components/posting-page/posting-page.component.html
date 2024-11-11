@@ -39,6 +39,7 @@
               <option *ngFor="let item of municipalities" [value]="item.code" >{{ item.name }}</option>
             </select>
           </div>
+
           <div>
             <label class="font-semibold">Barangay</label>
             <select class="input-txt" formControlName="barangay_code">
@@ -50,13 +51,10 @@
             <input type="text" class="input-txt" formControlName="address" />
           </div>
           <div *ngIf="postingForm.value.lib_posting_category_id === '1'" class="flex justify-center mt-5 col-span-4">
-            <!-- @if(!this.postingForm.value.id && !this.geoLocation) { -->
-              <button class="btn-blue-nr px-3" (click)="toggleMap()">
-                <fa-icon [icon]="faLocationDot" class="pr-2"></fa-icon>
-                {{ this.postingForm.value.id ? 'Update' : 'Tag' }} location
-              </button>
-            <!-- } -->
-            <!-- <span class="italic text-xs mt-2 text-right">{{ geoLocation ? (geoLocation.lat+', '+geoLocation.lng) : ''}}</span> -->
+            <button class="btn-blue-nr px-3" (click)="toggleMap()">
+              <fa-icon [icon]="faLocationDot" class="pr-2"></fa-icon>
+              {{ this.postingForm.value.id ? 'Update' : 'Tag' }} location
+            </button>
           </div>
         </div>
       </div>
@@ -104,13 +102,17 @@
       <div class="flex flex-col mt-5">
         <span class="font-semibold text-sm">Content</span>
         <div class="w-full">
-          <!-- (onFocus)="focus($event)" (onNativeFocus)="nativeFocus($event)" (onEditorChanged)="changedEditor($event)" (onBlur)="blur($event)" (onNativeBlur)="nativeBlur($event)" (onEditorCreated)="created($event)" -->
           <quill-editor class="h-96 w-full rounded" formControlName="description" [modules]="editorConfig"></quill-editor>
         </div>
       </div>
 
       <div class="flex justify-end my-3">
         @if(!postingForm.value.id || (postingForm.value.id && !postingForm.value.date_published)) {
+          <button *ngIf="postingForm.value.id" class="disabled:bg-gray-400 bg-rose-500 text-white px-8 py-2 font-semibold rounded-full mr-2" (click)="toggleMyModal('delete-item')">
+            <fa-icon *ngIf="!isSaving" [icon]="faSave"></fa-icon>
+            <fa-icon *ngIf="isSaving" [icon]="faCircleNotch" animation="spin"></fa-icon>
+            Delete
+          </button>
           <button [disabled]="!postingForm.valid" class="disabled:bg-gray-400 bg-orange-400 text-white px-8 py-2 font-semibold rounded-full mr-2" (click)="onSubmit()">
             <fa-icon *ngIf="!isSaving" [icon]="faSave"></fa-icon>
             <fa-icon *ngIf="isSaving" [icon]="faCircleNotch" animation="spin"></fa-icon>
@@ -129,3 +131,10 @@
     </div>
   </form>
 </div>
+
+<app-delete-item *ngIf="modals['delete-item']"
+  (toggleModal)="toggleMyModal($event)"
+  [url]="'posting-information/'"
+  [delete_id]="postingForm.value.id"
+  [delete_desc]="'Posting Item'"
+></app-delete-item>

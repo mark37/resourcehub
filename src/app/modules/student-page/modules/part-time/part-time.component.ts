@@ -91,15 +91,14 @@ export class PartTimeComponent implements OnInit {
       params['lat'] = this.center.lat;
       params['lng'] = this.center.lng;
     } else {
-      this.search = null;
       this.with_radius = false;
+      this.search = null;
     }
 
     if(this.search) params['search'] = this.search;
 
     let access_url:string;
     if(localStorage.getItem('access_token')) {
-      params['include'] = 'applicants';
       access_url = 'posting-information';
     } else {
       access_url = 'public-info'

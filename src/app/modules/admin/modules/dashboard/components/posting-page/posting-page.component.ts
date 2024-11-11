@@ -6,7 +6,8 @@ import { postingForm } from './postingForm';
 import { CommonModule, formatDate } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { QuillEditorComponent, QuillModule } from 'ngx-quill';
+import { QuillEditorComponent } from 'ngx-quill';
+import { DeleteItemComponent } from '../../../../../../components/delete-item/delete-item.component';
 
 @Component({
   selector: 'app-posting-page',
@@ -20,6 +21,7 @@ import { QuillEditorComponent, QuillModule } from 'ngx-quill';
     GoogleMapsModule,
     CommonModule,
     QuillEditorComponent,
+    DeleteItemComponent
   ]
 })
 export class PostingPageComponent implements OnInit {
@@ -75,11 +77,19 @@ export class PostingPageComponent implements OnInit {
   markerOptions: google.maps.MarkerOptions = {draggable: false};
   markerPositions: google.maps.LatLngLiteral[] = [];
 
+  toggleMyModal(name: string) {
+    if(name==='item-deleted') {
+      this.modals['delete-item'] = false;
+      this.closeComponent();
+    } else {
+      this.modals[name] = !this.modals[name];
+    }
+
+  }
+
   addMarker(event?: google.maps.MapMouseEvent) {
     if (event?.latLng) {
-      console.log(event?.latLng?.toJSON())
       this.markerPositions[0] = event?.latLng?.toJSON();
-      console.log(this.markerPositions)
     }
   }
 
@@ -122,12 +132,19 @@ export class PostingPageComponent implements OnInit {
 
   updateValidators(){
     if(this.postingForm.value.lib_posting_category_id === '1') {
-      this.postingForm.get('coordinates')?.setValidators([Validators.required])
+      this.postingForm.controls['coordinates'].enable();
     } else {
-      this.postingForm.get('coordinates')?.clearValidators();
+      this.postingForm.controls['coordinates'].disable();
     }
+  }
 
-    this.postingForm.get('coordinates')?.updateValueAndValidity();
+  deletePost() {
+    this.http.delete('posting-information/', this.postingForm.value.id).subscribe({
+      next: (data: any) => {
+        console.log(data)
+      },
+      error: err => console.log(err)
+    })
   }
 
   createForm() {
@@ -148,8 +165,9 @@ export class PostingPageComponent implements OnInit {
       no_irregular_flag: [false],
     });
 
+    console.log(this.selected_posting)
     if(this.selected_posting) {
-      this.municipality = this.selected_posting.barangay_code.substring(0,7).padEnd(10, '0');
+      this.municipality = this.selected_posting.barangay.psgc_10_digit_code.substring(0,7).padEnd(10, '0');
       this.loadDemog();
 
       this.postingForm.patchValue({
