@@ -31,7 +31,7 @@
           ></map-circle>
           @if(!updatingLocation) {
             @for (item of markerPositions; track item.position.position) {
-              <map-marker #marker="mapMarker" (mapClick)="openInfoWindow(marker, item.title)"
+              <map-marker #markerRefs="mapMarker" (mapClick)="openInfoWindow(markerRefs, item.title)"
                 [position]="item.position.position"
                 [options]="markerOptions"
                 *ngIf="with_radius ? isMarkerWithinRadius(item.position.position) : true"
@@ -96,8 +96,12 @@
           </span>
           <span class="text-xl font-semibold">{{ item.title }}</span>
           <span class="text-gray-500">{{ item.job_status }}</span>
-          <div class="flex justify-center mt-3">
-            <button class="btn-blue" (click)="toggleModal('view-details', item)">
+          <div class="flex justify-center mt-3 text-xs">
+            <button class="btn-blue bg-orange-500 rounded-r-none" (click)="openWindowFromDetails(item.latitude, item.longitude, item.title)">
+              <fa-icon [icon]="faLocationDot" class="pr-1"></fa-icon>
+              location
+            </button>
+            <button class="btn-blue rounded-l-none" (click)="toggleModal('view-details', item)">
               view details
               <fa-icon [icon]="faArrowRight"></fa-icon>
             </button>

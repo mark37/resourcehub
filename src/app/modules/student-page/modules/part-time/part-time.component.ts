@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { faArrowRight, faCheckCircle, faCircleNotch, faFilter, faLocationCrosshairs, faLocationDot, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from '../../../../shared/http.service';
@@ -10,7 +10,8 @@ import { HttpService } from '../../../../shared/http.service';
   styleUrl: './part-time.component.scss'
 })
 export class PartTimeComponent implements OnInit {
-  @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow | undefined;
+  @ViewChildren(MapMarker) markerRefs!: QueryList<MapMarker>;
+  @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow | undefined;
 
   faLocationCrosshairs = faLocationCrosshairs;
   faCircleNotch = faCircleNotch;
@@ -56,7 +57,6 @@ export class PartTimeComponent implements OnInit {
         let marker = { position : {lat: value.latitude, lng: value.longitude}, visible: false}
         this.markerPositions.push({title: value.title, position: marker});
       });
-      // console.log(this.markerPositions)
     }
   }
 
@@ -66,17 +66,25 @@ export class PartTimeComponent implements OnInit {
     if(this.infoWindow) this.infoWindow.open(marker);
   }
 
+  openWindowFromDetails(lat: number, lng: number, title: string) {
+    const markerIndex = this.markerPositions.findIndex(marker => marker.position.position.lat === lat && marker.position.position.lng === lng);
+
+    if(markerIndex !== -1) {
+      this.marker_title = title;
+      if(this.infoWindow) this.infoWindow.open(this.markerRefs.get(markerIndex));
+    }
+  }
+
   with_radius: boolean = true;
   loadPartTime(show_all: boolean, page?: number){
     this.isLoading = true;
     let params: any = {};
 
-
     params['page'] = page ?? 1;
-    params['per_page'] = 10;
+    params['per_page'] = 'all';
     params['lib_posting_category_id'] = 1;
     params['is_published'] = 'published';
-    params['include'] = 'applicants';
+    if(this.isAuthenticated)
     if(show_all === false) {
       this.with_radius = true;
       params['radius'] = this.radius;
@@ -89,7 +97,14 @@ export class PartTimeComponent implements OnInit {
 
     if(this.search) params['search'] = this.search;
 
-    const access_url = this.isAuthenticated ? 'posting-information' : 'public-info';
+    let access_url:string;
+    if(localStorage.getItem('access_token')) {
+      params['include'] = 'applicants';
+      access_url = 'posting-information';
+    } else {
+      access_url = 'public-info'
+    }
+
     this.http.get(access_url, { params }).subscribe({
       next: (data: any) => {
         this.partTimeList = data.data;
@@ -204,6 +219,6 @@ export class PartTimeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadPartTime(false, 1);
-    if(localStorage.getItem('access_token')) { this.isAuthenticated = true; } else { this.isAuthenticated = false; }
+
   }
 }
