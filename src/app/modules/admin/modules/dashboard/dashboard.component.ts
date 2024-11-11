@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit{
   modals: any = [];
   selected_posting!: any;
   category!: string;
-  is_published!: boolean;
+  is_published!: string;
   start_date!: string;
   end_date!: string;
   meta!: any;
