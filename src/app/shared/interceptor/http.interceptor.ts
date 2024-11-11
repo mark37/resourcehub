@@ -1,6 +1,7 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { catchError, of, throwError } from 'rxjs';
 
 export const httpInterceptor: HttpInterceptorFn = (request, next) => {
   const router = inject(Router); // Inject Router
@@ -17,9 +18,16 @@ export const httpInterceptor: HttpInterceptorFn = (request, next) => {
     headers: request.headers
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${authToken}`),
-      // .set('Access-Control-Allow-Origin', '*'),
     withCredentials: !isCheckEmailRoute
   });
 
-  return next(clonedRequest);
+  return next(clonedRequest).pipe(
+    catchError(error => {
+      if(error.status === 401) {
+        router.navigate(['/']);
+        return of(error)
+      }
+      return throwError(() => error);
+    })
+  );
 };
