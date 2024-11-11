@@ -1,14 +1,26 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faArrowLeft, faCircleNotch, faLocationDot, faSave, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { HttpService } from '../../../../../../shared/http.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { postingForm } from './postingForm';
-import { formatDate } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { QuillEditorComponent, QuillModule } from 'ngx-quill';
 
 @Component({
   selector: 'app-posting-page',
   templateUrl: './posting-page.component.html',
-  styleUrl: './posting-page.component.scss'
+  styleUrl: './posting-page.component.scss',
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    FontAwesomeModule,
+    FormsModule,
+    GoogleMapsModule,
+    CommonModule,
+    QuillEditorComponent,
+  ]
 })
 export class PostingPageComponent implements OnInit {
   @Output() toggleModal = new EventEmitter<any>();
@@ -108,6 +120,16 @@ export class PostingPageComponent implements OnInit {
     });
   }
 
+  updateValidators(){
+    if(this.postingForm.value.lib_posting_category_id === '1') {
+      this.postingForm.get('coordinates')?.setValidators([Validators.required])
+    } else {
+      this.postingForm.get('coordinates')?.clearValidators();
+    }
+
+    this.postingForm.get('coordinates')?.updateValueAndValidity();
+  }
+
   createForm() {
     this.postingForm =  this.formBuilder.nonNullable.group({
       id: [null],
@@ -138,7 +160,6 @@ export class PostingPageComponent implements OnInit {
       this.markerPositions = [{lat: this.selected_posting.latitude, lng: this.selected_posting.longitude}];
       this.geoLocation = this.markerPositions[0];
       if(this.selected_posting.date_published) this.postingForm.disable();
-      console.log(this.postingForm.value)
     }
   }
 
@@ -162,7 +183,6 @@ export class PostingPageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.selected_posting)
     this.isSaving = false;
     this.loadLibraries();
   }
