@@ -17,7 +17,6 @@ import { MessagingComponent } from './components/messaging/messaging.component';
 @NgModule({
   declarations: [
     DashboardComponent,
-    PostingPageComponent,
     ApplicantListComponent,
     MessagingComponent
   ],
@@ -31,7 +30,8 @@ import { MessagingComponent } from './components/messaging/messaging.component';
     GoogleMapsModule,
     ReactiveFormsModule,
     PageControllerComponent,
-    UserInformationComponent
+    UserInformationComponent,
+    PostingPageComponent,
   ]
 })
 export class DashboardModule { }

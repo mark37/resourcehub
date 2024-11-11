@@ -4,6 +4,8 @@ import { HttpService } from '../../../../shared/http.service';
 import { formatDate } from '@angular/common';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter, tap } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -73,7 +75,12 @@ export class DashboardComponent implements OnInit{
     this.modals[name] = !this.modals[name];
 
     if(name !== 'show-email' && name !== 'show-sms') {
-      this.loadList();
+      if(this.modals['show-posting'] === false) {
+        this.router.navigate(['/admin/dashboard']);
+        this.loadList();
+      } else {
+        this.loadList();
+      }
     }
   }
 
@@ -81,7 +88,20 @@ export class DashboardComponent implements OnInit{
     this.showPostingComponent = !this.showPostingComponent;
   }
 
-  loadList(page?: any) {
+  searchTerm!: string;
+  municipality_code!: string;
+  municipalities: any = [];
+  loadLibraries() {
+    this.http.get('psgc/provinces/0306900000', {params: {'include':'municipalities'}}).subscribe({
+      next: (data: any) => {
+        this.municipalities = data.data.municipalities;
+        this.loadList(1, true);
+      },
+      error: err => console.log(err)
+    })
+  }
+
+  loadList(page?: any, create_post?: boolean) {
     this.isLoading = true;
     let params: any = {};
     params['page'] = page ?? 1;
@@ -91,6 +111,8 @@ export class DashboardComponent implements OnInit{
     if(this.end_date) params['end_date'] = this.end_date;
     if(this.category) params['lib_posting_category_id'] = this.category;
     if(this.is_published) params['is_published'] = this.is_published;
+    if(this.searchTerm) params['search'] = this.searchTerm;
+    if(this.municipality_code) params['municipality_code'] = this.municipality_code;
 
     this.http.get('posting-information', { params }).subscribe({
       next: (data: any) => {
@@ -98,11 +120,21 @@ export class DashboardComponent implements OnInit{
         this.postList = data.data;
         this.meta = data.meta;
         this.isLoading = false;
+        if(!this.modals['show-posting']) this.checkUrlParams()
       },
       error: err => console.log(err)
     });
   }
 
+  checkUrlParams() {
+    this.route.queryParams.subscribe(params => {
+      console.log(params)
+      console.log(params['create_post'])
+
+      this.modals['show-posting'] = params['create_post'] === 'true' ? true : false;
+
+    })
+  }
   allPostingArray!: {title: string, date_published: string, date_end: string, slot: number, address: string}[];
   getAllData() {
     let params: any = {};
@@ -157,11 +189,23 @@ export class DashboardComponent implements OnInit{
     saveAs(data, `${fileName}.xlsx`);
   }
 
+  navigationEnd$ = this.router.events.pipe(
+    filter(event => event instanceof NavigationEnd),
+    tap(() => {
+      console.log('end')
+      this.modals['show-posting'] === false
+      this.loadList();
+    })
+  );
+
   constructor(
-    private http: HttpService
+    private http: HttpService,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.loadList();
+    this.loadLibraries();
+    this.navigationEnd$.subscribe();
   }
 }

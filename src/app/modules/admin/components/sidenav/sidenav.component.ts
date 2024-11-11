@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { AfterViewChecked, Component, ElementRef, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { faArrowLeft, faArrowRightFromBracket, faBell, faComment, faGear, faHouse, faTableColumns, faUser, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRightFromBracket, faBell, faComment, faGear, faHouse, faPenToSquare, faTableColumns, faUser, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { filter, tap } from 'rxjs';
 
 @Component({
@@ -16,10 +16,13 @@ export class SidenavComponent  {
   faArrowLeft = faArrowLeft;
   faGear = faGear;
   faArrowRightFromBracket = faArrowRightFromBracket;
+  faPenToSquare = faPenToSquare;
+
   menuList: any[] = [
     { name: 'Home', location: 'home' , icon: faHouse},
     { name: 'Dashboard', location: 'dashboard', icon: faTableColumns },
     { name: 'Notifications', location: '', icon: faBell },
+    { name: 'Create Post', location: 'create-post', icon: faPenToSquare },
     { name: 'Manage Users', location: 'manage-user', icon: faUser }
   ];
 
@@ -32,7 +35,12 @@ export class SidenavComponent  {
   modals: any[string] = [];
 
   navigateTo(location: string) {
-    this.router.navigate(['admin/'+location]);
+    if(location === 'create-post') {
+      this.router.navigate(['admin/dashboard'], { queryParams : {create_post: true}});
+    } else {
+      this.router.navigate(['admin/'+location]);
+    }
+
   }
 
   toggleMenu(name: string, location?: boolean) {
