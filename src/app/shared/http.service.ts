@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -32,11 +33,16 @@ export class HttpService {
     return this.http.post(`${this.baseUrl}`+ 'login', data);
   }
 
+  signout() {
+    return this.http.get(`${this.baseUrl}`+ 'logout');
+  }
+
   update(loc: string, id: string, data: any) {
     return this.http.put(`${this.baseUrl}` + 'v1/' + loc + id, data)
   }
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) { }
 }
