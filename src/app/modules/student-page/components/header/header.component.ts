@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { faArrowRightFromBracket, faBars, faGear, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { filter, tap } from 'rxjs';
+import { HttpService } from '../../../../shared/http.service';
 
 @Component({
   selector: 'app-header',
@@ -61,11 +62,18 @@ export class HeaderComponent implements OnInit {
   }
 
   signout() {
-    localStorage.clear();
-    this.router.navigate(['/']);
+    this.http.signout().subscribe({
+      next: (data: any) => {
+        console.log(data)
+        localStorage.clear();
+        this.router.navigate(['/'])
+      },
+      error: err => console.log(err)
+    });
   }
 
   constructor (
+    private http: HttpService,
     private router: Router,
     private location: Location
   ) { }

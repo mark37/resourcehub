@@ -3,6 +3,7 @@ import { AfterViewChecked, Component, ElementRef, ViewChild } from '@angular/cor
 import { NavigationEnd, Router } from '@angular/router';
 import { faArrowLeft, faArrowRightFromBracket, faBell, faComment, faGear, faHouse, faPenToSquare, faTableColumns, faUser, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { filter, tap } from 'rxjs';
+import { HttpService } from '../../../../shared/http.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -48,11 +49,19 @@ export class SidenavComponent  {
   }
 
   signOut() {
-    localStorage.clear();
-    this.router.navigate(['/'])
+    this.http.signout().subscribe({
+      next: (data: any) => {
+        localStorage.clear();
+        this.router.navigate(['/']);
+      },
+      error: err => console.log(err)
+    });
+    /* localStorage.clear();
+    this.router.navigate(['/']) */
   }
 
   constructor(
+    private http: HttpService,
     private router: Router,
     private location: Location
   ) { }
