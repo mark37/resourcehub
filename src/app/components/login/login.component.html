@@ -56,7 +56,7 @@
       </div>
 
       <div *ngIf="showForgotPass" class="flex flex-col">
-        <div class="font-semibold text-xl mb-8 text-center">
+        <div *ngIf="!reset_message" class="font-semibold text-xl mb-8 text-center">
           Reset your password
         </div>
         <div *ngIf="!reset_message" class="text-sm mb-3">
@@ -68,12 +68,21 @@
             <label>email</label>
             <input type="text" class="input-txt" formControlName="email" />
           </div>
+          <div *ngIf="reset_err_message" class="italic text-xs text-red-500">
+            {{ reset_err_message }}
+          </div>
           <div class="flex justify-end mt-3">
-            <button [disabled]="!emailResetForm.valid" (click)="resetPassword()" class="btn-blue-nr px-5">
+            <button [disabled]="!emailResetForm.valid || resetting_pass" (click)="resetPassword()" class="btn-blue-nr px-5">
+              <fa-icon *ngIf="resetting_pass" [icon]="faCircleNotch" animation="spin"></fa-icon>
               Reset Password
             </button>
           </div>
         </form>
+
+        <div *ngIf="reset_message" class="flex flex-col text-center">
+          {{ reset_message }}
+          <a href="/" class="bg-blue-500 px-5 py-1 rounded-md text-white mt-3" >Back to Login</a>
+        </div>
       </div>
     </div>
   </div>

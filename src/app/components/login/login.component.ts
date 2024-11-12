@@ -49,14 +49,18 @@ export class LoginComponent {
   }
 
   reset_message: string | null = null;
+  reset_err_message: string | null = null;
+  resetting_pass: boolean = false;
   resetPassword() {
+    this.resetting_pass = true;
     console.log(this.emailResetForm.value)
     this.http.forgotPass(this.emailResetForm.value).subscribe({
       next: (data: any) => {
         console.log(data)
+        this.resetting_pass = false;
         this.reset_message = data.status;
       },
-      error: err => console.log(err)
+      error: err => {console.log(err); this.resetting_pass = false; this.reset_err_message = err.error.email}
     })
   }
 
