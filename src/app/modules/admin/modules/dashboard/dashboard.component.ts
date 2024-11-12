@@ -192,9 +192,8 @@ export class DashboardComponent implements OnInit{
   navigationEnd$ = this.router.events.pipe(
     filter(event => event instanceof NavigationEnd),
     tap(() => {
-      console.log('end')
-      this.modals['show-posting'] === false
-      this.loadList();
+      this.modals['show-posting'] === false;
+      if(localStorage.getItem('access_token')) this.loadList();
     })
   );
 
