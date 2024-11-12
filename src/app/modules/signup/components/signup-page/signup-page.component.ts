@@ -43,8 +43,7 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
     if(page_value >= 1 && page_value <= 3) {
       if(!this.email_valid && page_value === 1) {
         console.log('test')
-        this.toggleRequired(page_value);
-        this.checkEmail();
+        this.checkEmail(page_value);
       } else {
         if(page_value === 1) this.loadLibraries();
 
@@ -64,12 +63,13 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
   checking_email: boolean = false;
   email_err!: string | null;
   student_email: boolean = false;
-  checkEmail() {
+  checkEmail(page_value: number) {
     this.checking_email = true;
     this.http.checkEmail({ params: { email: this.signUpForm.value.email }}).subscribe({
       next: (data: any) => {
         const split = this.signUpForm.value.email.split('@');
 
+        this.toggleRequired(page_value);
         this.student_email = this.emails_domain.includes(split[1])
         this.checking_email = false;
         this.loadLibraries();
@@ -77,6 +77,7 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
       },
       error: err => {
         console.log(err)
+        console.log(this.signUpForm)
         this.email_err = err.error.message;
         this.checking_email = false;
       }
@@ -121,28 +122,31 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
   }
 
   toggleRequired(page_value: number){
-    let validatorArray!: string[];
+    const page1_required: string[] = [
+      'first_name', 'last_name', 'contact_number',
+      'gender', 'birthdate', 'province_code', 'municipality_code',
+      'barangay_code', 'address', 'place_of_birth'
+    ];
+
+    const page2_required: string[] = [
+      'lib_school_id', 'course_code', 'year_level',
+      'photo_url', 'grade_url'
+    ];
+
+    const page3_required: string[] = ['average_monthly_income'];
+
     switch (page_value) {
       case 1:
-        validatorArray = [
-          'first_name', 'last_name', 'contact_number',
-          'gender', 'birthdate', 'province_code', 'municipality_code',
-          'barangay_code', 'address', 'place_of_birth'
-        ];
-        this.addValidator(validatorArray);
+        this.clearValidator(page2_required);
+        this.clearValidator(page3_required);
+        this.addValidator(page1_required);
         break;
       case 2:
-        validatorArray = [
-          'lib_school_id', 'course_code', 'year_level',
-          'photo_url', 'grade_url'
-        ];
-        this.addValidator(validatorArray);
+        this.clearValidator(page3_required);
+        this.addValidator(page2_required);
         break;
       case 3:
-        validatorArray = [
-          'average_monthly_income'
-        ];
-        this.addValidator(validatorArray);
+        this.addValidator(page3_required);
         break;
       default:
         break;
@@ -160,6 +164,13 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
       } else {
         this.signUpForm.get(value)?.setValidators([Validators.required]);
       }
+      this.signUpForm.get(value)?.updateValueAndValidity();
+    });
+  }
+
+  clearValidator(validatorArray: string[]) {
+    validatorArray.forEach(value => {
+      this.signUpForm.get(value)?.clearValidators();
       this.signUpForm.get(value)?.updateValueAndValidity();
     });
   }

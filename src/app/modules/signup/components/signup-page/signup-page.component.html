@@ -72,7 +72,7 @@
                 <div class="flex flex-col w-full md:w-3/5 ">
                   <button #proceedBtn [disabled]="!signUpForm.valid || checking_email  || (signUpForm.value.password !== signUpForm.value.password_confirmation)" (click)="navigatePage(1)" class="btn-blue-nr mt-5 h-14">
                     <fa-icon *ngIf="checking_email" [icon]="faCircleNotch" animation="spin" class="mr-1"></fa-icon>
-                    {{ checking_email ? 'Checking Email' : 'Proceed' }}
+                    {{ checking_email ? 'Checking Email' : 'Proceed' }} {{ signUpForm.valid }}
                   </button>
                   <span class="text-center text-xs mt-1">
                     By proceeding you agree to
@@ -96,13 +96,13 @@
       <div class="relative p-4 w-full max-w-5xl">
         <div class="flex flex-col">
           <div class="grid grid-cols-3 font-semibold text-center text-gray-500">
-            <button [disabled]="!signUpForm.valid" class="border-b-2 hover:cursor-pointer" (click)="navigatePage(1)" [class]="{'border-b-blue-600' : +page === 1}">
+            <button [disabled]="!signUpForm.valid && page < 2" class="border-b-2 hover:cursor-pointer" (click)="navigatePage(1)" [class]="{'border-b-blue-600' : +page === 1}">
               Part 1
             </button>
-            <button [disabled]="!signUpForm.valid" class="border-b-2 hover:cursor-pointer" (click)="navigatePage(2)" [class]="{'border-b-blue-600' : +page === 2}">
+            <button [disabled]="!signUpForm.valid && page < 3" class="border-b-2 hover:cursor-pointer" (click)="navigatePage(2)" [class]="{'border-b-blue-600' : +page === 2}">
               Part 2
             </button>
-            <button [disabled]="!signUpForm.valid" class="border-b-2 hover:cursor-pointer" (click)="navigatePage(3)" [class]="{'border-b-blue-600' : +page === 3}">
+            <button [disabled]="!signUpForm.valid && page === 1" class="border-b-2 hover:cursor-pointer" (click)="navigatePage(3)" [class]="{'border-b-blue-600' : +page === 3}">
               Part 3
             </button>
           </div>
