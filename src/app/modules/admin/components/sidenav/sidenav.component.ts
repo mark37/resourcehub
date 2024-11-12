@@ -23,7 +23,7 @@ export class SidenavComponent  {
     { name: 'Home', location: 'home' , icon: faHouse},
     { name: 'Dashboard', location: 'dashboard', icon: faTableColumns },
     { name: 'Notifications', location: '', icon: faBell },
-    { name: 'Create Post', location: 'create-post', icon: faPenToSquare },
+    { name: 'Create Post', location: 'dashboard?create_post=true', icon: faPenToSquare },
     { name: 'Manage Users', location: 'manage-user', icon: faUser }
   ];
 
@@ -36,12 +36,11 @@ export class SidenavComponent  {
   modals: any[string] = [];
 
   navigateTo(location: string) {
-    if(location === 'create-post') {
+    if(location === 'dashboard?create_post=true') {
       this.router.navigate(['admin/dashboard'], { queryParams : {create_post: true}});
     } else {
       this.router.navigate(['admin/'+location]);
     }
-
   }
 
   toggleMenu(name: string, location?: boolean) {
@@ -56,8 +55,6 @@ export class SidenavComponent  {
       },
       error: err => console.log(err)
     });
-    /* localStorage.clear();
-    this.router.navigate(['/']) */
   }
 
   constructor(
@@ -71,6 +68,7 @@ export class SidenavComponent  {
     filter(event => event instanceof NavigationEnd),
     tap(() => {
       this.current_url = this.location.path();
+      console.log(this.current_url)
     })
   );
 
