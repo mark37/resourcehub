@@ -21,6 +21,14 @@ export class HttpService {
     return this.http.delete(`${this.baseUrl}` + 'v1/' + loc + id)
   }
 
+  forgotPass(data: any) {
+    return this.http.post(`${this.baseUrl}`+ 'forgot-password', data);
+  }
+
+  resetPass(data: any){
+    return this.http.post(`${this.baseUrl}`+ 'reset-password', data);
+  }
+
   register(data: any) {
     return this.http.post(`${this.baseUrl}`+ 'register', data);
   }

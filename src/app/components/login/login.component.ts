@@ -29,9 +29,35 @@ export class LoginComponent {
     password: new FormControl<string|null>(null)
   });
 
+  emailResetForm: FormGroup = new FormGroup({
+    email: new FormControl<string|null>(null)
+  });
+
+  showForgotPass: boolean = false;
+  toggleForgotPass() {
+    if(!this.emailResetForm.value.email) {
+      this.emailResetForm = this.formBuilder.nonNullable.group({
+        email: [null, [Validators.required, Validators.email]],
+      });
+    }
+    this.showForgotPass = !this.showForgotPass;
+  }
+
   isInputPass: boolean = true;
   togglePassword() {
     this.isInputPass = !this.isInputPass
+  }
+
+  reset_message: string | null = null;
+  resetPassword() {
+    console.log(this.emailResetForm.value)
+    this.http.forgotPass(this.emailResetForm.value).subscribe({
+      next: (data: any) => {
+        console.log(data)
+        this.reset_message = data.status;
+      },
+      error: err => console.log(err)
+    })
   }
 
   onSubmit() {

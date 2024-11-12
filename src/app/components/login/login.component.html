@@ -11,7 +11,7 @@
 
   <div class="relative p-4 w-full max-w-xl h-auto">
     <div class="bg-white h-auto p-5 md:p-16 rounded-xl shadow-2xl">
-      <div class="flex flex-col">
+      <div *ngIf="!showForgotPass" class="flex flex-col">
         <div class="flex justify-between text-blue-600 font-semibold">
           <div>
             Sign In
@@ -35,7 +35,7 @@
             </div>
             <app-error-label *ngIf="formSubmitted" [childForm]="loginForm" [childFormName]="'password'"></app-error-label>
           </div>
-          <span class="hover:cursor-pointer text-blue-600 mt-1 text-xs text-right">Forgot password?</span>
+          <button (click)="toggleForgotPass()" class="hover:cursor-pointer text-blue-600 mt-1 text-xs text-right">Forgot password?</button>
 
           <div>
             <button type="submit" class="btn-blue w-full mt-5" [disabled]="isLoading">
@@ -52,6 +52,27 @@
             Dont have and account?
             <a class="text-blue-600 hover:cursor-pointer" href="#/signup">Register</a>
           </span>
+        </form>
+      </div>
+
+      <div *ngIf="showForgotPass" class="flex flex-col">
+        <div class="font-semibold text-xl mb-8 text-center">
+          Reset your password
+        </div>
+        <div *ngIf="!reset_message" class="text-sm mb-3">
+          To reset your password please provide us your email address and we will send you
+          an instructions on how to reset you password.
+        </div>
+        <form *ngIf="!reset_message" [formGroup]="emailResetForm">
+          <div>
+            <label>email</label>
+            <input type="text" class="input-txt" formControlName="email" />
+          </div>
+          <div class="flex justify-end mt-3">
+            <button [disabled]="!emailResetForm.valid" (click)="resetPassword()" class="btn-blue-nr px-5">
+              Reset Password
+            </button>
+          </div>
         </form>
       </div>
     </div>
