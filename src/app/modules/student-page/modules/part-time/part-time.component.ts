@@ -84,7 +84,7 @@ export class PartTimeComponent implements OnInit {
     params['per_page'] = 'all';
     params['lib_posting_category_id'] = 1;
     params['is_published'] = 'published';
-    if(this.isAuthenticated)
+    // if(this.isAuthenticated)
     if(show_all === false) {
       this.with_radius = true;
       params['radius'] = this.radius;
@@ -119,6 +119,7 @@ export class PartTimeComponent implements OnInit {
   toggleModal(name: string, data?: any) {
     this.selected_posting = data;
     this.modals[name] = !this.modals[name];
+    if(!this.modals[name]) this.loadPartTime(false)
   }
 
   // Function to calculate distance between two points in meters

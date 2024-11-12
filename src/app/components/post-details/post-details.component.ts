@@ -3,9 +3,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HttpService } from '../../shared/http.service';
-import { faArrowLeft, faFileLines, faSave, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCircleCheck, faFileLines, faSave, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { QuillEditorComponent, QuillModule } from 'ngx-quill';
+import { QuillEditorComponent } from 'ngx-quill';
 import { Router } from '@angular/router';
 
 @Component({
@@ -24,9 +24,11 @@ export class PostDetailsComponent {
   faFileLines = faFileLines;
   faArrowLeft = faArrowLeft;
   faXmark = faXmark;
+  faCircleCheck = faCircleCheck;
+
   public htmlContent: SafeHtml | null = null;
   showConfirmation: boolean = false;
-
+  showSuccessfullApplication: boolean = false;
   editorConfig = {
     toolbar: [ ]
   };
@@ -49,7 +51,7 @@ export class PostDetailsComponent {
 
     console.log(params)
     this.http.post('posting-application', params).subscribe({
-      next: () => this.closeModal(),
+      next: () => { this.showConfirmation = false; this.showSuccessfullApplication =  true; },
       error: err => console.log(err)
     });
   }
@@ -65,6 +67,7 @@ export class PostDetailsComponent {
   ) { }
 
   ngOnInit(): void {
+    this.isAuthenticated = localStorage.getItem('access_token') ? true : false;
     console.log(this.selected_posting);
     this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(this.selected_posting.description);
   }

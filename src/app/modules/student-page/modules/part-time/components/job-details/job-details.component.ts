@@ -86,6 +86,7 @@ export class JobDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.selected_posting);
     this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(this.selected_posting.description);
   }
 }
