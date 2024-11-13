@@ -49,9 +49,13 @@ export class PostDetailsComponent {
       params['date_applied'] = formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/manila');
     }
 
-    console.log(params)
     this.http.post('posting-application', params).subscribe({
-      next: () => { this.showConfirmation = false; this.showSuccessfullApplication =  true; },
+      next: () => {
+        this.showConfirmation = false;
+        if(applied) {
+          this.showSuccessfullApplication =  true;
+        }
+      },
       error: err => console.log(err)
     });
   }

@@ -72,7 +72,7 @@
                 <div class="flex flex-col w-full md:w-3/5 ">
                   <button #proceedBtn [disabled]="!signUpForm.valid || checking_email  || (signUpForm.value.password !== signUpForm.value.password_confirmation)" (click)="navigatePage(1)" class="btn-blue-nr mt-5 h-14">
                     <fa-icon *ngIf="checking_email" [icon]="faCircleNotch" animation="spin" class="mr-1"></fa-icon>
-                    {{ checking_email ? 'Checking Email' : 'Proceed' }} {{ signUpForm.valid }}
+                    {{ checking_email ? 'Checking Email' : 'Proceed' }}
                   </button>
                   <span class="text-center text-xs mt-1">
                     By proceeding you agree to

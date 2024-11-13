@@ -37,7 +37,7 @@ export class HistoryComponent implements OnInit{
 
   loadList() {
     this.isLoading = true;
-    let params: any = { 'include': 'posting', is_applied: 1 };
+    let params: any = { 'include': 'posting', is_applied: 1, per_page: 'all' };
     if(this.category) params['lib_posting_category_id'] = this.category;
     this.http.get('posting-application', { params }).subscribe({
       next: (data: any) => {
