@@ -20,7 +20,7 @@
 
   <div class="grid grid-cols-2 gap-4 mt-3 ">
     <div class="flex flex-col">
-      <div class="bg-white rounded-lg">
+      <div class="bg-white rounded-lg h-2/5">
         <div class="flex justify-between m-3">
           <div class="font-semibold">Draft Posts</div>
           <div class="text-xs text-blue-500">
@@ -30,7 +30,7 @@
             </button>
           </div>
         </div>
-        <div class="m-3">
+        <div class="m-3 h-4/5 overflow-y-auto">
           <div class="mb-2 pb-2 flex flex-row" *ngFor="let item of draft_posts">
             <div>
               <button class="text-2xl w-12 h-12 bg-gray-300 font-semibold mt-4 mr-2 rounded-md capitalize opacity-75">
@@ -49,28 +49,13 @@
           </div>
         </div>
       </div>
-
-      <!-- <div class="mt-3 bg-white rounded-lg">
-        <div class="flex justify-between m-3">
-          <div class="font-semibold">Draft Post</div>
-          <div class="text-xs text-blue-500">
-            <button>
-              See all
-              <fa-icon class="ml-1" [icon]="faArrowUpRightFromSquare"></fa-icon>
-            </button>
-          </div>
-        </div>
-        <div class="m-3">
-          tests
-        </div>
-      </div> -->
     </div>
 
-    <div class="flex flex-col bg-white p-3 rounded-lg">
+    <div class="flex flex-col bg-white p-3 rounded-lg h-2/5">
       <div class="m-3 font-semibold">
         Pending Accounts
       </div>
-      <div class="flex flex-col w-full select-none">
+      <div class="flex flex-col w-full select-none h-4/5 overflow-y-auto">
         <table class="table-auto">
           <tbody>
             <tr *ngFor="let item of userList; let i = index; let odd = odd" [ngClass]="{'bg-sky-50' : odd }" class=" hover:bg-sky-100">
