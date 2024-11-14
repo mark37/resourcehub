@@ -9,7 +9,10 @@
     <div class="flex flex-col md:flex-row justify-between border-b-2 border-gray-300 pb-1">
       <div class="flex">
         <button (click)="viewPhoto('view-documents', user.photo_url)">
-          <img [src]="user.photo_url" class="w-20 h-20"/>
+          <img *ngIf="user.photo_url" [src]="user.photo_url" alt="photo_2x2" class="w-20 h-20"/>
+          <div *ngIf="!user.photo_url" class="mr-2 flex w-16 h-16 text-4xl text-gray-600 align-middle rounded-full border-2 border-gray-300">
+            <fa-icon class="my-auto mx-auto " [icon]="faUser"></fa-icon>
+          </div>
         </button>
         <div class="flex flex-col">
           <span class="font-semibold text-xl">
@@ -65,7 +68,7 @@
       <legend class="text-center px-5 font-semibold text-sm bg-gray-200 py-1">Parents Information</legend>
       <div class="flex flex-col md:flex-row justify-between m-3 bg-sky-100 rounded-md px-3">
         <span class="w-full md:w-1/2">OFW Status: {{ user.parents.ofw_flag ? 'Yes' : 'No' }}</span>
-        <span class="w-full md:w-1/2">Average Montly Income: {{ user.parents.monthly_income.desc }}</span>
+        <span class="w-full md:w-1/2">Average Montly Income: {{ user.parents?.monthly_income?.desc }}</span>
       </div>
       <div class="flex flex-col md:flex-row justify-between mb-3">
         <div class="flex flex-col text-center w-full md:w-1/2">
@@ -175,4 +178,5 @@
 
 <app-view-documents *ngIf="modals['view-documents']"
   (toggleModal)="viewPhoto('view-documents')"
-[selected_data]="selected_data"></app-view-documents>
+  [selected_data]="selected_data"
+></app-view-documents>
