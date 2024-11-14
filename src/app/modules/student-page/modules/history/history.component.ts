@@ -57,6 +57,11 @@ export class HistoryComponent implements OnInit{
     this.modals[name] = !this.modals[name]
   }
 
+  selected_application_id!: string;
+  toggleCancelModal(id?: any) {
+    this.selected_application_id = id;
+    this.modals['cancel-application'] = !this.modals['cancel-application'];
+  }
   constructor (
     private http: HttpService
   ) { }

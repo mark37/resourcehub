@@ -6,6 +6,7 @@ import { HistoryComponent } from './history.component';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PostDetailsComponent } from '../../../../components/post-details/post-details.component';
+import { CancelApplicationComponent } from './modals/cancel-application/cancel-application.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { PostDetailsComponent } from '../../../../components/post-details/post-d
     HistoryRoutingModule,
     FormsModule,
     FontAwesomeModule,
-    PostDetailsComponent
+    PostDetailsComponent,
+    CancelApplicationComponent
   ]
 })
 export class HistoryModule { }
