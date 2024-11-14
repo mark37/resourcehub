@@ -39,7 +39,7 @@
           </span>
         </div>
         <div class="w-2/12 mt-5">
-          <button class="btn-blue px-5 text-xs" (click)="toggleModal('cancel-application')">
+          <button *ngIf="item.is_approved === null" class="btn-blue px-5 text-xs" (click)="toggleCancelModal(item.id)">
             Cancel Application
           </button>
         </div>

@@ -26,7 +26,7 @@ export class CancelApplicationComponent implements OnChanges, AfterViewInit {
   onSubmit() {
     this.is_loading = true;
     if(this.confirm_code === this.confirmation_code){
-      this.http.delete('posting-aplication/', this.selected_application_id).subscribe({
+      this.http.delete('posting-application/', this.selected_application_id).subscribe({
         next: () => {
           this.is_loading = false;
           this.message = 'Code Match, Item was deleted';
