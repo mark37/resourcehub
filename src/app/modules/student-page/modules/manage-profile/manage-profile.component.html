@@ -21,7 +21,39 @@
 
   <div *ngIf="showUpdateForm">
     <fieldset class="rounded-md border border-gray-400 bg-white" >
-      <legend class="ml-5 px-4 font-semibold bg-gray-200 py-2 rounded-mx">Parents Information</legend>
+      <legend class="ml-5 px-4 font-semibold bg-gray-200 py-2 rounded-mx">Current School Information</legend>
+      <form [formGroup]="userForm" class="flex flex-col md:grid md:grid-cols-3 gap-4 p-3 mx-4 border-b-2 border-gray-200">
+        <div>
+          <label for="school">School</label>
+          <select class="input-txt" formControlName="lib_school_id" name="lib_school_id" id="lib_school_id">
+            <option *ngFor="let item of school_list" [value]="item.id">{{ item.desc }}</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="school">Course</label>
+          <select class="input-txt" formControlName="lib_academic_program_id" name="lib_academic_program_id" id="lib_academic_program_id">
+            <option *ngFor="let item of academic_programs" [value]="item.id">{{ item.desc }}</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="school">Year Level</label>
+          <select class="input-txt" formControlName="lib_year_level_id" name="lib_year_level_id" id="lib_year_level_id">
+            <option *ngFor="let item of year_level_list" [value]="item.id">{{ item.desc }}</option>
+          </select>
+        </div>
+
+        <div class="flex justify-center col-span-3">
+          <button [disabled]="!userForm.valid || isFormSaving['user-information']" (click)="updateAcademicInfo()" class="btn-blue-nr w-32 text-sm py-1.5">
+            <fa-icon *ngIf="isFormSaving['user-information']" [icon]="faCircleNotch" animation="spin"></fa-icon>
+            Update
+          </button>
+        </div>
+      </form>
+    </fieldset>
+    <fieldset class="rounded-md border border-gray-400 bg-white" >
+      <legend class="ml-5 px-4 font-semibold bg-rose-200 py-2 rounded-mx">Parents Information</legend>
       <form [formGroup]="parentsForm" class="flex p-3 mx-4 border-b-2 border-gray-200">
         <div class="flex flex-col md:grid md:grid-cols-2 md:gap-x-16 md:mx-24">
           <div class="col-span-2 flex justify-center mb-3">

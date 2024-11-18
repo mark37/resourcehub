@@ -4,6 +4,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { faArrowLeft, faArrowRightFromBracket, faBell, faComment, faGear, faHouse, faPenToSquare, faTableColumns, faUser, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { filter, tap } from 'rxjs';
 import { HttpService } from '../../../../shared/http.service';
+import { EchoServiceService } from '../../../../shared/echo-service.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -60,7 +61,8 @@ export class SidenavComponent  {
   constructor(
     private http: HttpService,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private echoService: EchoServiceService
   ) { }
 
   current_url!: string;
@@ -73,6 +75,7 @@ export class SidenavComponent  {
   );
 
   ngOnInit(): void {
+    // this.echoService.listenToNotifications();
     this.current_url = this.location.path();
     this.navigationEnd$.subscribe();
   }

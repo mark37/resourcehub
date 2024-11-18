@@ -43,3 +43,12 @@ export function workExperienceForm() {
     end_date: new FormControl<string|null>(null)
   })
 }
+
+export function userForm() {
+  return new FormGroup({
+    id: new FormControl<string|null>(null),
+    lib_school_id: new FormControl<string|null>(null),
+    lib_academic_program_id: new FormControl<string|null>(null),
+    lib_year_level_id: new FormControl<string|null>(null),
+  });
+}

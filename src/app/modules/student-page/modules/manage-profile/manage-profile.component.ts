@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../../../shared/http.service';
 import { faAdd, faCircleNotch, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { educationForm, parentsForm, referenceForm, workExperienceForm } from './UserForm';
+import { educationForm, parentsForm, referenceForm, userForm, workExperienceForm } from './UserForm';
 import { formatDate } from '@angular/common';
 
 @Component({
@@ -19,6 +19,7 @@ export class ManageProfileComponent implements OnInit {
   referenceForm:FormGroup = referenceForm();
   workExperienceForm:FormGroup = workExperienceForm();
   parentsForm:FormGroup = parentsForm();
+  userForm:FormGroup = userForm();
 
   educationList!: any;
   referenceList!: any;
@@ -29,10 +30,24 @@ export class ManageProfileComponent implements OnInit {
   education_levels!: {id: string, desc: string}[];
   academic_programs!: {id: string, desc: string}[];
   income_list!: {id: string, desc: string}[];
+  school_list!: {id: string, desc: string}[];
+  year_level_list!: {id: string, desc: string}[];
 
   isFormSaving: any = [];
   convertDates(date: string): string | null {
     return date ? formatDate(date, 'yyyy-MM', 'en', 'Asia/manila') : null;
+  }
+
+  updateAcademicInfo() {
+    this.isFormSaving['user-information'] = true;
+
+    this.http.update('user-information/', this.userForm.value.id, this.userForm.value).subscribe({
+      next: (data: any) => {
+        this.isFormSaving['user-information'] = false;
+        console.log(data);
+      },
+      error: err => console.log(err)
+    })
   }
 
   onSubmit(url: string, formData: FormGroup, listName: string, formName:string) {
@@ -69,8 +84,11 @@ export class ManageProfileComponent implements OnInit {
 
     this.http.get('user-information', { params }).subscribe({
       next: (data: any) => {
+        console.log(data)
         this.selected_user = data.data[0];
         this.show_form = true;
+        this.userForm.patchValue({...data.data[0]});
+        console.log(this.userForm.value)
         if(!reloadOnly) this.createForms();
       },
       error: err => console.log(err)
@@ -92,6 +110,7 @@ export class ManageProfileComponent implements OnInit {
     this.loadData('user-employment', 'workExperienceList');
     this.loadData('user-reference', 'referenceList');
     this.loadData('parent-information', 'parentsInformation');
+    // this.loadData('parent-information', 'parentsInformation');
 
     this.createEducationForm();
     this.createReferenceForm();
@@ -159,6 +178,8 @@ export class ManageProfileComponent implements OnInit {
     if(!this.education_levels) this.loadLibraries('education-level', 'education_levels');
     if(!this.academic_programs) this.loadLibraries('academic-programs', 'academic_programs');
     if(!this.income_list) this.loadLibraries('monthly-income', 'income_list');
+    if(!this.school_list) this.loadLibraries('school', 'school_list');
+    if(!this.year_level_list) this.loadLibraries('year-level', 'year_level_list');
 
     this.loadUserInformation(true);
   }
