@@ -95,7 +95,7 @@
             </div>
           </span>
           <span class="text-xl font-semibold">{{ item.title }}</span>
-          <span class="text-gray-500">{{ item.job_status }}</span>
+          <span class="text-gray-500 text-sm">Slots: {{ item.posting_applications_count }}/{{ item.slot }}</span>
           <div class="flex justify-center mt-3 text-xs">
             <button class="btn-blue bg-orange-500 rounded-r-none" (click)="openWindowFromDetails(item.latitude, item.longitude, item.title)">
               <fa-icon [icon]="faLocationDot" class="pr-1"></fa-icon>
