@@ -32,7 +32,8 @@ export class ApplicantListComponent implements OnInit {
       posting_id: this.selected_posting.id,
       show_list: 1,
       per_page: this.per_page,
-      application_status: this.application_status
+      application_status: this.application_status,
+      is_applied: 1
     };
 
     this.http.get('posting-application', { params }).subscribe({
@@ -77,7 +78,8 @@ export class ApplicantListComponent implements OnInit {
       show_list: 1,
       per_page: 20,
       application_status: this.application_status,
-      page: 1
+      page: 1,
+      is_applied: 1
     };
 
     this.allApplicantArray = [];
