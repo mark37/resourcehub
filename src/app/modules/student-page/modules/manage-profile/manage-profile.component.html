@@ -306,3 +306,8 @@
     </fieldset>
   </div>
 </div>
+
+<app-deactivate-account *ngIf="modals['deactivate-account']"
+  (toggleCancelModal)="toggleCancelModal()"
+  [selected_application_id]="selected_user_id"
+></app-deactivate-account>

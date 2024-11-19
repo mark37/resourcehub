@@ -94,15 +94,22 @@ export class ManageProfileComponent implements OnInit {
       error: err => console.log(err)
     })
   }
-
+  selected_user_id!: string;
   deactivateAccount() {
-    console.log('test')
+    this.selected_user_id = this.userForm.value.id
+    this.toggleCancelModal();
     /* this.http.post('deactivate', {params:{}}).subscribe({
       next:(data: any) => {
         console.log(data)
       },
       error: err => console.log(err)
     }) */
+  }
+
+  modals: any = [];
+  toggleCancelModal() {
+    console.log('test')
+    this.modals['deactivate-account'] = !this.modals['deactivate-account'];
   }
 
   createForms() {
