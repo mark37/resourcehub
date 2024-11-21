@@ -21,7 +21,7 @@ export class RecentPartTimeComponent {
   loadList() {
     this.isLoading = true;
 
-    let params = { lib_posting_category_id: 1 };
+    let params = { lib_posting_category_id: 1, per_page: 'all' };
     this.http.get('posting-application', {params}).subscribe({
       next: (data: any) => {
         console.log(data);
