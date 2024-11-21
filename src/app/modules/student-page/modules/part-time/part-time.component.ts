@@ -92,7 +92,7 @@ export class PartTimeComponent implements OnInit {
       params['lng'] = this.center.lng;
     } else {
       this.with_radius = false;
-      this.search = null;
+      // this.search = null;
     }
 
     if(this.search) params['search'] = this.search;
