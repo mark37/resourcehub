@@ -45,11 +45,19 @@
               </select>
             </div> -->
 
-            <div class="col-span-2">
+            <div>
               <label class="pt-1 mr-4">Municipality</label>
               <select [(ngModel)]="municipality_code" class="input-txt">
                 <option [ngValue]="null">All</option>
                 <option *ngFor="let item of municipalities" [value]="item.code">{{ item.name }}</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="pt-1 mr-4">Slots</label>
+              <select [(ngModel)]="slots_filled" class="input-txt">
+                <option [ngValue]="null">All</option>
+                <option *ngFor="let item of filledSlotList" [value]="item.code">{{ item.name }}</option>
               </select>
             </div>
           </div>

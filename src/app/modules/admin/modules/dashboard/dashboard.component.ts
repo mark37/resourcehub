@@ -48,6 +48,11 @@ export class DashboardComponent implements OnInit{
     {title: 'Unpublished', id: 'unpublished'},
   ];
 
+  filledSlotList: {name:string ,code:string }[] = [
+    {name: 'Filled', code: 'filled'},
+    {name: 'With Vacant', code: 'unfilled'},
+  ];
+
   editorContent: string = '';  // Stores the editor content
   submittedContent: string = '';  // Stores the submitted content
 
@@ -60,6 +65,7 @@ export class DashboardComponent implements OnInit{
   };
 
   sms_message!: string | null;
+  slots_filled!: string;
 
   toggleMessaging(data?: any) {
     this.showMessaging = !this.showMessaging;
@@ -113,6 +119,7 @@ export class DashboardComponent implements OnInit{
     if(this.is_published) params['is_published'] = this.is_published;
     if(this.searchTerm) params['search'] = this.searchTerm;
     if(this.municipality_code) params['municipality_code'] = this.municipality_code;
+    if(this.slots_filled) params['slots_filled'] = this.slots_filled;
 
     this.http.get('posting-information', { params }).subscribe({
       next: (data: any) => {
