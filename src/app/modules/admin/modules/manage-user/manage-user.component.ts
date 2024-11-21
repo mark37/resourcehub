@@ -127,6 +127,8 @@ export class ManageUserComponent implements OnInit {
             first_name: item.first_name,
             email: item.email,
             contact_number: item.contact_number,
+            cor_url: item.cor_url,
+            rog_url: item.grade_url,
             is_scholar: item.scholar_flag ? 'Yes' : 'No',
             is_irregular: item.irregular_flag ? 'Yes' : 'No',
             is_shiftee: item.shiftee_flag ? 'Yes' : 'No',
