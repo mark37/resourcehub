@@ -18,14 +18,11 @@ export class LandingPageComponent {
   modals: any[string] = [];
 
   menuList: any[] = [
-    {name: 'Home', loc: ''},
-    {name: 'Dashboard', loc: ''},
-    {name: 'Scholarships', loc: ''},
-    {name: 'Part-time Jobs', loc: ''},
-    {name: 'History', loc: ''},
-    {name: 'About Us', loc: ''},
+    {name: 'Scholarships', loc: 'student/scholarship'},
+    {name: 'Part-time Jobs', loc: 'student/part-time'},
+/*     {name: 'About Us', loc: ''},
     {name: 'User Agreement', loc: ''},
-    {name: 'Term of Use', loc: ''},
+    {name: 'Term of Use', loc: ''}, */
   ];
 
   navigateTo(location: string) {
