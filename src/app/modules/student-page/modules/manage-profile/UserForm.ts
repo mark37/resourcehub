@@ -50,5 +50,10 @@ export function userForm() {
     lib_school_id: new FormControl<string|null>(null),
     lib_academic_program_id: new FormControl<string|null>(null),
     lib_year_level_id: new FormControl<string|null>(null),
+    cor_url: new FormControl<string|null>(null),
+    grade_url: new FormControl<string|null>(null),
+    scholar_flag: new FormControl<boolean>(false),
+    shiftee_flag	: new FormControl<boolean>(false),
+    irregular_flag: new FormControl<boolean>(false),
   });
 }
