@@ -102,6 +102,8 @@ export class ApplicantListComponent implements OnInit {
             year_level: item.user.year_level.desc,
             school: item.user.school.desc,
             date_applied: item.date_applied,
+            cor_url: item.user.cor_url,
+            rog_url: item.user.grade_url,
             application_status: item.is_approved === null ? 'pending' : (item.is_approved === 1 ? 'approved' : 'rejected')
           }));
 
