@@ -34,9 +34,15 @@ export class UserInformationComponent implements OnChanges{
     this.modals[name] = !this.modals[name]
   }
 
+  hide_element: boolean = false;
   onPrint1(el: ElementRef<HTMLTableElement | HTMLElement>) {
-    console.log(el)
-    this.print.print(el).subscribe(console.log)
+    this.hide_element = true;
+    this.print.print(el).subscribe({
+      next: (data) => {
+        if(data.close) this.hide_element = false;
+      },
+      error: () => console.log('error')
+    })
   }
 
   constructor (
