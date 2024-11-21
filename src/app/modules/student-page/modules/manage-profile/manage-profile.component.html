@@ -21,8 +21,25 @@
 
   <div *ngIf="showUpdateForm">
     <fieldset class="rounded-md border border-gray-400 bg-white" >
-      <legend class="ml-5 px-4 font-semibold bg-gray-200 py-2 rounded-mx">Current School Information</legend>
+      <legend class="ml-5 px-4 font-semibold bg-gray-200 py-2 rounded-mx">School Information</legend>
       <form [formGroup]="userForm" class="flex flex-col md:grid md:grid-cols-3 gap-4 p-3 mx-4 border-b-2 border-gray-200">
+        <div class="md:col-span-3 md:grid md:grid-cols-3 flex flex-col">
+          <div class="flex">
+            <input type="checkbox" class="input-checkbox mr-1" formControlName="scholar_flag" />
+            <label>Are you already a GRANTEE of a scholarship program?</label>
+          </div>
+
+          <div class="flex">
+            <input type="checkbox" class="input-checkbox mr-1" formControlName="shiftee_flag" />
+            <label>Are you a SHIFTEE?</label>
+          </div>
+
+          <div class="flex">
+            <input type="checkbox" class="input-checkbox mr-1" formControlName="irregular_flag" />
+            <label>Are you an IRREGULAR student?</label>
+          </div>
+        </div>
+
         <div>
           <label for="school">School</label>
           <select class="input-txt" formControlName="lib_school_id" name="lib_school_id" id="lib_school_id">
@@ -44,6 +61,33 @@
           </select>
         </div>
 
+
+
+        <!-- <div>
+          <input  #fileCOR (change)="onFileSelected($event, 'cor_url')" type="file" class="hidden" accept=".pdf,.doc,.docx" />
+          <button (click)="fileCOR.click()" class="btn-blue-nr text-white w-full text-sm mt-2"  [ngClass]="{'bg-gray-300': userForm.value.cor_url}">
+            <fa-icon [icon]="faArrowUpFromBracket"></fa-icon>
+            {{ userForm.value.cor_url ? 'Update' : 'Upload' }} COR/SOA/Enrollment Certificate
+          </button>
+
+          <div class="font-semibold text-sm mt-2">
+            {{ userForm.value?.cor_url?.name }}
+          </div>
+        </div>
+
+        <div>
+          <input  #fileRog (change)="onFileSelected($event, 'grade_url')" type="file" class="hidden" accept=".pdf,.doc,.docx" />
+          <button (click)="fileRog.click()" class="btn-blue-nr text-white w-full text-sm mt-2"  [ngClass]="{'bg-gray-300': userForm.value.grade_url}">
+            <fa-icon [icon]="faArrowUpFromBracket"></fa-icon>
+            {{ userForm.value.grade_url ? 'Update' : 'Upload' }} Report of Grade
+          </button>
+
+          <div class="font-semibold text-sm mt-2">
+            {{ userForm.value?.grade_url?.name }}
+          </div>
+        </div> -->
+
+
         <div class="flex justify-center col-span-3">
           <button [disabled]="!userForm.valid || isFormSaving['user-information']" (click)="updateAcademicInfo()" class="btn-blue-nr w-32 text-sm py-1.5">
             <fa-icon *ngIf="isFormSaving['user-information']" [icon]="faCircleNotch" animation="spin"></fa-icon>
@@ -52,7 +96,7 @@
         </div>
       </form>
     </fieldset>
-    <fieldset class="rounded-md border border-gray-400 bg-white" >
+    <fieldset class="rounded-md border border-gray-400 bg-white mt-3" >
       <legend class="ml-5 px-4 font-semibold bg-rose-200 py-2 rounded-mx">Parents Information</legend>
       <form [formGroup]="parentsForm" class="flex p-3 mx-4 border-b-2 border-gray-200">
         <div class="flex flex-col md:grid md:grid-cols-2 md:gap-x-16 md:mx-24">

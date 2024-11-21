@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../../../shared/http.service';
-import { faAdd, faCircleNotch, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faAdd, faArrowUpFromBracket, faCircleNotch, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { educationForm, parentsForm, referenceForm, userForm, workExperienceForm } from './UserForm';
 import { formatDate } from '@angular/common';
@@ -14,6 +14,7 @@ export class ManageProfileComponent implements OnInit {
   faEdit = faEdit;
   faAdd = faAdd;
   faCircleNotch = faCircleNotch;
+  faArrowUpFromBracket = faArrowUpFromBracket;
 
   educationForm:FormGroup = educationForm();
   referenceForm:FormGroup = referenceForm();
@@ -33,6 +34,23 @@ export class ManageProfileComponent implements OnInit {
   school_list!: {id: string, desc: string}[];
   year_level_list!: {id: string, desc: string}[];
 
+  file_err_message!: string | null;
+  onFileSelected(event: Event, formControlName: string) {
+    this.file_err_message = null;
+
+      const file = (event.target as HTMLInputElement).files?.[0];
+      const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+
+      if (file && allowedTypes.includes(file.type)) {
+        this.userForm.patchValue({ [formControlName]: file });
+      } else {
+        this.file_err_message = 'Invalid file type. Only PDF, DOC, DOCX, JPG, and PNG files are allowed.';
+        this.userForm.patchValue({ [formControlName]: null });
+      }
+
+      console.log(this.userForm.value)
+  }
+
   isFormSaving: any = [];
   convertDates(date: string): string | null {
     return date ? formatDate(date, 'yyyy-MM', 'en', 'Asia/manila') : null;
@@ -41,6 +59,24 @@ export class ManageProfileComponent implements OnInit {
   updateAcademicInfo() {
     this.isFormSaving['user-information'] = true;
 
+    this.userForm.patchValue({
+      scholar_flag: this.userForm.value.scholar_flag ? 1 : 0,
+      shiftee_flag: this.userForm.value.shiftee_flag ? 1 : 0,
+      irregular_flag: this.userForm.value.irregular_flag ? 1 : 0,
+    });
+
+    let formData = new FormData();
+    Object.keys(this.userForm.controls).forEach((key) => {
+      const control = this.userForm.get(key);
+      console.log(control)
+      if(control?.value instanceof File) {
+        formData.append(key, control.value);
+      } else if (control) {
+        formData.append(key, control.value ?? '');
+      }
+    });
+
+    console.log(formData);
     this.http.update('user-information/', this.userForm.value.id, this.userForm.value).subscribe({
       next: (data: any) => {
         this.isFormSaving['user-information'] = false;
@@ -98,12 +134,6 @@ export class ManageProfileComponent implements OnInit {
   deactivateAccount() {
     this.selected_user_id = this.userForm.value.id
     this.toggleCancelModal();
-    /* this.http.post('deactivate', {params:{}}).subscribe({
-      next:(data: any) => {
-        console.log(data)
-      },
-      error: err => console.log(err)
-    }) */
   }
 
   modals: any = [];
