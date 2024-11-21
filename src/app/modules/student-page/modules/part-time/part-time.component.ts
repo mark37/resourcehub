@@ -217,6 +217,8 @@ export class PartTimeComponent implements OnInit {
     this.screenHeight = window.innerHeight;
   }
 
+
+
   ngOnInit(): void {
     this.loadPartTime(false, 1);
 

@@ -26,7 +26,7 @@ export class PostDetailsComponent {
   faXmark = faXmark;
   faCircleCheck = faCircleCheck;
 
-  public htmlContent: SafeHtml | null = null;
+  // public htmlContent: SafeHtml | null = null;
   showConfirmation: boolean = false;
   showSuccessfullApplication: boolean = false;
   editorConfig = {
@@ -64,6 +64,20 @@ export class PostDetailsComponent {
     this.toggleModal.emit();
   }
 
+  withUserEducation: boolean = false;
+  show_form: boolean = false;
+  loadUserInformation(reloadOnly?: boolean) {
+    let params: any = { user_info: 1 };
+
+    this.http.get('user-information', { params }).subscribe({
+      next: (data: any) => {
+        this.withUserEducation = data.data[0].user_education.length > 0 ? true : false;
+        this.show_form = true;
+      },
+      error: err => console.log(err)
+    })
+  }
+
   constructor(
     private http: HttpService,
     private sanitizer: DomSanitizer,
@@ -71,8 +85,9 @@ export class PostDetailsComponent {
   ) { }
 
   ngOnInit(): void {
+    this.loadUserInformation();
     this.isAuthenticated = localStorage.getItem('access_token') ? true : false;
     console.log(this.selected_posting);
-    this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(this.selected_posting.description);
+    // this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(this.selected_posting.description);
   }
 }
