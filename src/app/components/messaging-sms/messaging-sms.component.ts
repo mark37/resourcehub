@@ -32,7 +32,8 @@ export class MessagingSmsComponent implements OnInit {
       }
       this.http.post('send-sms', params).subscribe({
         next: (data: any) => {
-          console.log(data)
+          // console.log(data)
+          this.selected_user.sms_logs.splice(0, 0, data.data);
           this.is_saving = false;
         },
         error: err => console.log(err)
@@ -50,6 +51,6 @@ export class MessagingSmsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.selected_user)
+    // console.log(this.selected_user)
   }
 }
