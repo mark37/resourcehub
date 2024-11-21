@@ -25,8 +25,9 @@ export class MessagingSmsComponent implements OnInit {
     if(this.message && this.message !== '') {
       this.is_saving = true;
 
-      let params: {message: string, contact_number: string} = {
+      let params: {message: string, contact_number: string, user_id: string} = {
         message: this.message,
+        user_id: this.selected_user.id,
         contact_number: this.selected_user.contact_number
       }
       this.http.post('send-sms', params).subscribe({
