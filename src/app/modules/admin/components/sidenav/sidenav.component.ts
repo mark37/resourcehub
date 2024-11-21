@@ -23,7 +23,7 @@ export class SidenavComponent  {
   menuList: any[] = [
     { name: 'Home', location: 'home' , icon: faHouse},
     { name: 'Dashboard', location: 'dashboard', icon: faTableColumns },
-    { name: 'Notifications', location: '', icon: faBell },
+    // { name: 'Notifications', location: '', icon: faBell },
     { name: 'Create Post', location: 'dashboard?create_post=true', icon: faPenToSquare },
     { name: 'Manage Users', location: 'manage-user', icon: faUser }
   ];
