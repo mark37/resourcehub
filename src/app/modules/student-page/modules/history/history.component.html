@@ -17,8 +17,8 @@
     </div>
 
     <div class="flex flex-col">
-      <div *ngFor="let item of applicationList" class="border border-gray-400 shadow-md rounded-lg w-full flex p-3 mt-3">
-        <div class="w-8/12 flex flex-col">
+      <div *ngFor="let item of applicationList" class="border border-gray-400 shadow-md rounded-lg w-full flex flex-col md:flex-row p-3 mt-3">
+        <div class="md:w-8/12 flex flex-col">
           <span class="text-xl font-semibold">
             <button class="text-sm text-blue-600 px-2 " (click)="toggleModal('post-details', item)">
               <fa-icon [icon]="faArrowUpRightFromSquare"></fa-icon>
@@ -32,13 +32,13 @@
             Date Applied: {{ item.date_applied | date: 'MMM dd, yyyy' }}
           </span>
         </div>
-        <div class="w-2/12 mt-5">
+        <div class="md:w-2/12 mt-5">
           <span>
             <fa-icon *ngIf="item.is_approved !== null" [icon]="faCircleCheck" [ngClass]="{ 'text-green-500':item.is_approved === 1, 'text-red-500': item.is_approved === 0 }"></fa-icon>
             {{ item.is_approved !== null ? (item.is_approved === 1 ? 'Approved' : 'Denied') : 'Pending' }}
           </span>
         </div>
-        <div class="w-2/12 mt-5">
+        <div class="md:w-2/12 mt-5">
           <button *ngIf="item.is_approved === null" class="btn-blue px-5 text-xs" (click)="toggleCancelModal(item.id)">
             Cancel Application
           </button>
