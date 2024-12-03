@@ -33,7 +33,8 @@ export class ApplicantListComponent implements OnInit {
       show_list: 1,
       per_page: this.per_page,
       application_status: this.application_status,
-      is_applied: 1
+      is_applied: 1,
+      page: page ?? 1
     };
 
     this.http.get('posting-application', { params }).subscribe({
@@ -56,6 +57,18 @@ export class ApplicantListComponent implements OnInit {
   toggleMyModal(name: string, data?: any) {
     this.selected_application = data;
     this.modals[name] = !this.modals[name];
+  }
+
+  updateForInterviewApplicationStatus(is_approved: boolean){
+    this.updating_status = true;
+    this.selected_application['is_approved_interview'] = is_approved;
+    this.http.update('posting-application/', this.selected_application.id, this.selected_application).subscribe({
+      next: (data: any) => {
+        this.updating_status = false;
+        this.toggleMyModal('user-details');
+      },
+      error: err => console.log(err)
+    });
   }
 
   updating_status: boolean = false;

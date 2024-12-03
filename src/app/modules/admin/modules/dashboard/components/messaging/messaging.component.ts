@@ -16,6 +16,7 @@ export class MessagingComponent implements OnInit {
   faPaperPlane = faPaperPlane;
   faArrowLeft = faArrowLeft;
 
+  interview_message!: string;
   mobile_message_approved!: string;
   mobile_message_rejected!: string;
   email_message_approved!: string;
@@ -45,17 +46,20 @@ export class MessagingComponent implements OnInit {
     this.is_saving = true;
     let params: any ={
       posting_id: this.selected_posting.id,
+      interview_message: this.interview_message,
       mobile_message_approved: this.mobile_message_approved,
       mobile_message_rejected: this.mobile_message_rejected,
       email_message_approved: this.email_message_approved,
       email_message_rejected: this.email_message_rejected
     };
 
+    console.log(params);
     this.http.post('message-template', params).subscribe({
       next: (data: any) => {
         console.log(data);
         this.message_template = data.data;
         if(this.message_template) {
+          this.interview_message = this.message_template.interview_message;
           this.mobile_message_approved = this.message_template.mobile_message_approved;
           this.mobile_message_rejected = this.message_template.mobile_message_rejected;
           this.email_message_approved = this.message_template.email_message_approved;
@@ -77,6 +81,7 @@ export class MessagingComponent implements OnInit {
         this.message_template = data.data[0];
 
         if(this.message_template) {
+          this.interview_message = this.message_template.interview_message;
           this.mobile_message_approved = this.message_template.mobile_message_approved;
           this.mobile_message_rejected = this.message_template.mobile_message_rejected;
           this.email_message_approved = this.message_template.email_message_approved;

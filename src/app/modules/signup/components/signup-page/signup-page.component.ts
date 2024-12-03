@@ -93,6 +93,8 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
       scholar_flag: this.signUpForm.value.scholar_flag ? 1 : 0,
       shiftee_flag: this.signUpForm.value.shiftee_flag ? 1 : 0,
       irregular_flag: this.signUpForm.value.irregular_flag ? 1 : 0,
+      pwd_flag: this.signUpForm.value.irregular_flag ? 1 : 0,
+      solo_parent_flag: this.signUpForm.value.irregular_flag ? 1 : 0,
     });
 
     let formData = new FormData();
@@ -272,12 +274,15 @@ export class SignupPageComponent implements OnInit, AfterViewInit {
       scholar_flag: [false],
       shiftee_flag: [false],
       irregular_flag: [false],
+      pwd_flag: [false],
       place_of_birth: [null],
       lib_school_id: [null],
       lib_education_level_id: [3],
       lib_year_level_id: [null],
       lib_academic_program_id: [null],
+      gwa: [null],
       ofw_flag: [false],
+      solo_parent_flag: [false],
       fathers_name: [null],
       fathers_occupation: [null],
       fathers_company: [null],

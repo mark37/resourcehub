@@ -161,7 +161,11 @@
                   <app-error-label *ngIf="formSubmitted" [childForm]="signUpForm" [childFormName]="'contact_number'"></app-error-label>
                 </div>
 
-                <div></div>
+                <div class="mt-4">
+                  <input id="pwd_flag" formControlName="pwd_flag" type="checkbox" class="checkbox" />
+                  <label for="pwd_flag" class="pl-2">Are you a Person With Disabilities (PWD)?</label>
+                </div>
+
                 <div>
                   <label for="province_code" class="text-xs text-gray-400">Province</label>
                   <select (change)="getDemog('psgc/provinces', signUpForm.value.province_code, 'municipalities')" id="province_code" formControlName="province_code" class="input-txt -mb-2">
@@ -246,6 +250,10 @@
                     <input id="irregular_flag" formControlName="irregular_flag" type="checkbox" class="rounded-md text-lg mr-1" />
                     <label for="irregular_flag">Are you an IRREGULAR student?</label>
                   </div>
+                  <div class="flex flex-row">
+                    <label for="gwa">General Weighted Average (GWA)</label>
+                    <input id="gwa" formControlName="gwa" type="text" max="5.0" min="1.0" class="input-txt w-28 ml-3" />
+                  </div>
                 </div>
                 <div class="grid grid-cols-2  gap-x-4 mt-3 w-full">
                   <div *ngIf="!student_email">
@@ -294,9 +302,13 @@
             @case (3) {
               <div class="md:grid md:grid-cols-2 md:gap-4">
 
-                <div class="col-span-2 flex justify-center mt-2">
+                <div class="col-span-2 flex justify-left mt-2">
                   <input id="ofw_flag" formControlName="ofw_flag" type="checkbox" class="rounded-md text-lg mr-1" />
                   <label for="ofw_flag">One or both parents is an overseas filipino worker (OFW)</label>
+                </div>
+                <div class="col-span-2 flex justify-left mt-2">
+                  <input id="solo_parent_flag" formControlName="solo_parent_flag" type="checkbox" class="rounded-md text-lg mr-1" />
+                  <label for="solo_parent_flag">Solo Parent</label>
                 </div>
                 <fieldset class="border border-gray-400">
                   <legend class="ml-3">Father's Information</legend>

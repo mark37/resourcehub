@@ -46,10 +46,38 @@
               <option *ngFor="let item of barangays" [value]="item.code" >{{ item.name }}</option>
             </select>
           </div>
+
           <div>
             <label class="font-semibold">Address</label>
             <input type="text" class="input-txt" formControlName="address" />
           </div>
+
+          <div *ngIf="postingForm.value.lib_posting_category_id === '2'">
+            <label class="font-semibold">General Weighted Average</label>
+            <input type="text" max="5.0" min="1.0" class="input-txt" formControlName="gwa" />
+          </div>
+
+          <div *ngIf="postingForm.value.lib_posting_category_id === '2'">
+            <label class="font-semibold">Year Level</label>
+            <select type="text" class="input-txt" formControlName="lib_year_level_id">
+              <option *ngFor="let item of year_levels" [value]="item.id">{{ item.desc }}</option>
+            </select>
+          </div>
+
+          <div *ngIf="postingForm.value.lib_posting_category_id === '2'">
+            <label class="font-semibold">Course</label>
+            <select type="text" class="input-txt" formControlName="lib_academic_program_id">
+              <option *ngFor="let item of academic_programs" [value]="item.id">{{ item.desc }}</option>
+            </select>
+          </div>
+
+          <div *ngIf="postingForm.value.lib_posting_category_id === '2'">
+            <label class="font-semibold">Household Income</label>
+            <select type="text" class="input-txt" formControlName="lib_average_monthly_income_id">
+              <option *ngFor="let item of montly_incomes" [value]="item.id">{{ item.desc }}</option>
+            </select>
+          </div>
+
           <div *ngIf="postingForm.value.lib_posting_category_id === '1'" class="flex justify-center mt-5 col-span-4">
             <button class="btn-blue-nr px-3" (click)="toggleMap()">
               <fa-icon [icon]="faLocationDot" class="pr-2"></fa-icon>

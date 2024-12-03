@@ -49,8 +49,12 @@
       <span class="-mt-0.5">Rejected</span>
     </div>
     <div class="flex">
+      <span class="block rounded h-4 w-4 shadow-sm mr-1 bg-blue-500"></span>
+      <span class="-mt-0.5">Approved for Interview</span>
+    </div>
+    <div class="flex">
       <span class="block rounded h-4 w-4 shadow-sm mr-1 bg-green-500"></span>
-      <span class="-mt-0.5">Approved</span>
+      <span class="-mt-0.5">Approved Application</span>
     </div>
   </div>
   <table class="table-auto max-h-4/5 overflow-y-auto mt-3 select-none">
@@ -66,8 +70,9 @@
       <tr *ngFor="let item of applicantList; let i = index; let odd = odd" class="hover:bg-sky-100 text-xs">
         <td class="text-center  flex align-middle select-none">
           <span class="block rounded h-4 w-4 shadow-sm mr-2" [ngClass]="{
-            'bg-orange-500 text-white' : item.is_approved === null,
+            'bg-orange-500 text-white' : item.is_approved === null && item.is_approved_interview === null,
             'bg-green-500 text-white' : item.is_approved === 1,
+            'bg-blue-500 text-white' : item.is_approved === null && item.is_approved_interview === 1,
             'bg-red-500 text-white' : item.is_approved === 0,
           }">
           </span>
@@ -96,7 +101,7 @@
     </div>
   </div>
 
-  <app-page-controller *ngIf="applicantList.length > this.per_page" [meta]="meta"></app-page-controller>
+  <app-page-controller *ngIf="meta?.total > this.per_page" (movePage)="loadApplicants($event)"  [meta]="meta"></app-page-controller>
 </div>
 
 <div *ngIf="modals['user-details']" id="defaultModal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 w-full md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog" style="z-index:60">
@@ -121,14 +126,18 @@
         </div>
 
           <!-- Modal footer -->
-        <div *ngIf="!selected_application.is_approved" class="flex justify-center py-3 px-5 space-x-4 rounded-b border-t border-gray-200">
+        <div *ngIf="!selected_application.is_approved" class="flex text-xs justify-center py-3 px-5 space-x-4 rounded-b border-t border-gray-200">
           <button [disabled]="updating_status" (click)="updateApplicationStatus(false)" class="btn-blue bg-red-500 mr-2 w-28">
             <fa-icon *ngIf="updating_status" [icon]="faCircleNotch" animation="spin"></fa-icon>
             Reject
           </button>
-          <button [disabled]="updating_status" (click)="updateApplicationStatus(true)" class="btn-blue bg-blue-500  w-28">
+          <button *ngIf="selected_application.is_approved_interview === null" [disabled]="updating_status" (click)="updateForInterviewApplicationStatus(true)" class="btn-blue bg-blue-500  w-28">
             <fa-icon *ngIf="updating_status" [icon]="faCircleNotch" animation="spin"></fa-icon>
-            Approve
+            Approve for Interview
+          </button>
+          <button *ngIf="selected_application.is_approved_interview" [disabled]="updating_status" (click)="updateApplicationStatus(true)" class="btn-blue bg-blue-500  w-28">
+            <fa-icon *ngIf="updating_status" [icon]="faCircleNotch" animation="spin"></fa-icon>
+            Approve Application
           </button>
         </div>
       </div>

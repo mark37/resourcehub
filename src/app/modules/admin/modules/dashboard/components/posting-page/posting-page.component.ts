@@ -8,6 +8,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { QuillEditorComponent } from 'ngx-quill';
 import { DeleteItemComponent } from '../../../../../../components/delete-item/delete-item.component';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-posting-page',
@@ -53,7 +54,9 @@ export class PostingPageComponent implements OnInit {
     {label: 'No existing scholarship', var_name: 'no_scholar_flag'},
     {label: 'Non-OFW parents', var_name: 'no_ofw_flag'},
     {label: 'No shiftee', var_name: 'no_shiftee_flag'},
-    {label: 'No Irregular', var_name: 'no_irregular_flag'}
+    {label: 'No Irregular', var_name: 'no_irregular_flag'},
+    {label: 'Must be a PWD', var_name: 'pwd_flag'},
+    {label: 'Parent is a Solo Parent', var_name: 'solo_parent_flag'}
   ];
 
   partTimeList: any[] = [];
@@ -163,6 +166,12 @@ export class PostingPageComponent implements OnInit {
       no_ofw_flag : [false],
       no_shiftee_flag: [false],
       no_irregular_flag: [false],
+      solo_parent_flag: [false],
+      pwd_flag: [false],
+      gwa: [null],
+      lib_academic_program_id: [null],
+      lib_year_level_id: [null],
+      lib_average_monthly_income_id: [null],
     });
 
     console.log(this.selected_posting)
@@ -181,10 +190,22 @@ export class PostingPageComponent implements OnInit {
     }
   }
 
+  academic_programs!: any;
+  year_levels!: any;
+  montly_incomes!: any;
+
   loadLibraries() {
-    this.http.get('psgc/provinces/0306900000', {params: {'include':'municipalities'}}).subscribe({
-      next: (data: any) => {
-        this.municipalities = data.data.municipalities;
+    const getCourses = this.http.get('libraries/academic-programs', { params: {per_page: 'all'}});
+    const getYearLevels = this.http.get('libraries/year-level', { params: {per_page: 'all'}});
+    const getIncomes = this.http.get('libraries/monthly-income', { params: {per_page: 'all'}});
+    const getMunicipalities = this.http.get('psgc/provinces/0306900000', {params: {'include':'municipalities'}});
+
+    forkJoin([getMunicipalities, getCourses, getYearLevels, getIncomes]).subscribe({
+      next: ([dataMunicipalities, dataCourses, dataYearLevels, dataIncomes]: any) => {
+        this.municipalities = dataMunicipalities.data.municipalities;
+        this.academic_programs = dataCourses.data;
+        this.year_levels = dataYearLevels.data;
+        this.montly_incomes = dataIncomes.data;
         this.createForm();
       },
       error: err => console.log(err)

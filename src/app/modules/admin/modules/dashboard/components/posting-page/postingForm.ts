@@ -16,6 +16,12 @@ export function postingForm() {
     no_ofw_flag : new FormControl<boolean>(false),
     no_shiftee_flag: new FormControl<boolean>(false),
     no_irregular_flag: new FormControl<boolean>(false),
+    solo_parent_flag: new FormControl<boolean>(false),
+    pwd_flag: new FormControl<boolean>(false),
+    gwa: new FormControl<number|null>(null),
+    lib_academic_program_id: new FormControl<string|null>(null),
+    lib_year_level_id: new FormControl<string|null>(null),
+    lib_average_monthly_income_id: new FormControl<string|null>(null),
   });
 }
 

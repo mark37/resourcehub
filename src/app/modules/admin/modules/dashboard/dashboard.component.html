@@ -108,6 +108,7 @@
                 Date Published <br />
                 Deadline date
               </th>
+              <th class="w-1/12">Applicant <br />Count</th>
               <th class="w-2/12">Slots</th>
               <th class="w-3/12">Actions</th>
             </tr>
@@ -127,7 +128,8 @@
                 {{ item.date_published ? (item.date_published | date: 'MMM dd, yyyy') : '-' }} <br />
                 {{ item.date_end | date: 'MMM dd, yyyy' }}
               </td>
-              <td class="text-center text-sm">{{ item.posting_applications_count }}/{{ item.slot }}</td>
+              <td class="text-center text-sm">{{ item.posting_applications_count }}</td>
+              <td class="text-center text-sm">{{ item.posting_approved_applications_count }}/{{ item.slot }}</td>
 
               <td class="text-center text-xs">
                 @if(item.applicants.length > 0) {
