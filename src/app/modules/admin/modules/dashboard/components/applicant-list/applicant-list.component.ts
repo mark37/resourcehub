@@ -57,6 +57,8 @@ export class ApplicantListComponent implements OnInit {
   toggleMyModal(name: string, data?: any) {
     this.selected_application = data;
     this.modals[name] = !this.modals[name];
+
+    this.loadApplicants(this.meta.current_page)
   }
 
   updateForInterviewApplicationStatus(is_approved: boolean){

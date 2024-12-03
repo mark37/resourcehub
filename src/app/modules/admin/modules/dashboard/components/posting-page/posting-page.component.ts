@@ -213,6 +213,7 @@ export class PostingPageComponent implements OnInit {
   }
 
   is_closing: boolean = false;
+  post_close: boolean = false;
   closePost(){
     this.is_closing = true;
 
@@ -220,6 +221,7 @@ export class PostingPageComponent implements OnInit {
     this.http.update('posting-information/',this.postingForm.value.id, params).subscribe({
       next: (data) => {
         this.is_closing = false;
+        this.post_close = true;
         console.log(data)
       },
       error: err => console.log(err)
