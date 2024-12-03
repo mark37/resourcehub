@@ -155,6 +155,14 @@
             Publish
           </button>
         }
+
+        @if(!postingForm.value.id || (postingForm.value.id && postingForm.value.date_published)) {
+          <button class="disabled:bg-gray-400 bg-blue-600 text-white px-8 py-2 font-semibold rounded-full" (click)="closePost()">
+            <fa-icon *ngIf="!isSaving" [icon]="faUpload"></fa-icon>
+            <fa-icon *ngIf="isSaving" [icon]="faCircleNotch" animation="spin"></fa-icon>
+            Close Post
+          </button>
+        }
       </div>
     </div>
   </form>

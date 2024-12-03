@@ -212,6 +212,20 @@ export class PostingPageComponent implements OnInit {
     })
   }
 
+  is_closing: boolean = false;
+  closePost(){
+    this.is_closing = true;
+
+    let params = { post_closed_flag: true, closed_date: formatDate(new Date(), 'yyyy-MM-dd', 'en', 'Asia/manila')};
+    this.http.update('posting-information/',this.postingForm.value.id, params).subscribe({
+      next: (data) => {
+        this.is_closing = false;
+        console.log(data)
+      },
+      error: err => console.log(err)
+    })
+  }
+
   closeComponent(){
     this.toggleModal.emit()
   }
