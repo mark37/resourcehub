@@ -63,6 +63,7 @@ export class ManageProfileComponent implements OnInit {
       scholar_flag: this.userForm.value.scholar_flag ? 1 : 0,
       shiftee_flag: this.userForm.value.shiftee_flag ? 1 : 0,
       irregular_flag: this.userForm.value.irregular_flag ? 1 : 0,
+      pwd_flag: this.userForm.value.pwd_flag ? 1 : 0,
     });
 
     let formData = new FormData();

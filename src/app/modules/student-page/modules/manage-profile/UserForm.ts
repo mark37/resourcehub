@@ -55,5 +55,7 @@ export function userForm() {
     scholar_flag: new FormControl<boolean>(false),
     shiftee_flag	: new FormControl<boolean>(false),
     irregular_flag: new FormControl<boolean>(false),
+    pwd_flag: new FormControl<boolean>(false),
+    gwa: new FormControl<string|null>(null),
   });
 }
