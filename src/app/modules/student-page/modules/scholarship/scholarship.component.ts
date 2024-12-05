@@ -30,6 +30,8 @@ export class ScholarshipComponent implements OnInit {
   toggleModal(name: string, data?: any) {
     this.selected_posting = data;
     this.modals[name] = !this.modals[name];
+
+    if(this.modals[name] === false) this.loadScholarship()
   }
 
   loadScholarship(page?: string) {

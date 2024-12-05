@@ -76,11 +76,12 @@ export class PartTimeComponent implements OnInit {
   }
 
   with_radius: boolean = true;
-  loadPartTime(show_all: boolean, page?: number){
+  params: any = {};
+  loadPartTime(show_all?: boolean, page?: number){
     this.isLoading = true;
     let params: any = {};
 
-    params['page'] = page ?? 1;
+    // params['page'] = page ?? 1;
     params['per_page'] = 'all';
     params['lib_posting_category_id'] = 1;
     params['is_published'] = 'published';
@@ -90,7 +91,7 @@ export class PartTimeComponent implements OnInit {
       params['radius'] = this.radius;
       params['lat'] = this.center.lat;
       params['lng'] = this.center.lng;
-    } else {
+    } else if (show_all === true) {
       this.with_radius = false;
       // this.search = null;
     }
@@ -104,6 +105,7 @@ export class PartTimeComponent implements OnInit {
       access_url = 'public-info'
     }
 
+    // let params: any = {params};
     this.http.get(access_url, { params }).subscribe({
       next: (data: any) => {
         this.partTimeList = data.data;
@@ -119,7 +121,7 @@ export class PartTimeComponent implements OnInit {
   toggleModal(name: string, data?: any) {
     this.selected_posting = data;
     this.modals[name] = !this.modals[name];
-    if(!this.modals[name]) this.loadPartTime(false)
+    if(!this.modals[name]) this.loadPartTime()
   }
 
   // Function to calculate distance between two points in meters

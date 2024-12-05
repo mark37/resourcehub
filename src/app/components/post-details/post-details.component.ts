@@ -92,8 +92,9 @@ export class PostDetailsComponent {
   ) { }
 
   ngOnInit(): void {
-    this.loadUserInformation();
     this.isAuthenticated = localStorage.getItem('access_token') ? true : false;
+    if(this.isAuthenticated) this.loadUserInformation();
+    if(!this.isAuthenticated) this.show_form = true;
     console.log(this.selected_posting);
     // this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(this.selected_posting.description);
   }
