@@ -29,7 +29,8 @@
               <button class="btn-blue bg-gray-400 mr-3" (click)="toggleConfirmation()">
                 Cancel
               </button>
-              <button class="btn-blue" (click)="onSubmit(true)">
+              <button [disabled]="is_saving" class="btn-blue" (click)="onSubmit(true)">
+                <fa-icon *ngIf="is_saving" [icon]="faCircleNotch" animation="spin"></fa-icon>
                 Apply
               </button>
             </div>
@@ -67,8 +68,9 @@
               Cancel Application
             </button> -->
           } @else {
-            <button *ngIf="isAuthenticated" class="btn-blue bg-orange-500" (click)="onSubmit()">
-              <fa-icon [icon]="faSave"></fa-icon>
+            <button [disabled]="is_saving" *ngIf="isAuthenticated" class="btn-blue bg-orange-500" (click)="onSubmit()">
+              <fa-icon *ngIf="is_saving" [icon]="faCircleNotch" animation="spin"></fa-icon>
+              <fa-icon *ngIf="!is_saving" [icon]="faSave"></fa-icon>
               Save post
             </button>
 

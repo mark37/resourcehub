@@ -39,6 +39,7 @@ export class RecentPartTimeComponent {
     if(data) this.selected_posting['applicants'] = [data];
 
     this.modals[name] = !this.modals[name];
+    if(this.modals[name] === false) this.loadList();
   }
   constructor (
     private http: HttpService,

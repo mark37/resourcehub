@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HttpService } from '../../shared/http.service';
-import { faArrowLeft, faCircleCheck, faFileLines, faSave, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCircleCheck, faCircleNotch, faFileLines, faSave, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { QuillEditorComponent } from 'ngx-quill';
 import { Router } from '@angular/router';
@@ -25,6 +25,7 @@ export class PostDetailsComponent {
   faArrowLeft = faArrowLeft;
   faXmark = faXmark;
   faCircleCheck = faCircleCheck;
+  faCircleNotch = faCircleNotch;
 
   // public htmlContent: SafeHtml | null = null;
   showConfirmation: boolean = false;
@@ -41,7 +42,9 @@ export class PostDetailsComponent {
     this.showConfirmation = !this.showConfirmation;
   }
 
+  is_saving: boolean = false;
   onSubmit(applied?: boolean){
+    this.is_saving = true;
     let params: any = {};
     params['posting_id'] = this.selected_posting.id;
     if(applied) {
@@ -51,9 +54,13 @@ export class PostDetailsComponent {
 
     this.http.post('posting-application', params).subscribe({
       next: () => {
+        this.is_saving = false;
         this.showConfirmation = false;
         if(applied) {
           this.showSuccessfullApplication =  true;
+          this.closeModal();
+        } else {
+          this.closeModal();
         }
       },
       error: err => console.log(err)
